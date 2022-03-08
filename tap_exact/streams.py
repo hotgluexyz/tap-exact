@@ -186,9 +186,104 @@ class ItemsStream(ExactStream):
             )),
             th.Property("d:UnitDescription", th.StringType),
             th.Property("d:UnitType", th.StringType),
-
-
-            
+  
         )),
     )
 
+
+class SalesOrderStream(ExactStream):
+    name = "sales_order"
+    path = "/s"
+    primary_keys = ["id"]
+
+    schema = th.PropertiesList(
+        
+        th.Property("id", string),
+        th.Property("updated", th.DateTimeType),
+        th.Property("author", th.ObjectType(
+            th.Property("name", string),
+        )),
+        th.Property("link", th.ObjectType(
+            th.Property("@rel", th.StringType),
+            th.Property("@title", th.StringType),
+            th.Property("@href", th.StringType),
+        )),
+        th.Property("@title", th.StringType),
+        th.Property("@href", th.StringType),
+        th.Property("category", th.ObjectType(
+            th.Property("@scheme", th.StringType),
+            th.Property("@term", th.StringType),
+        )),
+        th.Property("content", th.ObjectType(
+            th.Property("@type", th.StringType),
+            th.Property("m:properties", th.ObjectType(
+                th.Property("d:AmountDc", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:AmountDiscount", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:AmountDiscountExclVat", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:ApprovalStatus", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:ApprovalStatusDescription", string),
+                th.Property("d:Approved", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:Approver", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:Created", th.ObjectType(
+                    th.Property("#text", th.DateTimeType)
+                )),
+                th.Property("d:Creator", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:CreatorFullName", string),
+                th.Property("d:Currency", string),
+                th.Property("d:DeliverTo", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:DeliveryDate", th.ObjectType(
+                    th.Property("#text", th.DateTimeType)
+                )),
+                th.Property("d:DeliveryStatus", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:DeliveryStatusDescription", string),
+                th.Property("d:DeliveryAddress", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:Description", string),
+                th.Property("d:OrderDate", th.ObjectType(
+                    th.Property("#text", th.DateTimeType)
+                )),
+                th.Property("d:OrderedBy", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:OrderedNyName", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:OrderID", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:OrderNumber", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:Salesperson", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:Status", th.ObjectType(
+                    th.Property("#text", string)
+                )),
+                th.Property("d:StatusDescription", string),
+                th.Property("d:WarehouseCode", string),
+                th.Property("d:WarehouseDescription", string),
+            )),
+        )),
+        
+
+    ).to_dict()
