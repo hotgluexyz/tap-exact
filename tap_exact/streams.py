@@ -70,37 +70,148 @@ class ItemsStream(ExactStream):
     primary_keys = ["id"]
 
     schema = th.PropertiesList(
-        th.Property("id", string),
+        th.Property("id", th.StringType),
         th.Property("title", th.ObjectType(
-            th.Property("@type", string)
+            th.Property("@type", th.StringType)
         )),
         th.Property("updated", th.DateTimeType),
         th.Property("author", th.ObjectType(
-            th.Property("name", string),
+            th.Property("name", th.StringType),
         )),
         th.Property("link", th.ObjectType(
-            th.Property("@rel", string),
-            th.Property("@title", string),
-            th.Property("@href", string),
+            th.Property("@rel", th.StringType),
+            th.Property("@title", th.StringType),
+            th.Property("@href", th.StringType),
         )),
         th.Property("category", th.ObjectType(
-            th.Property("@scheme", string),
-            th.Property("@term", string),
+            th.Property("@scheme", th.StringType),
+            th.Property("@term", th.StringType),
+        )),
+        th.Property("content", th.ObjectType(
+            th.Property("d:AverageCost", th.ObjectType(
+                th.Property("#text", th.StringType)
+                
+            )),
+            th.Property("d:Code", th.StringType),
+            th.Property("d.CopyRemarks", th.ObjectType(
+                th.Property("#text", th.StringType),
+            )),
+            th.Property("d:CostPriceCurrency", th.StringType),
+            th.Property("d:Created", th.ObjectType(
+                th.Property("#text", th.DateTimeType)
+            )),
+            th.Property("d:Creator", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:CreatorFullName", th.StringType),
+            th.Property("d:Description", th.StringType),
+            th.Property("d:ExtraDescription", th.StringType),
+            th.Property("d:ID", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsBatchItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsFractionAllowedItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsMakeItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsNewContract", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsOnDemandItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsPackageItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsPurchaseItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsSalesItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsSerialItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsStockItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsSubcontractedItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsTaxableItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsTime", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:IsWebshopItem", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:ItemGroup", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:ItemGroupCode", th.StringType),
+            th.Property("d:ItemGroupDescription", th.StringType),
+            th.Property("d:Modified", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:Modifier", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:ModifierFullName", th.StringType),
+            th.Property("d:PictureThumbnailUrl", th.StringType),
+            th.Property("d:PictureUrl", th.StringType),
+            th.Property("d:SearchCode", th.StringType),
+            th.Property("d:SecurityLevel", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:StandardSalesPrice", th.ObjectType(
+                th.Property("#text", th.StringType)
+            )),
+            th.Property("d:StartDate", th.ObjectType(
+                th.Property("#text", th.DateTimeType)
+            )),
+            th.Property("d:StatisticalUnits", th.ObjectType(
+                th.Property("#text", th.DateTimeType)
+            )),
+            th.Property("d:Stock", th.ObjectType(
+                th.Property("#text", th.DateTimeType)
+            )),
+            th.Property("d:Unit", th.ObjectType(
+                th.Property("#text", th.DateTimeType)
+            )),
+            th.Property("d:UnitDescription", th.StringType),
+            th.Property("d:UnitType", th.StringType),
+
+
+
+
+
+
+
+
+
+
+
+            
+            
+
+            
+
+
+            
         )),
 
 
     )
     
 {
- 'id': "https://start.exactonline.com/api/v1/64850/bulk/logistics/Items(guid'559e9212-af04-46cc-8ca1-87f03adf0dcf')",
- 'title': {'@type': 'text'},
- 'updated': '2022-03-08T09:35:42Z',
- 'author': {'name': None},
-    'link': {'@rel': 'edit',
-        '@title': 'Item',
-        '@href': "Items(guid'559e9212-af04-46cc-8ca1-87f03adf0dcf')"},
-    'category': {'@term': 'Exact.Web.Api.Models.Item',
-    '@scheme': 'http://schemas.microsoft.com/ado/2007/08/dataservices/scheme'},
+ 
+ 
     'content': {'@type': 'application/xml',
  'm:properties': {'d:ID': {'@m:type': 'Edm.Guid',
  '#text': '559e9212-af04-46cc-8ca1-87f03adf0dcf'},
