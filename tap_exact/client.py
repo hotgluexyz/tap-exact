@@ -18,7 +18,7 @@ class ExactStream(RESTStream):
     """Exact stream class."""
 
     # TODO: Set the API's base URL here:
-    url_base = "https://api.mysample.com"
+    url_base = "https://start.exactonline.com"
 
     # OR use a dynamic url_base:
     # @property
