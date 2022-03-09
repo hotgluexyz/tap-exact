@@ -1,9 +1,10 @@
 """REST client handling, including ExactStream base class."""
 
 import requests
+import json
 from pathlib import Path
 from typing import Any, Dict, Optional, Union, List, Iterable
-
+import xmltodict
 from memoization import cached
 
 from singer_sdk.helpers.jsonpath import extract_jsonpath
@@ -26,15 +27,15 @@ class ExactStream(RESTStream):
     #     """Return the API URL root, configurable via tap settings."""
     #     return self.config["api_url"]
 
-    records_jsonpath = "$[*]"  # Or override `parse_response`.
-    next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
+    records_jsonpath = "$.feed.entry[*]"  # Or override `parse_response`.
+    # next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
 
     @property
     def authenticator(self) -> BearerTokenAuthenticator:
         """Return a new authenticator object."""
         return BearerTokenAuthenticator.create_for_stream(
             self,
-            token=self.config.get("api_key")
+            token=self.config.get("access_token")
         )
 
     @property
@@ -77,6 +78,15 @@ class ExactStream(RESTStream):
             params["order_by"] = self.replication_key
         return params
 
+    def xml_to_dict(self, response):
+        data = json.loads(json.dumps(xmltodict.parse(response.text)))
+        return data
+
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        """Parse the response and return an iterator of result rows."""
+
+        yield from extract_jsonpath(self.records_jsonpath, input=self.xml_to_dict(response))
+
     def prepare_request_payload(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Optional[dict]:
@@ -86,11 +96,6 @@ class ExactStream(RESTStream):
         """
         # TODO: Delete this method if no payload is required. (Most REST APIs.)
         return None
-
-    def parse_response(self, response: requests.Response) -> Iterable[dict]:
-        """Parse the response and return an iterator of result rows."""
-        # TODO: Parse response body and return a set of records.
-        yield from extract_jsonpath(self.records_jsonpath, input=response.json())
 
     def post_process(self, row: dict, context: Optional[dict]) -> dict:
         """As needed, append or transform raw data to match expected structure."""

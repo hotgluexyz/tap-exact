@@ -1,6 +1,5 @@
 """Stream type classes for tap-exact."""
 
-from msilib.schema import Property
 from pathlib import Path
 from typing import Any, Dict, Optional, Union, List, Iterable
 
@@ -188,7 +187,7 @@ class ItemsStream(ExactStream):
             th.Property("d:UnitType", th.StringType),
   
         )),
-    )
+    ).to_dict()
 
 
 class SalesOrderStream(ExactStream):
@@ -420,7 +419,7 @@ class PurchaseOrdersStream(ExactStream):
                                 th.Property("@term", th.StringType),
                                 th.Property("@scheme", th.StringType)
                             )),
-                            th.Property("content", th.Object(
+                            th.Property("content", th.ObjectType(
                                 th.Property("m:properties", th.ObjectType(
                                     th.Property("d:AmountDc", th.ObjectType(
                                         th.Property("#text", th.StringType)
