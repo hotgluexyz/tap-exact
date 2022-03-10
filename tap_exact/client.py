@@ -2,6 +2,7 @@
 
 import requests
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional, Union, List, Iterable
 import xmltodict
@@ -30,9 +31,48 @@ class ExactStream(RESTStream):
     records_jsonpath = "$.feed.entry[*]"  # Or override `parse_response`.
     # next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
 
+    def get_token(self):
+        url = "https://start.exactonline.com/api/oauth2/token"
+        
+        
+        access_token = self._tap._config.get("access_token")
+        
+        expires_in = self._tap._config.get("expires_in")
+        
+        now = round(datetime.utcnow().timestamp())
+
+        if (not access_token) or (not expires_in) or ((expires_in - now) < 1):
+            client_id = self._tap._config.get("client_id")    
+            client_secret = self._tap._config.get("client_secret")
+            refresh_token = self._tap._config.get("refresh_token")
+
+            payload = f'grant_type=refresh_token&refresh_token={refresh_token}&client_id={client_id}&client_secret={client_secret}'
+            
+            headers = {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+            }
+            response = requests.request("POST", url, headers=headers, data=payload).json()
+
+            access_token = response["access_token"]
+            expires_in = now + int(response["expires_in"])
+            refresh_token = response.get("refresh_token")
+
+            self._tap._config["access_token"] = access_token
+            self._tap._config["expires_in"] = expires_in
+            self._tap._config["refresh_in"] = refresh_token
+            self._tap._config["client_id"] = client_id
+            self._tap._config["client_secret"] = client_secret
+            
+
+            with open(self._tap.config_file, "w") as outfile:
+                json.dump(self._tap._config, outfile, indent=4)
+
+        return access_token
+        
     @property
     def authenticator(self) -> BearerTokenAuthenticator:
         """Return a new authenticator object."""
+        access_token = self.get_token()
         return BearerTokenAuthenticator.create_for_stream(
             self,
             token=self.config.get("access_token")

@@ -7,8 +7,6 @@ from singer_sdk import typing as th  # JSON schema typing helpers
 # TODO: Import your custom stream types here:
 from tap_exact.streams import (
     ExactStream,
-    UsersStream,
-    GroupsStream,
     ItemsStream,
     SalesOrderStream,
     PurchaseOrdersStream
@@ -16,8 +14,6 @@ from tap_exact.streams import (
 # TODO: Compile a list of custom stream types here
 #       OR rewrite discover_streams() below with your custom logic.
 STREAM_TYPES = [
-    UsersStream,
-    GroupsStream,
     ItemsStream,
     SalesOrderStream,
     PurchaseOrdersStream
@@ -27,6 +23,16 @@ STREAM_TYPES = [
 class TapExact(Tap):
     """Exact tap class."""
     name = "tap-exact"
+    def __init__(
+        self,
+        config=None,
+        catalog=None,
+        state=None,
+        parse_env_config=False,
+        validate_config=True,
+    ) -> None:
+        super().__init__(config, catalog, state, parse_env_config, validate_config)
+        self.config_file = config[0]
 
     # TODO: Update this section with the actual config values you expect:
     config_jsonschema = th.PropertiesList(
