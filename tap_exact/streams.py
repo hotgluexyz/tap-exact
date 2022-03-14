@@ -554,3 +554,67 @@ class WarehouseStream(ExactStream):
         )
       
     ).to_dict()
+
+
+class SuppliersStream(ExactStream):
+    name = "suppliers"
+    path = "/api/v1/64850/logistics/SupplierItem?$select=ID,CopyRemarks,CountryOfOrigin,CountryOfOriginDescription,Created,Creator,CreatorFullName,Currency,CurrencyDescription,Division,DropShipment,EndDate,Item,ItemCode,ItemDescription,MainSupplier,MinimumQuantity,Modified,Modifier,ModifierFullName,Notes,PurchaseLeadTime,PurchasePrice,PurchaseUnit,PurchaseUnitDescription,PurchaseUnitFactor,PurchaseVATCode,PurchaseVATCodeDescription,StartDate,Supplier,SupplierCode,SupplierDescription,SupplierItemCode"
+    primary_keys = ["id"]
+
+    schema = th.PropertiesList(
+
+        th.Property("content", th.ObjectType(
+            th.Property("m:properties", th.ObjectType(
+                th.Property("d:Creator", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:CreatorFullName", th.CustomType({"type": ["array", "object", "string"]})),
+                th.Property("d:Currency", th.StringType),
+                th.Property("d:CurrencyDescription", th.StringType),
+                th.Property("d:Division", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:DropShipment", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:ID", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Item", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:ItemCode", th.StringType),
+                th.Property("d:ItemDescription", th.StringType),
+                th.Property("d:MinimumQuantity", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Modified", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Modifier", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:ModifierFullName", th.CustomType({"type": ["array", "object", "string"]})),
+                th.Property("d:PurchaseLeadTime", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:PurchasePrice", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:PurchaseUnit", th.StringType),
+                th.Property("d:PurchaseUnitDescription", th.StringType),
+                th.Property("d:StartDate", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Supplier", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:SupplierCode", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:SupplierDescription", th.StringType),
+                th.Property("d:SupplierItemCode", th.StringType)
+
+            ))
+        ))
+    ).to_dict()
