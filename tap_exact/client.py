@@ -52,16 +52,18 @@ class ExactStream(RESTStream):
                   'Content-Type': 'application/x-www-form-urlencoded',
             }
             response = requests.request("POST", url, headers=headers, data=payload).json()
-
+            if "access_token not expired" in response.get("error_description", ""):
+                return access_token 
             access_token = response["access_token"]
             expires_in = now + int(response["expires_in"])
             refresh_token = response.get("refresh_token")
 
             self._tap._config["access_token"] = access_token
             self._tap._config["expires_in"] = expires_in
-            self._tap._config["refresh_in"] = refresh_token
+            # self._tap._config["refresh_in"] = refresh_token
             self._tap._config["client_id"] = client_id
             self._tap._config["client_secret"] = client_secret
+            self._tap._config["refresh_token"] = refresh_token
             
 
             with open(self._tap.config_file, "w") as outfile:

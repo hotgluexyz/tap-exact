@@ -9,14 +9,16 @@ from tap_exact.streams import (
     ExactStream,
     ItemsStream,
     SalesOrderStream,
-    PurchaseOrdersStream
+    PurchaseOrdersStream,
+    WarehouseStream
 )
 # TODO: Compile a list of custom stream types here
 #       OR rewrite discover_streams() below with your custom logic.
 STREAM_TYPES = [
     ItemsStream,
     SalesOrderStream,
-    PurchaseOrdersStream
+    PurchaseOrdersStream,
+    WarehouseStream
 ]
 
 

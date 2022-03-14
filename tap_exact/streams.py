@@ -500,55 +500,57 @@ class WarehouseStream(ExactStream):
     primary_keys = ["id"]
 
     schema = th.PropertiesList(
-        th.Property("@type", string),
-        th.Property("m:properties", th.ObjectType(
-            th.Property("d:Created", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:CreatorFullName", string),
-            th.Property("d:CurrentStock", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:ID", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:Item", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:ItemCode", string),
-            th.Property("d:ItemDescription", string),
-            th.Property("d:ItemStartDate", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:ItemUnit", string),
-            th.Property("d:ItemUnitDescription", string),
-            th.Property("d:MaximumStock", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:Modified", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:Modifier", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:ModifierFullName", string),
-            th.Property("d:ProjectedStock", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:ReorderPoint", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:SafetyStock", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:StorageLocationUrl", string),
-            th.Property("d:Warehouse", th.ObjectType(
-                th.Property("#text", string)
-            )),
-            th.Property("d:WarehouseCode", string),
-            th.Property("d:WarehouseDescription", string),
+        th.Property("content", th.ObjectType(
+            th.Property("@type", th.StringType),
+            th.Property("m:properties", th.ObjectType(
+                th.Property("d:Created", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:CreatorFullName", th.CustomType({"type": ["array", "object", "string"]})),
+                th.Property("d:CurrentStock", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:ID", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Item", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:ItemCode", th.StringType),
+                th.Property("d:ItemDescription", th.StringType),
+                th.Property("d:ItemStartDate", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:ItemUnit", th.StringType),
+                th.Property("d:ItemUnitDescription", th.StringType),
+                th.Property("d:MaximumStock", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Modified", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Modifier", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:ModifierFullName", th.CustomType({"type": ["array", "object", "string"]})),
+                th.Property("d:ProjectedStock", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:ReorderPoint", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:SafetyStock", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:StorageLocationUrl", th.StringType),
+                th.Property("d:Warehouse", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:WarehouseCode", th.StringType),
+                th.Property("d:WarehouseDescription", th.StringType),
 
-
-        ))
+            ))
+        )
+        )
       
     ).to_dict()
