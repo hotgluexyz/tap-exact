@@ -492,3 +492,63 @@ class PurchaseOrdersStream(ExactStream):
             )
         ))
     ).to_dict()
+
+
+class WarehouseStream(ExactStream):
+    name = "warehouses"
+    path = "/api/v1/64850/inventory/ItemWarehouses?$select=ID,Created,Creator,CreatorFullName,CurrentStock,DefaultStorageLocation,DefaultStorageLocationCode,DefaultStorageLocationDescription,Division,Item,ItemCode,ItemDescription,ItemEndDate,ItemIsFractionAllowedItem,ItemIsStockItem,ItemStartDate,ItemUnit,ItemUnitDescription,MaximumStock,Modified,Modifier,ModifierFullName,OrderPolicy,Period,PlannedStockIn,PlannedStockOut,PlanningDetailsUrl,ProjectedStock,ReorderPoint,ReorderQuantity,ReplenishmentType,ReservedStock,SafetyStock,StorageLocationUrl,Warehouse,WarehouseCode,WarehouseDescription"
+    primary_keys = ["id"]
+
+    schema = th.PropertiesList(
+        th.Property("@type", string),
+        th.Property("m:properties", th.ObjectType(
+            th.Property("d:Created", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:CreatorFullName", string),
+            th.Property("d:CurrentStock", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:ID", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:Item", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:ItemCode", string),
+            th.Property("d:ItemDescription", string),
+            th.Property("d:ItemStartDate", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:ItemUnit", string),
+            th.Property("d:ItemUnitDescription", string),
+            th.Property("d:MaximumStock", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:Modified", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:Modifier", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:ModifierFullName", string),
+            th.Property("d:ProjectedStock", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:ReorderPoint", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:SafetyStock", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:StorageLocationUrl", string),
+            th.Property("d:Warehouse", th.ObjectType(
+                th.Property("#text", string)
+            )),
+            th.Property("d:WarehouseCode", string),
+            th.Property("d:WarehouseDescription", string),
+
+
+        ))
+      
+    ).to_dict()
