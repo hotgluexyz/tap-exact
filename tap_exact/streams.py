@@ -618,3 +618,64 @@ class SuppliersStream(ExactStream):
             ))
         ))
     ).to_dict()
+
+
+class SalesOrderLinesStream(ExactStream):
+    name = "sales_orderlines"
+    path = "/api/v1/64850/bulk/SalesOrder/SalesOrderLines?$select=ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostPriceFC,CostUnit,CostUnitDescription,CustomerItemCode,DeliveryDate,Description,Discount,Division,Item,ItemCode,ItemDescription,ItemVersion,ItemVersionDescription,LineNumber,NetPrice,Notes,OrderID,OrderNumber,Pricelist,PricelistDescription,Project,ProjectDescription,PurchaseOrder,PurchaseOrderLine,PurchaseOrderLineNumber,PurchaseOrderNumber,Quantity,ShopOrder,UnitCode,UnitDescription,UnitPrice,UseDropShipment,VATAmount,VATCode,VATCodeDescription,VATPercentage"
+    primary_keys = ["id"]
+
+    schema = th.PropertiesList(
+        th.Property("content", th.ObjectType(
+            th.Property("m:properties", th.ObjectType(
+                th.Property("d:AmountDC", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:AmountFC", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:DeliveryDate", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Description", th.StringType),
+                th.Property("d:DeliveryDate", th.ObjectType(
+                    th.Property("d:Discount", th.StringType)
+                )),
+                th.Property("d:ID", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Item", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:ItemCode", th.StringType),
+                th.Property("d:ItemDescription", th.StringType),
+                th.Property("d:LineNumber", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:NetPrice", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:OrderID", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:OrderNumber", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:Quantity", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:UnitCode", th.StringType),
+                th.Property("d:UnitDescription", th.StringType),
+                th.Property("d:UnitPrice", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:UseDropShipment", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+                th.Property("d:VATAmount", th.ObjectType(
+                    th.Property("#text", th.StringType)
+                )),
+
+            ))
+        ))
+    ).to_dict()

@@ -8,10 +8,11 @@ from singer_sdk import typing as th  # JSON schema typing helpers
 from tap_exact.streams import (
     ExactStream,
     ItemsStream,
+    SalesOrderLinesStream,
     SalesOrderStream,
     PurchaseOrdersStream,
     WarehouseStream,
-    SuppliersStream
+    SuppliersStream,
 )
 # TODO: Compile a list of custom stream types here
 #       OR rewrite discover_streams() below with your custom logic.
@@ -20,7 +21,8 @@ STREAM_TYPES = [
     SalesOrderStream,
     PurchaseOrdersStream,
     WarehouseStream,
-    SuppliersStream
+    SuppliersStream,
+    SalesOrderLinesStream
 ]
 
 
