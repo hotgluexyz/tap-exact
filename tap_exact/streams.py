@@ -1,61 +1,11 @@
-"""Stream type classes for tap-exact."""
-
-from pathlib import Path
-from typing import Any, Dict, Optional, Union, List, Iterable
-
 from singer_sdk import typing as th
-from tomlkit import string  # JSON Schema typing helpers
-
 from tap_exact.client import ExactStream
-
-# TODO: Delete this is if not using json files for schema definition
-SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
-# TODO: - Override `UsersStream` and `GroupsStream` with your own stream definition.
-#       - Copy-paste as many times as needed to create multiple stream types.
-
-
-# class UsersStream(ExactStream):
-#     """Define custom stream."""
-#     name = "users"
-#     path = "/users"
-#     primary_keys = ["id"]
-#     replication_key = None
-#     # Optionally, you may also use `schema_filepath` in place of `schema`:
-#     # schema_filepath = SCHEMAS_DIR / "users.json"
-#     schema = th.PropertiesList(
-#         th.Property("name", th.StringType),
-#         th.Property(
-#             "id",
-#             th.StringType,
-#             description="The user's system ID"
-#         ),
-#         th.Property(
-#             "age",
-#             th.IntegerType,
-#             description="The user's age in years"
-#         ),
-#         th.Property(
-#             "email",
-#             th.StringType,
-#             description="The user's email address"
-#         ),
-#         th.Property("street", th.StringType),
-#         th.Property("city", th.StringType),
-#         th.Property(
-#             "state",
-#             th.StringType,
-#             description="State name in ISO 3166-2 format"
-#         ),
-#         th.Property("zip", th.StringType),
-#     ).to_dict()
-
-
-
 
 class ItemsStream(ExactStream):
     name = "items"
     path = "/api/v1/64850/bulk/Logistics/Items?$select=ID,AverageCost,Barcode,Class_01,Class_02,Class_03,Class_04,Class_05,Class_06,Class_07,Class_08,Class_09,Class_10,Code,CopyRemarks,CostPriceCurrency,CostPriceNew,CostPriceStandard,Created,Creator,CreatorFullName,Description,Division,EndDate,ExtraDescription,FreeBoolField_01,FreeBoolField_02,FreeBoolField_03,FreeBoolField_04,FreeBoolField_05,FreeDateField_01,FreeDateField_02,FreeDateField_03,FreeDateField_04,FreeDateField_05,FreeNumberField_01,FreeNumberField_02,FreeNumberField_03,FreeNumberField_04,FreeNumberField_05,FreeNumberField_06,FreeNumberField_07,FreeNumberField_08,FreeTextField_01,FreeTextField_02,FreeTextField_03,FreeTextField_04,FreeTextField_05,FreeTextField_06,FreeTextField_07,FreeTextField_08,FreeTextField_09,FreeTextField_10,GLCosts,GLCostsCode,GLCostsDescription,GLRevenue,GLRevenueCode,GLRevenueDescription,GLStock,GLStockCode,GLStockDescription,GrossWeight,IsBatchItem,IsFractionAllowedItem,IsMakeItem,IsNewContract,IsOnDemandItem,IsPackageItem,IsPurchaseItem,IsSalesItem,IsSerialItem,IsStockItem,IsSubcontractedItem,IsTaxableItem,IsTime,IsWebshopItem,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NetWeight,NetWeightUnit,Notes,PictureName,PictureThumbnailUrl,PictureUrl,SalesVatCode,SalesVatCodeDescription,SearchCode,SecurityLevel,StandardSalesPrice,StartDate,StatisticalCode,StatisticalNetWeight,StatisticalUnits,StatisticalValue,Stock,Unit,UnitDescription,UnitType"
     primary_keys = ["id"]
+    #replication_key = "updated"
 
     schema = th.PropertiesList(
         th.Property("id", th.StringType),

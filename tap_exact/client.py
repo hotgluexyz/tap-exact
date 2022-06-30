@@ -1,102 +1,33 @@
-"""REST client handling, including ExactStream base class."""
-
 import requests
 import json
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, Optional, Union, List, Iterable
+from typing import Any, Dict, Optional, List, Iterable
 import xmltodict
 from memoization import cached
 
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.streams import RESTStream
-from singer_sdk.authenticators import BearerTokenAuthenticator
-
-
-SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
-
+from tap_exact.auth import OAuth2Authenticator
 
 class ExactStream(RESTStream):
-    """Exact stream class."""
 
-    # TODO: Set the API's base URL here:
     url_base = "https://start.exactonline.com"
 
-    # OR use a dynamic url_base:
-    # @property
-    # def url_base(self) -> str:
-    #     """Return the API URL root, configurable via tap settings."""
-    #     return self.config["api_url"]
-
-    records_jsonpath = "$.feed.entry[*]"  # Or override `parse_response`.
-    # next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
-
-    def get_token(self):
-        url = "https://start.exactonline.com/api/oauth2/token"
-        
-        
-        access_token = self._tap._config.get("access_token")
-        
-        expires_in = self._tap._config.get("expires_in")
-        
-        now = round(datetime.utcnow().timestamp())
-
-        if (not access_token) or (not expires_in) or ((expires_in - now) < 1):
-            client_id = self._tap._config.get("client_id")    
-            client_secret = self._tap._config.get("client_secret")
-            refresh_token = self._tap._config.get("refresh_token")
-
-            payload = f'grant_type=refresh_token&refresh_token={refresh_token}&client_id={client_id}&client_secret={client_secret}'
-            
-            headers = {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-            }
-            response = requests.request("POST", url, headers=headers, data=payload).json()
-            if "access_token not expired" in response.get("error_description", ""):
-                return access_token 
-            access_token = response["access_token"]
-            expires_in = now + int(response["expires_in"])
-            refresh_token = response.get("refresh_token")
-
-            self._tap._config["access_token"] = access_token
-            self._tap._config["expires_in"] = expires_in
-            # self._tap._config["refresh_in"] = refresh_token
-            self._tap._config["client_id"] = client_id
-            self._tap._config["client_secret"] = client_secret
-            self._tap._config["refresh_token"] = refresh_token
-            
-
-            with open(self._tap.config_file, "w") as outfile:
-                json.dump(self._tap._config, outfile, indent=4)
-
-        return access_token
-        
+    records_jsonpath = "$.feed.entry[*]" 
     @property
-    def authenticator(self) -> BearerTokenAuthenticator:
-        """Return a new authenticator object."""
-        access_token = self.get_token()
-        return BearerTokenAuthenticator.create_for_stream(
-            self,
-            token=self.config.get("access_token")
-        )
+    def authenticator(self) -> OAuth2Authenticator:
+        oauth_url = "https://start.exactonline.com/api/oauth2/token"
+        return OAuth2Authenticator(self, self.config, auth_endpoint=oauth_url)
 
     @property
     def http_headers(self) -> dict:
-        """Return the http headers needed."""
         headers = {}
         if "user_agent" in self.config:
             headers["User-Agent"] = self.config.get("user_agent")
-        # If not using an authenticator, you may also provide inline auth headers:
-        # headers["Private-Token"] = self.config.get("auth_token")
         return headers
 
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
     ) -> Optional[Any]:
-        """Return a token for identifying next page or None if no more pages."""
-        # TODO: If pagination is required, return a token which can be used to get the
-        #       next page. If this is the final page, return "None" to end the
-        #       pagination loop.
         if self.next_page_token_jsonpath:
             all_matches = extract_jsonpath(
                 self.next_page_token_jsonpath, response.json()
@@ -105,13 +36,11 @@ class ExactStream(RESTStream):
             next_page_token = first_match
         else:
             next_page_token = response.headers.get("X-Next-Page", None)
-
         return next_page_token
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
-        """Return a dictionary of values to be used in URL parameterization."""
         params: dict = {}
         if next_page_token:
             params["page"] = next_page_token
@@ -125,21 +54,4 @@ class ExactStream(RESTStream):
         return data
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
-        """Parse the response and return an iterator of result rows."""
-
         yield from extract_jsonpath(self.records_jsonpath, input=self.xml_to_dict(response))
-
-    def prepare_request_payload(
-        self, context: Optional[dict], next_page_token: Optional[Any]
-    ) -> Optional[dict]:
-        """Prepare the data payload for the REST API request.
-
-        By default, no payload will be sent (return None).
-        """
-        # TODO: Delete this method if no payload is required. (Most REST APIs.)
-        return None
-
-    def post_process(self, row: dict, context: Optional[dict]) -> dict:
-        """As needed, append or transform raw data to match expected structure."""
-        # TODO: Delete this method if not needed.
-        return row
