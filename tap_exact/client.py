@@ -1,18 +1,21 @@
-import requests
 import json
-from typing import Any, Dict, Optional, List, Iterable
+from typing import Any, Dict, Iterable, List, Optional
+
+import requests
 import xmltodict
 from memoization import cached
-
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.streams import RESTStream
+
 from tap_exact.auth import OAuth2Authenticator
+
 
 class ExactStream(RESTStream):
 
     url_base = "https://start.exactonline.com"
 
-    records_jsonpath = "$.feed.entry[*]" 
+    records_jsonpath = "$.feed.entry[*]"
+
     @property
     def authenticator(self) -> OAuth2Authenticator:
         oauth_url = "https://start.exactonline.com/api/oauth2/token"
@@ -54,4 +57,6 @@ class ExactStream(RESTStream):
         return data
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
-        yield from extract_jsonpath(self.records_jsonpath, input=self.xml_to_dict(response))
+        yield from extract_jsonpath(
+            self.records_jsonpath, input=self.xml_to_dict(response)
+        )

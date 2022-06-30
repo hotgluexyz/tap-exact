@@ -46,15 +46,20 @@ class OAuth2Authenticator(APIAuthenticatorBase):
             return False
 
         if not expires_in:
-            return False 
+            return False
 
         return not ((expires_in - now) < 120)
 
     def update_access_token(self) -> None:
-        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-        token_response = requests.post(self._auth_endpoint, data=self.oauth_request_body,headers=headers)
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        token_response = requests.post(
+            self._auth_endpoint, data=self.oauth_request_body, headers=headers
+        )
 
-        if token_response.json().get("error_description") == 'Rate limit exceeded: access_token not expired':
+        if (
+            token_response.json().get("error_description")
+            == "Rate limit exceeded: access_token not expired"
+        ):
             return None
 
         try:
@@ -70,7 +75,7 @@ class OAuth2Authenticator(APIAuthenticatorBase):
         self._tap._config["access_token"] = token_json["access_token"]
         self._tap._config["refresh_token"] = token_json["refresh_token"]
         now = round(datetime.utcnow().timestamp())
-        self._tap._config["expires_in"] = int(token_json["expires_in"])+now
+        self._tap._config["expires_in"] = int(token_json["expires_in"]) + now
 
         with open(self._tap.config_file, "w") as outfile:
             json.dump(self._tap._config, outfile, indent=4)
