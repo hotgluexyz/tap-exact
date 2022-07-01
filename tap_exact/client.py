@@ -31,6 +31,7 @@ class ExactStream(RESTStream):
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
     ) -> Optional[Any]:
+        # not enought data on the test account to test pagination
         if self.next_page_token_jsonpath:
             all_matches = extract_jsonpath(
                 self.next_page_token_jsonpath, response.json()
@@ -38,7 +39,7 @@ class ExactStream(RESTStream):
             first_match = next(iter(all_matches), None)
             next_page_token = first_match
         else:
-            next_page_token = response.headers.get("X-Next-Page", None)
+            next_page_token = response.headers.get("__next", None)
         return next_page_token
 
     def get_url_params(
@@ -47,9 +48,13 @@ class ExactStream(RESTStream):
         params: dict = {}
         if next_page_token:
             params["page"] = next_page_token
+
+        # no datetime filter found on api's reference
+        # and nothing found testing different possibilities
         if self.replication_key:
             params["sort"] = "asc"
             params["order_by"] = self.replication_key
+
         return params
 
     def xml_to_dict(self, response):
@@ -57,6 +62,17 @@ class ExactStream(RESTStream):
         return data
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
-        yield from extract_jsonpath(
-            self.records_jsonpath, input=self.xml_to_dict(response)
-        )
+        return extract_jsonpath(self.records_jsonpath, input=self.xml_to_dict(response))
+
+    def post_process(self, row: dict, context: Optional[dict]) -> dict:
+        content = row["content"]["m:properties"]
+        new_content = {}
+        for key in content:
+            if type(content[key]) == type(""):
+                new_content[key[2:]] = content[key]
+            elif "Edm.Boolean" == content[key].get("@m:type"):
+                new_content[key[2:]] = bool(content[key].get("#text", None))
+            else:
+                new_content[key[2:]] = content[key].get("#text", None)
+        row = new_content
+        return row

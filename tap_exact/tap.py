@@ -50,9 +50,7 @@ class TapExact(Tap):
             required=False,
             description="Timestamp of the expiration date of the access token in UTC time",
         ),
-        th.Property(
-            "current_division",th.StringType,required=True
-        ),
+        th.Property("current_division", th.StringType, required=True),
     ).to_dict()
 
     def discover_streams(self) -> List[Stream]:
