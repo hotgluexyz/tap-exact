@@ -121,7 +121,7 @@ class ItemsStream(ExactStream):
 
 class SalesOrderStream(ExactStream):
     name = "sales_order"
-    primary_keys = ["id"]
+    primary_keys = ["OrderID"]
 
     schema = th.PropertiesList(
         th.Property("AmountDC",th.StringType,),
@@ -161,7 +161,6 @@ class SalesOrderStream(ExactStream):
         th.Property("StatusDescription", th.StringType),
         th.Property("WarehouseCode", th.StringType),
         th.Property("WarehouseDescription", th.StringType),
-        th.Property("WarehouseID", th.StringType),
     ).to_dict()
 
     @property
@@ -171,7 +170,7 @@ class SalesOrderStream(ExactStream):
 
 class PurchaseOrdersStream(ExactStream):
     name = "purchase_orders"
-    primary_keys = ["id"]
+    primary_keys = ["PurchaseOrderID"]
 
     schema = th.PropertiesList(
         th.Property('AmountDC',th.StringType),
@@ -240,7 +239,7 @@ class PurchaseOrdersStream(ExactStream):
 
 class WarehouseStream(ExactStream):
     name = "warehouses"
-    primary_keys = ["id"]
+    primary_keys = ["ID"]
 
     schema = th.PropertiesList(
         th.Property("Created",th.StringType,),
@@ -291,7 +290,7 @@ class WarehouseStream(ExactStream):
 
 class SuppliersStream(ExactStream):
     name = "suppliers"
-    primary_keys = ["id"]
+    primary_keys = ["ID"]
 
     schema = th.PropertiesList(
         th.Property("Creator",th.StringType,),
@@ -337,7 +336,7 @@ class SuppliersStream(ExactStream):
 
 class SalesOrderLinesStream(ExactStream):
     name = "sales_orderlines"
-    primary_keys = ["id"]
+    primary_keys = ["ID"]
 
     schema = th.PropertiesList(
         th.Property("AmountDC",th.StringType,),
