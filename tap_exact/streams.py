@@ -160,6 +160,7 @@ class SalesOrderStream(ExactStream):
         th.Property("Status",th.StringType,),
         th.Property("StatusDescription", th.StringType),
         th.Property("WarehouseCode", th.StringType),
+        th.Property("WarehouseID", th.StringType),
         th.Property("WarehouseDescription", th.StringType),
     ).to_dict()
 
@@ -374,7 +375,7 @@ class SalesOrderLinesStream(ExactStream):
         th.Property("ProjectDescription",th.StringType,),
         th.Property("Project",th.StringType,),
         th.Property("PurchaseOrder",th.StringType,),
-        th.Property("PurchaseOrderLine",th.StringType,),
+        th.Property("PurchaseOrderLine",th.CustomType({'type':['array','string']}),),
         th.Property("PurchaseOrderLineNumber",th.StringType,),
         th.Property("PurchaseOrderNumber",th.StringType,),
         th.Property("ShopOrder",th.StringType,),
@@ -387,3 +388,68 @@ class SalesOrderLinesStream(ExactStream):
     def path(self):
         current_division = self.config.get("current_division")
         return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrderLines?$select=ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostPriceFC,CostUnit,CostUnitDescription,CustomerItemCode,DeliveryDate,Description,Discount,Division,Item,ItemCode,ItemDescription,ItemVersion,ItemVersionDescription,LineNumber,NetPrice,Notes,OrderID,OrderNumber,Pricelist,PricelistDescription,Project,ProjectDescription,PurchaseOrder,PurchaseOrderLine,PurchaseOrderLineNumber,PurchaseOrderNumber,Quantity,ShopOrder,UnitCode,UnitDescription,UnitPrice,UseDropShipment,VATAmount,VATCode,VATCodeDescription,VATPercentage"
+
+class PurchaseOrderLinesStream(ExactStream):
+    name = "purchase_orderlines"
+    primary_keys = ["ID"]
+
+    schema = th.PropertiesList(
+        th.Property("ID",th.StringType),
+        th.Property("AmountDC",th.StringType),
+        th.Property("AmountFC",th.StringType),
+        th.Property("CostCenter",th.StringType),
+        th.Property("CostCenterDescription",th.StringType),
+        th.Property("CostUnit",th.StringType),
+        th.Property("CostUnitDescription",th.StringType),
+        th.Property("Created",th.DateTimeType),
+        th.Property("Creator",th.StringType),
+        th.Property("CreatorFullName",th.StringType),
+        th.Property("Description",th.StringType),
+        th.Property("Discount",th.StringType),
+        th.Property("Expense",th.StringType),
+        th.Property("Division",th.StringType),
+        th.Property("ExpenseDescription",th.StringType),
+        th.Property("InStock",th.StringType),
+        th.Property("InvoiceQuantity",th.StringType),
+        th.Property("IsBatchNumberItem",th.BooleanType),
+        th.Property("IsSerialNumberItem",th.BooleanType),
+        th.Property("Item",th.StringType),
+        th.Property("ItemBarcode",th.StringType),
+        th.Property("ItemCode",th.StringType),
+        th.Property("ItemDescription",th.StringType),
+        th.Property("ItemDivisable",th.BooleanType),
+        th.Property("LineNumber",th.StringType),
+        th.Property("Modified",th.StringType),
+        th.Property("Modifier",th.StringType),
+        th.Property("ModifierFullName",th.StringType),
+        th.Property("NetPrice",th.StringType),
+        th.Property("Notes",th.StringType),
+        th.Property("Project",th.StringType),
+        th.Property("ProjectCode",th.StringType),
+        th.Property("ProjectDescription",th.StringType),
+        th.Property("ProjectedStock",th.StringType),
+        th.Property("PurchaseOrderID",th.StringType),
+        th.Property("Quantity",th.StringType),
+        th.Property("QuantityInPurchaseUnits",th.StringType),
+        th.Property("Rebill",th.BooleanType),
+        th.Property("ReceiptDate",th.StringType),
+        th.Property("ReceivedQuantity",th.StringType),
+        th.Property("SalesOrder",th.StringType),
+        th.Property("SalesOrderLine",th.StringType),
+        th.Property("SalesOrderLineNumber",th.StringType),
+        th.Property("SalesOrderNumber",th.StringType),
+        th.Property("SupplierItemCode",th.StringType),
+        th.Property("SupplierItemCopyRemarks",th.StringType),
+        th.Property("Unit",th.StringType),
+        th.Property("UnitDescription",th.StringType),
+        th.Property("UnitPrice",th.StringType),
+        th.Property("VATAmount",th.StringType),
+        th.Property("VATCode",th.StringType),
+        th.Property("VATDescription",th.StringType),
+        th.Property("VATPercentage",th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        return f"/api/v1/{current_division}/purchaseorder/PurchaseOrderLines?$select=ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Description,Discount,Division,Expense,ExpenseDescription,InStock,InvoicedQuantity,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,Project,ProjectCode,ProjectDescription,ProjectedStock,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceivedQuantity,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SupplierItemCode,SupplierItemCopyRemarks,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage"
