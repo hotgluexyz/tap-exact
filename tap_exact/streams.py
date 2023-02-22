@@ -503,3 +503,23 @@ class SalesInvoiceLinesStream(ExactStream):
     def path(self):
         current_division = self.config.get("current_division")
         return f"/api/v1/{current_division}/salesinvoice/SalesInvoiceLines?$select=ID,AmountDC,ItemCode,InvoiceID,Quantity,SalesOrderNumber"
+
+class SalesItemsPrices(ExactStream):
+    name = "sales_items_prices"
+    primary_keys = ["ID"]
+
+    schema = th.PropertiesList(
+        th.Property("ID",th.StringType),
+        th.Property("Item",th.StringType),
+        th.Property("ItemCode",th.StringType),
+        th.Property("Price",th.StringType),
+        th.Property("Quantity",th.StringType),
+        th.Property("StartDate",th.DateTimeType),
+        th.Property("EndDate",th.DateTimeType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        return f"/api/v1/{current_division}/logistics/SalesItemPrices?$select=ID,Item,ItemCode,Price,Quantity,StartDate,EndDate"
+
