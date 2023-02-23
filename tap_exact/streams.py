@@ -289,8 +289,8 @@ class WarehouseStream(ExactStream):
         return f"/api/v1/{current_division}/inventory/ItemWarehouses?$select=ID,Created,Creator,CreatorFullName,CurrentStock,DefaultStorageLocation,DefaultStorageLocationCode,DefaultStorageLocationDescription,Division,Item,ItemCode,ItemDescription,ItemEndDate,ItemIsFractionAllowedItem,ItemIsStockItem,ItemStartDate,ItemUnit,ItemUnitDescription,MaximumStock,Modified,Modifier,ModifierFullName,OrderPolicy,Period,PlannedStockIn,PlannedStockOut,PlanningDetailsUrl,ProjectedStock,ReorderPoint,ReorderQuantity,ReplenishmentType,ReservedStock,SafetyStock,StorageLocationUrl,Warehouse,WarehouseCode,WarehouseDescription"
 
 
-class SuppliersStream(ExactStream):
-    name = "suppliers"
+class SupplierProductsStream(ExactStream):
+    name = "supplierProducts"
     primary_keys = ["ID"]
 
     schema = th.PropertiesList(
@@ -453,3 +453,73 @@ class PurchaseOrderLinesStream(ExactStream):
     def path(self):
         current_division = self.config.get("current_division")
         return f"/api/v1/{current_division}/purchaseorder/PurchaseOrderLines?$select=ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Description,Discount,Division,Expense,ExpenseDescription,InStock,InvoicedQuantity,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,Project,ProjectCode,ProjectDescription,ProjectedStock,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceivedQuantity,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SupplierItemCode,SupplierItemCopyRemarks,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage"
+
+class SupplierStream(ExactStream):
+    name = "suppliers"
+    primary_keys = ["ID"]
+
+    schema = th.PropertiesList(
+        th.Property("ID",th.StringType),
+        th.Property("Name",th.StringType),
+        th.Property("Email",th.StringType),
+        th.Property("PurchaseLeadDays",th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        return f"/api/v1/{current_division}/crm/Accounts?$select=ID,Name,Email,PurchaseLeadDays"
+
+class SalesInvoicesStream(ExactStream):
+    name = "sales_invoices"
+    primary_keys = ["InvoiceID"]
+
+    schema = th.PropertiesList(
+        th.Property("InvoiceID",th.StringType),
+        th.Property("AmountDC",th.IntegerType),
+        th.Property("InvoiceDate",th.DateTimeType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        return f"/api/v1/{current_division}/salesinvoice/SalesInvoices?$select=InvoiceID,AmountDC,InvoiceDate"
+
+
+class SalesInvoiceLinesStream(ExactStream):
+    name = "sales_invoice_lines"
+    primary_keys = ["ID"]
+
+    schema = th.PropertiesList(
+        th.Property("ID",th.StringType),
+        th.Property("AmountDC",th.StringType),
+        th.Property("ItemCode",th.StringType),
+        th.Property("InvoiceID",th.StringType),
+        th.Property("Quantity",th.IntegerType),
+        th.Property("SalesOrderNumber", th.IntegerType)
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        return f"/api/v1/{current_division}/salesinvoice/SalesInvoiceLines?$select=ID,AmountDC,ItemCode,InvoiceID,Quantity,SalesOrderNumber"
+
+class SalesItemsPrices(ExactStream):
+    name = "sales_items_prices"
+    primary_keys = ["ID"]
+
+    schema = th.PropertiesList(
+        th.Property("ID",th.StringType),
+        th.Property("Item",th.StringType),
+        th.Property("ItemCode",th.StringType),
+        th.Property("Price",th.StringType),
+        th.Property("Quantity",th.StringType),
+        th.Property("StartDate",th.DateTimeType),
+        th.Property("EndDate",th.DateTimeType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        return f"/api/v1/{current_division}/logistics/SalesItemPrices?$select=ID,Item,ItemCode,Price,Quantity,StartDate,EndDate"
+

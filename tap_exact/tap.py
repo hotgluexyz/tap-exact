@@ -9,9 +9,13 @@ from tap_exact.streams import (
     PurchaseOrdersStream,
     SalesOrderLinesStream,
     SalesOrderStream,
-    SuppliersStream,
+    SupplierProductsStream,
     WarehouseStream,
-    PurchaseOrderLinesStream
+    PurchaseOrderLinesStream,
+    SupplierStream,
+    SalesInvoicesStream,
+    SalesInvoiceLinesStream,
+    SalesItemsPrices
 )
 
 STREAM_TYPES = [
@@ -19,9 +23,13 @@ STREAM_TYPES = [
     SalesOrderStream,
     PurchaseOrdersStream,
     WarehouseStream,
-    SuppliersStream,
+    SupplierProductsStream,
     SalesOrderLinesStream,
-    PurchaseOrderLinesStream
+    PurchaseOrderLinesStream,
+    SupplierStream,
+    SalesInvoicesStream,
+    SalesInvoiceLinesStream,
+    SalesItemsPrices
 ]
 
 
