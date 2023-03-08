@@ -18,7 +18,7 @@ class ItemsStream(ExactStream):
         th.Property("Creator", th.StringType),
         th.Property("CreatorFullName", th.StringType),
         th.Property("Division", th.StringType),
-        th.Property("EndDate", th.StringType),
+        th.Property("EndDate", th.DateTimeType),
         th.Property("Description", th.StringType),
         th.Property("ExtraDescription", th.StringType),
         th.Property("FreeBoolField_01", th.BooleanType),
@@ -173,7 +173,11 @@ class SalesOrderStream(ExactStream):
     @property
     def path(self):
         current_division = self.config.get("current_division")
-        return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrders?$select=OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef"
+        default_warehouse_id = self.config.get("default_warehouse_id")
+        if default_warehouse_id:
+            return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrders?$select=OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef&$filter=WarehouseID eq guid'{default_warehouse_id}'"
+        else:
+            return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrders?$select=OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef"
 
 class PurchaseOrdersStream(ExactStream):
     name = "purchase_orders"
@@ -586,3 +590,21 @@ class SalesItemsPrices(ExactStream):
         current_division = self.config.get("current_division")
         return f"/api/v1/{current_division}/logistics/SalesItemPrices?$select=ID,Item,ItemCode,Price,Quantity,StartDate,EndDate"
 
+class Deleted(ExactStream):
+    name = "deleted"
+    primary_keys = ["ID"]
+
+    schema = th.PropertiesList(
+        th.Property("Timestamp",th.DateTimeType),
+        th.Property("DeletedBy",th.StringType),
+        th.Property("DeletedDate",th.DateTimeType),
+        th.Property("Division",th.StringType),
+        th.Property("EntityKey",th.StringType),
+        th.Property("EntityType",th.StringType),
+        th.Property("ID",th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        return f"/api/v1/{current_division}/sync/Deleted?$select=DeletedBy,ID,EntityType,EntityKey"
