@@ -54,12 +54,6 @@ class TapExact(Tap):
         th.Property("refresh_token", th.StringType, required=True),
         th.Property("client_id", th.StringType, required=True),
         th.Property("client_secret", th.StringType, required=True),
-        th.Property(
-            "expires_in",
-            th.IntegerType,
-            required=False,
-            description="Timestamp of the expiration date of the access token in UTC time",
-        ),
         th.Property("current_division", th.StringType, required=True),
     ).to_dict()
 
