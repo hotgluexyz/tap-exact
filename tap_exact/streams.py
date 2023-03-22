@@ -544,7 +544,7 @@ class SalesInvoicesStream(ExactStream):
 
     schema = th.PropertiesList(
         th.Property("InvoiceID",th.StringType),
-        th.Property("AmountDC",th.IntegerType),
+        th.Property("AmountDC",th.StringType),
         th.Property("InvoiceDate",th.DateTimeType),
     ).to_dict()
 
@@ -562,7 +562,7 @@ class SalesInvoiceLinesStream(ExactStream):
         th.Property("AmountDC",th.StringType),
         th.Property("ItemCode",th.StringType),
         th.Property("InvoiceID",th.StringType),
-        th.Property("Quantity",th.IntegerType),
+        th.Property("Quantity",th.StringType),
         th.Property("SalesOrderNumber", th.IntegerType)
     ).to_dict()
 
