@@ -173,9 +173,10 @@ class SalesOrderStream(ExactStream):
     @property
     def path(self):
         current_division = self.config.get("current_division")
-        default_warehouse_id = self.config.get("default_warehouse_id")
-        if default_warehouse_id:
-            return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrders?$select=OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef&$filter=WarehouseID eq guid'{default_warehouse_id}'"
+        use_multiple_warehouses = self.config.get("use_sales_orders_multiple_houses")
+        if self.default_warehouse_id and not use_multiple_warehouses:
+            warehouse_uuid = self.default_warehouse_uuid
+            return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrders?$select=OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef&$filter=WarehouseID eq guid'{warehouse_uuid}'"
         else:
             return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrders?$select=OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef"
 
@@ -245,6 +246,9 @@ class PurchaseOrdersStream(ExactStream):
     @property
     def path(self):
         current_division = self.config.get("current_division")
+        use_multiple_warehouses = self.config.get("use_buy_orders_multiple_houses")
+        if self.default_warehouse_id and not use_multiple_warehouses:
+            return f"/api/v1/{current_division}/purchaseorder/PurchaseOrders?$select=PurchaseOrderID,AmountDC,AmountFC,Created,Creator,CreatorFullName,Currency,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Division,Document,DocumentSubject,DropShipment,ExchangeRate,IncotermAddress,IncotermCode,IncotermVersion,InvoiceStatus,Modified,Modifier,ModifierFullName,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderLineCount,PurchaseOrderLines,ReceiptDate,ReceiptStatus,Remarks,SalesOrder,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierName,VATAmount,Warehouse,WarehouseCode,WarehouseDescription,YourRef&$expand=PurchaseOrderLines&$filter=(OrderStatus eq 20 or OrderStatus eq 10) and ( ReceiptStatus eq 10 or ReceiptStatus eq 20) and (WarehouseCode eq '{self.default_warehouse_id}')"
         return f"/api/v1/{current_division}/purchaseorder/PurchaseOrders?$select=PurchaseOrderID,AmountDC,AmountFC,Created,Creator,CreatorFullName,Currency,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Division,Document,DocumentSubject,DropShipment,ExchangeRate,IncotermAddress,IncotermCode,IncotermVersion,InvoiceStatus,Modified,Modifier,ModifierFullName,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderLineCount,PurchaseOrderLines,ReceiptDate,ReceiptStatus,Remarks,SalesOrder,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierName,VATAmount,Warehouse,WarehouseCode,WarehouseDescription,YourRef&$expand=PurchaseOrderLines&$filter=(OrderStatus eq 20 or OrderStatus eq 10) and ( ReceiptStatus eq 10 or ReceiptStatus eq 20)"
 
 class WarehouseStream(ExactStream):
@@ -295,6 +299,10 @@ class WarehouseStream(ExactStream):
     @property
     def path(self):
         current_division = self.config.get("current_division")
+        use_multiple_warehouses = self.config.get("use_sales_orders_multiple_houses")
+        if self.default_warehouse_id and not use_multiple_warehouses:
+            warehouse_uuid = self.default_warehouse_uuid
+            return f"/api/v1/{current_division}/inventory/ItemWarehouses?$select=ID,Created,Creator,CreatorFullName,CurrentStock,DefaultStorageLocation,DefaultStorageLocationCode,DefaultStorageLocationDescription,Division,Item,ItemCode,ItemDescription,ItemEndDate,ItemIsFractionAllowedItem,ItemIsStockItem,ItemStartDate,ItemUnit,ItemUnitDescription,MaximumStock,Modified,Modifier,ModifierFullName,OrderPolicy,Period,PlannedStockIn,PlannedStockOut,PlanningDetailsUrl,ProjectedStock,ReorderPoint,ReorderQuantity,ReplenishmentType,ReservedStock,SafetyStock,StorageLocationUrl,Warehouse,WarehouseCode,WarehouseDescription&$filter=Warehouse eq guid'{warehouse_uuid}'"
         return f"/api/v1/{current_division}/inventory/ItemWarehouses?$select=ID,Created,Creator,CreatorFullName,CurrentStock,DefaultStorageLocation,DefaultStorageLocationCode,DefaultStorageLocationDescription,Division,Item,ItemCode,ItemDescription,ItemEndDate,ItemIsFractionAllowedItem,ItemIsStockItem,ItemStartDate,ItemUnit,ItemUnitDescription,MaximumStock,Modified,Modifier,ModifierFullName,OrderPolicy,Period,PlannedStockIn,PlannedStockOut,PlanningDetailsUrl,ProjectedStock,ReorderPoint,ReorderQuantity,ReplenishmentType,ReservedStock,SafetyStock,StorageLocationUrl,Warehouse,WarehouseCode,WarehouseDescription"
 
 class StockPositionsStream(ExactStream):
@@ -551,7 +559,11 @@ class SalesInvoicesStream(ExactStream):
     @property
     def path(self):
         current_division = self.config.get("current_division")
-        return f"/api/v1/{current_division}/salesinvoice/SalesInvoices?$select=InvoiceID,AmountDC,InvoiceDate"
+        use_multiple_warehouses = self.config.get("use_sales_invoices_multiple_houses")
+        if self.default_warehouse_id and not use_multiple_warehouses:
+            warehouse_uuid = self.default_warehouse_uuid
+            return f"/api/v1/{current_division}/salesinvoice/SalesInvoices?$select=InvoiceID,AmountDC,InvoiceDate,Warehouse&$filter=Warehouse eq guid'{warehouse_uuid}'"
+        return f"/api/v1/{current_division}/salesinvoice/SalesInvoices?$select=InvoiceID,AmountDC,InvoiceDate,Warehouse"
 
 class SalesInvoiceLinesStream(ExactStream):
     name = "sales_invoice_lines"
