@@ -2,6 +2,7 @@ import json
 from typing import Any, Dict, Iterable, List, Optional
 
 import requests
+import copy
 import xmltodict
 from memoization import cached
 from singer_sdk.helpers.jsonpath import extract_jsonpath
@@ -12,7 +13,10 @@ from tap_exact.auth import OAuth2Authenticator
 
 class ExactStream(RESTStream):
 
-    url_base = "https://start.exactonline.com"
+    def url_base(self) -> str:
+        exact_environment = self.config["exact_environment"]
+        url = f"https://start.exactonline.{exact_environment}"
+        return url
 
     records_jsonpath = "$.feed.entry[*]"
 
@@ -78,3 +82,23 @@ class ExactStream(RESTStream):
                 new_content[key[2:]] = content[key].get("#text", None)
         row = new_content
         return row
+
+    def get_url(self, context: Optional[dict]) -> str:
+        """Get stream entity URL.
+
+        Developers override this method to perform dynamic URL generation.
+
+        Args:
+            context: Stream partition or context dictionary.
+
+        Returns:
+            A URL, optionally targeted to a specific partition or context.
+        """
+        url = "".join([self.url_base(), self.path or ""])
+        vals = copy.copy(dict(self.config))
+        vals.update(context or {})
+        for k, v in vals.items():
+            search_text = "".join(["{", k, "}"])
+            if search_text in url:
+                url = url.replace(search_text, self._url_encode(v))
+        return url
