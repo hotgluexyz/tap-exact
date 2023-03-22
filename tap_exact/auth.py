@@ -40,7 +40,7 @@ class OAuth2Authenticator(APIAuthenticatorBase):
     def is_token_valid(self) -> bool:
         access_token = self._tap._config.get("access_token")
         now = round(datetime.utcnow().timestamp())
-        expires_in = self._tap.config.get("expires_in")
+        expires_in = int(self._tap.config.get("expires_in"))
 
         if not access_token:
             return False
