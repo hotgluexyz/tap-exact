@@ -1,5 +1,5 @@
 from singer_sdk import typing as th
-
+from typing import Optional
 from tap_exact.client import ExactStream
 
 class ItemsStream(ExactStream):
@@ -18,7 +18,7 @@ class ItemsStream(ExactStream):
         th.Property("Creator", th.StringType),
         th.Property("CreatorFullName", th.StringType),
         th.Property("Division", th.StringType),
-        th.Property("EndDate", th.StringType),
+        th.Property("EndDate", th.DateTimeType),
         th.Property("Description", th.StringType),
         th.Property("ExtraDescription", th.StringType),
         th.Property("FreeBoolField_01", th.BooleanType),
@@ -119,6 +119,12 @@ class ItemsStream(ExactStream):
         current_division = self.config.get("current_division")
         return f"/api/v1/{current_division}/bulk/Logistics/Items?$select=ID,AverageCost,Barcode,Class_01,Class_02,Class_03,Class_04,Class_05,Class_06,Class_07,Class_08,Class_09,Class_10,Code,CopyRemarks,CostPriceCurrency,CostPriceNew,CostPriceStandard,Created,Creator,CreatorFullName,Description,Division,EndDate,ExtraDescription,FreeBoolField_01,FreeBoolField_02,FreeBoolField_03,FreeBoolField_04,FreeBoolField_05,FreeDateField_01,FreeDateField_02,FreeDateField_03,FreeDateField_04,FreeDateField_05,FreeNumberField_01,FreeNumberField_02,FreeNumberField_03,FreeNumberField_04,FreeNumberField_05,FreeNumberField_06,FreeNumberField_07,FreeNumberField_08,FreeTextField_01,FreeTextField_02,FreeTextField_03,FreeTextField_04,FreeTextField_05,FreeTextField_06,FreeTextField_07,FreeTextField_08,FreeTextField_09,FreeTextField_10,GLCosts,GLCostsCode,GLCostsDescription,GLRevenue,GLRevenueCode,GLRevenueDescription,GLStock,GLStockCode,GLStockDescription,GrossWeight,IsBatchItem,IsFractionAllowedItem,IsMakeItem,IsNewContract,IsOnDemandItem,IsPackageItem,IsPurchaseItem,IsSalesItem,IsSerialItem,IsStockItem,IsSubcontractedItem,IsTaxableItem,IsTime,IsWebshopItem,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NetWeight,NetWeightUnit,Notes,PictureName,PictureThumbnailUrl,PictureUrl,SalesVatCode,SalesVatCodeDescription,SearchCode,SecurityLevel,StandardSalesPrice,StartDate,StatisticalCode,StatisticalNetWeight,StatisticalUnits,StatisticalValue,Stock,Unit,UnitDescription,UnitType"
 
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "item_id": record["ID"],
+        }
+
 class SalesOrderStream(ExactStream):
     name = "sales_order"
     primary_keys = ["OrderID"]
@@ -167,7 +173,11 @@ class SalesOrderStream(ExactStream):
     @property
     def path(self):
         current_division = self.config.get("current_division")
-        return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrders?$select=OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef"
+        default_warehouse_id = self.config.get("default_warehouse_id")
+        if default_warehouse_id:
+            return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrders?$select=OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef&$filter=WarehouseID eq guid'{default_warehouse_id}'"
+        else:
+            return f"/api/v1/{current_division}/bulk/SalesOrder/SalesOrders?$select=OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef"
 
 class PurchaseOrdersStream(ExactStream):
     name = "purchase_orders"
@@ -235,8 +245,7 @@ class PurchaseOrdersStream(ExactStream):
     @property
     def path(self):
         current_division = self.config.get("current_division")
-        return f"/api/v1/{current_division}/purchaseorder/PurchaseOrders?$select=PurchaseOrderID,AmountDC,AmountFC,Created,Creator,CreatorFullName,Currency,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Division,Document,DocumentSubject,DropShipment,ExchangeRate,IncotermAddress,IncotermCode,IncotermVersion,InvoiceStatus,Modified,Modifier,ModifierFullName,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderLineCount,PurchaseOrderLines,ReceiptDate,ReceiptStatus,Remarks,SalesOrder,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierName,VATAmount,Warehouse,WarehouseCode,WarehouseDescription,YourRef&$expand=PurchaseOrderLines"
-
+        return f"/api/v1/{current_division}/purchaseorder/PurchaseOrders?$select=PurchaseOrderID,AmountDC,AmountFC,Created,Creator,CreatorFullName,Currency,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Division,Document,DocumentSubject,DropShipment,ExchangeRate,IncotermAddress,IncotermCode,IncotermVersion,InvoiceStatus,Modified,Modifier,ModifierFullName,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderLineCount,PurchaseOrderLines,ReceiptDate,ReceiptStatus,Remarks,SalesOrder,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierName,VATAmount,Warehouse,WarehouseCode,WarehouseDescription,YourRef&$expand=PurchaseOrderLines&$filter=(OrderStatus eq 20 or OrderStatus eq 10) and ( ReceiptStatus eq 10 or ReceiptStatus eq 20)"
 
 class WarehouseStream(ExactStream):
     name = "warehouses"
@@ -288,7 +297,67 @@ class WarehouseStream(ExactStream):
         current_division = self.config.get("current_division")
         return f"/api/v1/{current_division}/inventory/ItemWarehouses?$select=ID,Created,Creator,CreatorFullName,CurrentStock,DefaultStorageLocation,DefaultStorageLocationCode,DefaultStorageLocationDescription,Division,Item,ItemCode,ItemDescription,ItemEndDate,ItemIsFractionAllowedItem,ItemIsStockItem,ItemStartDate,ItemUnit,ItemUnitDescription,MaximumStock,Modified,Modifier,ModifierFullName,OrderPolicy,Period,PlannedStockIn,PlannedStockOut,PlanningDetailsUrl,ProjectedStock,ReorderPoint,ReorderQuantity,ReplenishmentType,ReservedStock,SafetyStock,StorageLocationUrl,Warehouse,WarehouseCode,WarehouseDescription"
 
+class StockPositionsStream(ExactStream):
+    name = "stock_positions"
+    primary_keys = ["ID"]
 
+    schema = th.PropertiesList(
+        th.Property("ID",th.StringType),
+        th.Property("Timestamp",th.DateTimeType),
+        th.Property("ItemId",th.StringType),
+        th.Property("ItemCode",th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("UnitCode", th.StringType),
+        th.Property("UnitDescription", th.StringType),
+        th.Property("CurrentStock", th.StringType),
+        th.Property("PlanningIn",th.StringType),
+        th.Property("PlanningOut", th.StringType),
+        th.Property("ProjectedStock", th.StringType),
+        th.Property("ReservedStock",th.StringType),
+        th.Property("FreeStock",th.StringType,),
+        th.Property("ReorderPoint",th.StringType),
+        th.Property("Warehouse",th.StringType),
+        th.Property("WarehouseDescription",th.StringType,),
+        th.Property("Division",th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        return f"/api/v1/{current_division}/sync/Inventory/StockPositions?$select=Timestamp,CurrentStock,Division,FreeStock,ID,ItemCode,ItemDescription,ItemId,PlanningIn,PlanningOut,ProjectedStock,ReorderPoint,ReservedStock,UnitCode,UnitDescription,Warehouse,WarehouseDescription"
+
+class LogisticsStockPositionsStream(ExactStream):
+    name = "logistics_stock_positions"
+    primary_keys = ["ID"]
+    parent_stream_type = ItemsStream
+    records_jsonpath = "$.StockPosition.element"
+
+    schema = th.PropertiesList(
+        th.Property("ItemId",th.StringType,),
+        th.Property("InStock",th.StringType,),
+        th.Property("PlanningIn",th.StringType),
+        th.Property("PlanningOut",th.StringType)
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        base_url = f"/api/v1/{current_division}"
+        return base_url + "/read/logistics/StockPosition?itemId=guid'{item_id}'"
+    
+    def post_process(self, row: dict, context: Optional[dict]) -> dict:
+        content = row
+        new_content = {}
+        for key in content:
+            if type(content[key]) == type(""):
+                new_content[key] = content[key]
+            elif "Edm.Boolean" == content[key].get("@p2:type"):
+                new_content[key] = bool(content[key].get("#text", None))
+            else:
+                new_content[key] = content[key].get("#text", None)
+        row = new_content
+        return row
+    
 class SupplierProductsStream(ExactStream):
     name = "supplierProducts"
     primary_keys = ["ID"]
@@ -333,7 +402,6 @@ class SupplierProductsStream(ExactStream):
     def path(self):
         current_division = self.config.get("current_division")
         return f"/api/v1/{current_division}/logistics/SupplierItem?$select=ID,CopyRemarks,CountryOfOrigin,CountryOfOriginDescription,Created,Creator,CreatorFullName,Currency,CurrencyDescription,Division,DropShipment,EndDate,Item,ItemCode,ItemDescription,MainSupplier,MinimumQuantity,Modified,Modifier,ModifierFullName,Notes,PurchaseLeadTime,PurchasePrice,PurchaseUnit,PurchaseUnitDescription,PurchaseUnitFactor,PurchaseVATCode,PurchaseVATCodeDescription,StartDate,Supplier,SupplierCode,SupplierDescription,SupplierItemCode"
-
 
 class SalesOrderLinesStream(ExactStream):
     name = "sales_orderlines"
@@ -485,7 +553,6 @@ class SalesInvoicesStream(ExactStream):
         current_division = self.config.get("current_division")
         return f"/api/v1/{current_division}/salesinvoice/SalesInvoices?$select=InvoiceID,AmountDC,InvoiceDate"
 
-
 class SalesInvoiceLinesStream(ExactStream):
     name = "sales_invoice_lines"
     primary_keys = ["ID"]
@@ -523,3 +590,21 @@ class SalesItemsPrices(ExactStream):
         current_division = self.config.get("current_division")
         return f"/api/v1/{current_division}/logistics/SalesItemPrices?$select=ID,Item,ItemCode,Price,Quantity,StartDate,EndDate"
 
+class Deleted(ExactStream):
+    name = "deleted"
+    primary_keys = ["ID"]
+
+    schema = th.PropertiesList(
+        th.Property("Timestamp",th.DateTimeType),
+        th.Property("DeletedBy",th.StringType),
+        th.Property("DeletedDate",th.DateTimeType),
+        th.Property("Division",th.StringType),
+        th.Property("EntityKey",th.StringType),
+        th.Property("EntityType",th.StringType),
+        th.Property("ID",th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        current_division = self.config.get("current_division")
+        return f"/api/v1/{current_division}/sync/Deleted?$select=DeletedBy,ID,EntityType,EntityKey"
