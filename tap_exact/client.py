@@ -2,6 +2,7 @@ import json
 from typing import Any, Dict, Iterable, List, Optional
 
 import requests
+import copy
 import xmltodict
 from memoization import cached
 from singer_sdk.helpers.jsonpath import extract_jsonpath
@@ -12,13 +13,25 @@ from tap_exact.auth import OAuth2Authenticator
 
 class ExactStream(RESTStream):
 
-    url_base = "https://start.exactonline.com"
+    @property
+    def url_base(self) -> str:
+        refresh_token = self.config["refresh_token"].split(".")[0]
+        if "NL" in refresh_token:
+            exact_environment = "nl"
+        elif "UK" in refresh_token:
+            exact_environment = "co.uk"
+        else:
+            exact_environment = "com"
+
+        url = f"https://start.exactonline.{exact_environment}"
+        return url
 
     records_jsonpath = "$.feed.entry[*]"
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
-        oauth_url = "https://start.exactonline.com/api/oauth2/token"
+        oauth_url = f"{self.url_base}/api/oauth2/token"
+
         return OAuth2Authenticator(self, self.config, auth_endpoint=oauth_url)
 
     @property
