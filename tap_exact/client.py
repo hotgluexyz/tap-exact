@@ -13,8 +13,16 @@ from tap_exact.auth import OAuth2Authenticator
 
 class ExactStream(RESTStream):
 
+    @property
     def url_base(self) -> str:
-        exact_environment = self.config["exact_environment"]
+        refresh_token = self.config["refresh_token"].split(".")[0]
+        if "NL" in refresh_token:
+            exact_environment = "nl"
+        elif "UK" in refresh_token:
+            exact_environment = "co.uk"
+        else:
+            exact_environment = "com"
+
         url = f"https://start.exactonline.{exact_environment}"
         return url
 
@@ -22,8 +30,7 @@ class ExactStream(RESTStream):
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
-        exact_environment = self.config.get("exact_environment")
-        oauth_url = f"https://start.exactonline.{exact_environment}/api/oauth2/token"
+        oauth_url = f"{self.url_base}/api/oauth2/token"
 
         return OAuth2Authenticator(self, self.config, auth_endpoint=oauth_url)
 
@@ -82,23 +89,3 @@ class ExactStream(RESTStream):
                 new_content[key[2:]] = content[key].get("#text", None)
         row = new_content
         return row
-
-    def get_url(self, context: Optional[dict]) -> str:
-        """Get stream entity URL.
-
-        Developers override this method to perform dynamic URL generation.
-
-        Args:
-            context: Stream partition or context dictionary.
-
-        Returns:
-            A URL, optionally targeted to a specific partition or context.
-        """
-        url = "".join([self.url_base(), self.path or ""])
-        vals = copy.copy(dict(self.config))
-        vals.update(context or {})
-        for k, v in vals.items():
-            search_text = "".join(["{", k, "}"])
-            if search_text in url:
-                url = url.replace(search_text, self._url_encode(v))
-        return url
