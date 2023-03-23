@@ -27,6 +27,9 @@ class ExactStream(RESTStream):
         return url
 
     records_jsonpath = "$.feed.entry[*]"
+    @property
+    def default_warehouse_id(self):
+        return self.config.get("default_warehouse_id")
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
@@ -40,6 +43,21 @@ class ExactStream(RESTStream):
         if "user_agent" in self.config:
             headers["User-Agent"] = self.config.get("user_agent")
         return headers
+    
+    @property
+    def default_warehouse_uuid(self) -> str:
+        if self.config.get("default_warehouse_id"):
+            default_warehouse_id = self.config.get("default_warehouse_id")
+            current_division = self.config.get("current_division")
+            url=f"{self.url_base}/api/v1/{current_division}/inventory/Warehouses"
+            params={"$filter": f"Code eq '{default_warehouse_id}'"}
+            headers=self.authenticator.auth_headers
+            json_path = "$.feed.entry.content[0].properties.code"
+
+            response = requests.request("GET", url=url, params=params,headers=headers)
+            res_json = self.xml_to_dict(response)
+            return res_json["feed"]["entry"]["content"]["m:properties"]["d:ID"]["#text"]
+        return None
 
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
