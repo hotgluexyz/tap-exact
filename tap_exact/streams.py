@@ -360,7 +360,12 @@ class LogisticsStockPositionsStream(ExactStream):
             if type(content[key]) == type(""):
                 new_content[key] = content[key]
             elif "Edm.Boolean" == content[key].get("@p2:type"):
-                new_content[key] = bool(content[key].get("#text", None))
+                if content[key].get("#text") == "true":
+                    new_content[key] = True
+                elif content[key].get("#text") == "false":
+                    new_content[key] = False
+                else:
+                    new_content[key] = None
             else:
                 new_content[key] = content[key].get("#text", None)
         row = new_content

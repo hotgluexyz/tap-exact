@@ -102,7 +102,12 @@ class ExactStream(RESTStream):
             if type(content[key]) == type(""):
                 new_content[key[2:]] = content[key]
             elif "Edm.Boolean" == content[key].get("@m:type"):
-                new_content[key[2:]] = bool(content[key].get("#text", None))
+                if content[key].get("#text") == "true":
+                    new_content[key[2:]] = True
+                elif content[key].get("#text") == "false":
+                    new_content[key[2:]] = False
+                else:
+                    new_content[key[2:]] = None
             else:
                 new_content[key[2:]] = content[key].get("#text", None)
         row = new_content
