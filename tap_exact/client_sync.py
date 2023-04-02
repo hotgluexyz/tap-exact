@@ -17,7 +17,8 @@ STARTING_MARKER = "starting_replication_value"
 class ExactSyncStream(ExactStream):
     
     def get_starting_time(self, context):
-        rep_key = self.get_starting_timestamp(context)
+        state = self.get_context_state(context)
+        rep_key = state["replication_key_value"]
         return rep_key or 1
 
     def get_url_params(

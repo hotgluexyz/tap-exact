@@ -667,6 +667,7 @@ class SalesInvoicesStream(DynamicStream):
         th.Property("InvoiceDate",th.DateTimeType),
         th.Property("Modified",th.DateTimeType),
         th.Property("Timestamp",th.StringType),
+        th.Property("Warehouse",th.StringType),
     ).to_dict()
 
     @property
@@ -679,9 +680,9 @@ class SalesInvoicesStream(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,Timestamp"
+            return f"InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,Timestamp,Warehouse"
         else:  
-            return f"InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified"
+            return f"InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,Warehouse"
 
     @property
     def filter(self):
