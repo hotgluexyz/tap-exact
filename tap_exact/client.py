@@ -77,6 +77,8 @@ class ExactStream(RESTStream):
     @property
     def sync_endpoint(self):
         if self.config.get("sync_endpoints") != None:
+            sync_endpoint_value = self.config.get("sync_endpoints")
+            self.logger.info(f"sync_endpoint with value {sync_endpoint_value}")
             return self.config.get("sync_endpoints")
         return False
     
