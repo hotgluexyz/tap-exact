@@ -2,38 +2,51 @@ import json
 from typing import Any, Dict, Iterable, List, Optional
 
 import requests
-import copy
 import xmltodict
 from memoization import cached
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.streams import RESTStream
+from pendulum import parse
 
 from tap_exact.auth import OAuth2Authenticator
+from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
+from time import sleep
+from singer_sdk.helpers._state import increment_state
 
+
+
+REPLICATION_INCREMENTAL = "INCREMENTAL"
+REPLICATION_LOG_BASED = "LOG_BASED"
 
 class ExactStream(RESTStream):
 
     @property
-    def url_base(self) -> str:
+    def exact_environment(self) -> str:
         refresh_token = self.config["refresh_token"].split(".")[0]
         if "NL" in refresh_token:
-            exact_environment = "nl"
+            return "nl"
         elif "UK" in refresh_token:
-            exact_environment = "co.uk"
+            return "co.uk"
         else:
-            exact_environment = "com"
+            return "com"
 
-        url = f"https://start.exactonline.{exact_environment}"
+    @property
+    def url_base(self) -> str:
+        current_division = self.config.get("current_division")
+        url = f"https://start.exactonline.{self.exact_environment}/api/v1/{current_division}"
         return url
 
     records_jsonpath = "$.feed.entry[*]"
     @property
     def default_warehouse_id(self):
-        return self.config.get("default_warehouse_id")
+        if self.config.get("use_stock_multiple_warehouses") == False and not self.config.get("default_warehouse_id"):
+            raise "There is no default_warehouse_id"
+        else:
+            return self.config.get("default_warehouse_id")
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
-        oauth_url = f"{self.url_base}/api/oauth2/token"
+        oauth_url = f"https://start.exactonline.{self.exact_environment}/api/oauth2/token"
 
         return OAuth2Authenticator(self, self.config, auth_endpoint=oauth_url)
 
@@ -48,44 +61,72 @@ class ExactStream(RESTStream):
     def default_warehouse_uuid(self) -> str:
         if self.config.get("default_warehouse_id"):
             default_warehouse_id = self.config.get("default_warehouse_id")
-            current_division = self.config.get("current_division")
-            url=f"{self.url_base}/api/v1/{current_division}/inventory/Warehouses"
+            url=f"{self.url_base}/inventory/Warehouses"
             params={"$filter": f"Code eq '{default_warehouse_id}'"}
             headers=self.authenticator.auth_headers
-            json_path = "$.feed.entry.content[0].properties.code"
 
             response = requests.request("GET", url=url, params=params,headers=headers)
             res_json = self.xml_to_dict(response)
-            return res_json["feed"]["entry"]["content"]["m:properties"]["d:ID"]["#text"]
+            warehouse_uuid = res_json["feed"]["entry"]["content"]["m:properties"]["d:ID"]["#text"]
+            self._tap._config["warehouse_uuid"] = warehouse_uuid
+            with open(self._tap.config_file, "w") as outfile:
+                json.dump(self._tap._config, outfile, indent=4)
+            return warehouse_uuid
         return None
-
+    
+    @property
+    def sync_endpoint(self):
+        if self.config.get("sync_endpoints") != None:
+            return self.config.get("sync_endpoints")
+        return False
+    
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
     ) -> Optional[Any]:
-        # not enought data on the test account to test pagination
-        if self.next_page_token_jsonpath:
-            all_matches = extract_jsonpath(
-                self.next_page_token_jsonpath, response.json()
-            )
-            first_match = next(iter(all_matches), None)
-            next_page_token = first_match
+        res_json = self.xml_to_dict(response)
+        if "link" in res_json["feed"].keys():
+            link_dict = {}
+            links = res_json["feed"]["link"]
+            if type(links) == list:
+                for record in res_json["feed"]["link"]:
+                    link_dict[record["@rel"]] = record["@href"]
+                if "next" in link_dict.keys():
+                    next_link = link_dict["next"]
+                    next_page_token = next_link.split("&")[-1]
+                    next_page_token = next_page_token.split("=")[-1]
+                    return next_page_token
         else:
-            next_page_token = response.headers.get("__next", None)
-        return next_page_token
+            return None
+    
+    def get_starting_time(self, context):
+        start_date = self.config.get("start_date")
+        if start_date:
+            start_date = parse(self.config.get("start_date"))
+        rep_key = self.get_starting_timestamp(context)
+        return rep_key or start_date
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
         params: dict = {}
+        if self.select:
+            params["$select"] = self.select
+        start_date = self.get_starting_time(context)
+        filter = None
+        date_filter = None
+        if self.replication_key and start_date:
+            start_date = start_date.strftime('%Y-%m-%dT%H:%M:%S')
+            date_filter = f"Modified gt datetime'{start_date}'"
+        if hasattr(self, "filter"):
+            filter = self.filter
+        if filter and date_filter:
+            params["$filter"] = f"{filter} and {date_filter}"
+        elif filter or date_filter:
+            params["$filter"] = filter or date_filter
+        if hasattr(self, "expand"):
+            params["$expand"] = self.expand
         if next_page_token:
-            params["page"] = next_page_token
-
-        # no datetime filter found on api's reference
-        # and nothing found testing different possibilities
-        if self.replication_key:
-            params["sort"] = "asc"
-            params["order_by"] = self.replication_key
-
+            params["$skiptoken"] = next_page_token
         return params
 
     def xml_to_dict(self, response):
@@ -112,3 +153,33 @@ class ExactStream(RESTStream):
                 new_content[key[2:]] = content[key].get("#text", None)
         row = new_content
         return row
+
+    def get_records(self, context: Optional[dict]) -> Iterable[Dict[str, Any]]:
+        use_sales_orders = self.config.get("use_sales_orders") if self.config.get("use_sales_orders") != None else True
+        use_sales_invoices = self.config.get("use_sales_invoices") if self.config.get("use_sales_invoices") != None else True
+        use_stock_multiple_warehouses = self.config.get("use_stock_multiple_warehouses") or False
+        if ((self.name == "sales_order" and not use_sales_orders) or 
+            (self.name == "sales_invoices" and not use_sales_invoices) or
+            (self.name == "warehouses" and use_stock_multiple_warehouses) or
+            (self.name == "logistics_stock_positions" and not use_stock_multiple_warehouses)
+            ):
+            pass
+        else:
+            for record in self.request_records(context):
+                transformed_record = self.post_process(record, context)
+                if transformed_record is None:
+                    continue
+                yield transformed_record
+
+    def validate_response(self, response: requests.Response) -> None:
+        sleep(1.01)
+        if (
+            response.status_code in self.extra_retry_statuses
+            or 500 <= response.status_code < 600
+        ):
+            msg = self.response_error_message(response)
+            raise RetriableAPIError(msg, response)
+        elif 400 <= response.status_code < 500:
+            msg = self.response_error_message(response)
+            raise FatalAPIError(msg)
+        
