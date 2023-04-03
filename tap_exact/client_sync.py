@@ -18,7 +18,9 @@ class ExactSyncStream(ExactStream):
     
     def get_starting_time(self, context):
         state = self.get_context_state(context)
-        rep_key = state["replication_key_value"]
+        rep_key = None
+        if "replication_key_value" in state.keys():
+            rep_key = state["replication_key_value"]
         return rep_key or 1
 
     def get_url_params(
