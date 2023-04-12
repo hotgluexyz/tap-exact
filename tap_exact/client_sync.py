@@ -1,11 +1,12 @@
 from typing import Any, Dict, Optional,List,Union
 
 from tap_exact.client import ExactStream
-from singer_sdk.helpers._state import (increment_state, log_sort_error, reset_state_progress_markers)
+from singer_sdk.helpers._state import (increment_state, log_sort_error)
 import datetime
 import pendulum
 import copy
 from singer_sdk.exceptions import InvalidStreamSortException
+from tap_exact.sync_endpoints_state_funct import finalize_state_progress_markers
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"
 REPLICATION_LOG_BASED = "LOG_BASED"
@@ -77,22 +78,8 @@ class ExactSyncStream(ExactStream):
                     is_sorted=treat_as_sorted,
                 )
     
-
-    def custom_finalize_state_progress_markers(self, stream_or_partition_state: dict) -> Optional[dict]:
-        stream_or_partition_state.pop(STARTING_MARKER, None)
-        if PROGRESS_MARKERS in stream_or_partition_state:
-            if "replication_key" in stream_or_partition_state[PROGRESS_MARKERS]:
-                # Replication keys valid (only) after sync is complete
-                progress_markers = stream_or_partition_state[PROGRESS_MARKERS]
-                stream_or_partition_state["replication_key"] = progress_markers.pop(
-                    "replication_key"
-                )
-                new_rk_value = progress_markers.pop("replication_key_value")
-                stream_or_partition_state["replication_key_value"] = new_rk_value
-        # Wipe and return any markers that have not been promoted
-        return reset_state_progress_markers(stream_or_partition_state)
-    
     def finalize_state_progress_markers(self, state: Optional[dict] = None) -> None:
+        #all logic is the same, only overwritten to use the customized finalize_state_progress_markers function for timestamp
         if state is None or state == {}:
             for child_stream in self.child_streams or []:
                 child_stream.finalize_state_progress_markers()
@@ -101,10 +88,10 @@ class ExactSyncStream(ExactStream):
             for context in self.partitions or [{}]:
                 context = context or None
                 state = self.get_context_state(context)
-                self.custom_finalize_state_progress_markers(state)
+                finalize_state_progress_markers(state)
             return
 
-        self.custom_finalize_state_progress_markers(state)
+        finalize_state_progress_markers(state)
 
     def _sync_records(  # noqa C901  # too complex
         self, context: Optional[dict] = None
@@ -114,7 +101,7 @@ class ExactSyncStream(ExactStream):
         context_list: Optional[List[dict]]
         context_list = [context] if context is not None else self.partitions
         selected = self.selected
-
+        #all logic is the same, only overwritten to use the customized finalize_state_progress_markers function for timestamp
         for current_context in context_list or [{}]:
             partition_record_count = 0
             current_context = current_context or None
@@ -164,11 +151,11 @@ class ExactSyncStream(ExactStream):
                 partition_record_count += 1
             if current_context == state_partition_context:
                 # Finalize per-partition state only if 1:1 with context
-                self.custom_finalize_state_progress_markers(state)
+                finalize_state_progress_markers(state)
         if not context:
             # Finalize total stream only if we have the full full context.
             # Otherwise will be finalized by tap at end of sync.
-            self.custom_finalize_state_progress_markers(self.stream_state)
+            finalize_state_progress_markers(self.stream_state)
         self._write_record_count_log(record_count=record_count, context=context)
         # Reset interim bookmarks before emitting final STATE message:
         self._write_state_message()
