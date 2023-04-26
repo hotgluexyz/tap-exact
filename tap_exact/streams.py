@@ -499,6 +499,13 @@ class SalesOrderLinesStream(DynamicStream):
     name = "sales_orderlines"
     primary_keys = ["ID"]
     parent_stream_type = SalesOrderStream
+    replication_key = "Timestamp"
+    @property
+    def ignore_parent_stream(self):
+        if self.sync_endpoint:
+            return True
+        else:
+            False
 
     schema = th.PropertiesList(
         th.Property("AmountDC",th.StringType,),

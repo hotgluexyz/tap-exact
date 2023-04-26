@@ -37,6 +37,7 @@ class ExactStream(RESTStream):
         return url
 
     records_jsonpath = "$.feed.entry[*]"
+    ignore_parent_stream = False
     @property
     def default_warehouse_id(self):
         use_stock_multiple_warehouses = self.config.get("use_stock_multiple_warehouses")
@@ -115,7 +116,7 @@ class ExactStream(RESTStream):
         start_date = self.get_starting_time(context)
         filter = None
         date_filter = None
-        if self.replication_key and start_date:
+        if self.replication_key and self.replication_key !="Timestamp" and start_date:
             start_date = start_date.strftime('%Y-%m-%dT%H:%M:%S')
             date_filter = f"Modified gt datetime'{start_date}'"
         if hasattr(self, "filter"):
