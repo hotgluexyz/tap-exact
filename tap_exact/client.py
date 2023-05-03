@@ -12,7 +12,7 @@ from tap_exact.auth import OAuth2Authenticator
 from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from time import sleep
 from singer_sdk.helpers._state import increment_state
-
+import datetime
 
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"
@@ -117,6 +117,7 @@ class ExactStream(RESTStream):
         filter = None
         date_filter = None
         if self.replication_key and self.replication_key !="Timestamp" and start_date:
+            start_date = start_date + datetime.timedelta(seconds=1)
             start_date = start_date.strftime('%Y-%m-%dT%H:%M:%S')
             date_filter = f"Modified gt datetime'{start_date}'"
         if hasattr(self, "filter"):
