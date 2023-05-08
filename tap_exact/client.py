@@ -159,7 +159,7 @@ class ExactStream(RESTStream):
 
     def get_records(self, context: Optional[dict]) -> Iterable[Dict[str, Any]]:
         use_sales_orders = self.config.get("use_sales_orders") if self.config.get("use_sales_orders") != None else True
-        use_sales_invoices = self.config.get("use_sales_invoices") if self.config.get("use_sales_invoices") != None else True
+        use_sales_invoices = self.config.get("use_sales_invoices") if self.config.get("use_sales_invoices") != None else False
         use_stock_multiple_warehouses = self.config.get("use_stock_multiple_warehouses") or False
         if ((self.name == "sales_order" and not use_sales_orders) or 
             (self.name == "sales_invoices" and not use_sales_invoices) or
