@@ -152,6 +152,7 @@ class SalesOrderStream(DynamicStream):
     replication_key = "Modified"
 
     schema = th.PropertiesList(
+        th.Property("ID", th.DateTimeType),
         th.Property("AmountDC",th.StringType,),
         th.Property("AmountFC",th.StringType,),
         th.Property("AmountFCExclVat",th.StringType,),
@@ -204,7 +205,7 @@ class SalesOrderStream(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,WarehouseCode,WarehouseDescription,WarehouseID,YourRef,Timestamp,Modified"
+            return f"OrderID,AmountDC,ID,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,WarehouseCode,WarehouseDescription,WarehouseID,YourRef,Timestamp,Modified"
         else:
             return f"OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef,Modified"
    
