@@ -152,7 +152,7 @@ class SalesOrderStream(DynamicStream):
     replication_key = "Modified"
 
     schema = th.PropertiesList(
-        th.Property("ID", th.DateTimeType),
+        th.Property("ID", th.StringType),
         th.Property("AmountDC",th.StringType,),
         th.Property("AmountFC",th.StringType,),
         th.Property("AmountFCExclVat",th.StringType,),
