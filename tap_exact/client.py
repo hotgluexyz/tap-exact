@@ -23,12 +23,12 @@ class ExactStream(RESTStream):
     @property
     def exact_environment(self) -> str:
         refresh_token = self.config["refresh_token"].split(".")[0]
-        if "NL" in refresh_token:
-            return "nl"
+        if "US" in refresh_token:
+            return "com"
         elif "UK" in refresh_token:
             return "co.uk"
         else:
-            return "com"
+            return "nl"
 
     @property
     def url_base(self) -> str:
