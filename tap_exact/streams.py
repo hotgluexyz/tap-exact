@@ -16,10 +16,60 @@ else:
 class DynamicStream(ExactSyncStream if use_sync_endpoint else ExactStream):
     pass
 
+class MeStream(ExactStream):
+    name = "me"
+
+    schema = th.PropertiesList(
+        th.Property("CurrentDivision", th.IntegerType),
+    ).to_dict()
+
+    @property
+    def url_base(self) -> str:
+        return f"https://start.exactonline.{self.exact_environment}/api/v1"
+
+    @property
+    def path(self):
+        return "/current/Me"
+    @property
+    def select(self):
+        return "CurrentDivision"
+
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "current_division": record["CurrentDivision"],
+        }
+
+class DivisionsStream(ExactStream):
+    name = "divisions"
+    parent_stream_type = MeStream
+
+    schema = th.PropertiesList(
+        th.Property("Code", th.IntegerType),
+    ).to_dict()
+
+
+    @property
+    def path(self):
+        if not self.sync_all_divisions:
+            return "/hrm/Divisions"
+        return "{current_division}/hrm/Divisions"
+
+    @property
+    def select(self):
+        return "Code"
+
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "division": record["Code"]
+        }
+
 class ItemsStream(DynamicStream):
     name = "items"
     primary_keys = ["ID"]
     replication_key = "Modified"
+    parent_stream_type = DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("AverageCost", th.StringType),
@@ -132,7 +182,10 @@ class ItemsStream(DynamicStream):
     @property
     def path(self):
         type = "sync" if self.sync_endpoint else "bulk"
-        return f"/{type}/Logistics/Items"
+        url = f"/{type}/Logistics/Items"
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
 
     @property
     def select(self):

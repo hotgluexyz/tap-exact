@@ -30,14 +30,28 @@ class ExactStream(RESTStream):
         else:
             return "nl"
 
+    default_division = None  
+    @property
+    def sync_all_divisions(self) -> bool:
+        if self.config.get("current_division"):
+            self.default_division = self.config.get("current_division")
+            return False
+        return True
+
     @property
     def url_base(self) -> str:
-        current_division = self.config.get("current_division")
-        url = f"https://start.exactonline.{self.exact_environment}/api/v1/{current_division}"
-        return url
+        url = f"https://start.exactonline.{self.exact_environment}/api/v1"
+        if self.sync_all_divisions:        
+            return url
+        return f"{url}/{self.default_division}"
 
+    @property
+    def ignore_parent_stream(self) -> bool:
+        if self.sync_all_divisions:
+            return False
+        return True
+    
     records_jsonpath = "$.feed.entry[*]"
-    ignore_parent_stream = False
     @property
     def default_warehouse_id(self):
         use_stock_multiple_warehouses = self.config.get("use_stock_multiple_warehouses")
