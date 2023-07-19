@@ -55,10 +55,11 @@ class ExactStream(RESTStream):
     @property
     def default_warehouse_id(self):
         use_stock_multiple_warehouses = self.config.get("use_stock_multiple_warehouses")
-        if not use_stock_multiple_warehouses and not self.config.get("default_warehouse_id"):
-            raise Exception("There is no default_warehouse_code")
-        else:
-            return self.config.get("default_warehouse_id")
+        if not self.sync_all_divisions:
+            if not use_stock_multiple_warehouses and not self.config.get("default_warehouse_id"):
+                raise Exception("There is no default_warehouse_code")
+            else:
+                return self.config.get("default_warehouse_id")
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
