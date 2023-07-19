@@ -20,7 +20,9 @@ from tap_exact.streams import (
     SalesItemsPrices,
     StockPositionsStream,
     LogisticsStockPositionsStream,
-    Deleted
+    Deleted,
+    MeStream,
+    DivisionsStream
 )
 
 STREAM_TYPES = [
@@ -37,7 +39,9 @@ STREAM_TYPES = [
     SalesItemsPrices,
     LogisticsStockPositionsStream,
     StockPositionsStream,
-    Deleted
+    Deleted,
+    MeStream,
+    DivisionsStream
 ]
 
 
@@ -62,7 +66,7 @@ class TapExact(Tap):
         th.Property("refresh_token", th.StringType, required=True),
         th.Property("client_id", th.StringType, required=True),
         th.Property("client_secret", th.StringType, required=True),
-        th.Property("current_division", th.StringType, required=True),
+        th.Property("current_division", th.StringType, required=False),
     ).to_dict()
 
     def discover_streams(self) -> List[Stream]:
@@ -91,8 +95,9 @@ class TapExact(Tap):
 
         # Initialize child streams list for parents
         for stream_type, streams in streams_by_type.items():
-            if stream_type.parent_stream_type and not stream_type.ignore_parent_stream:
-                parents = streams_by_type[stream_type.parent_stream_type]
+            if stream_type.parent_stream_type and not streams_by_type[stream_type][0].ignore_parent_stream:
+                parent_stream_type = streams_by_type[stream_type][0].parent_stream_type if type(stream_type.parent_stream_type) == property else stream_type.parent_stream_type
+                parents = streams_by_type[parent_stream_type]
                 for parent in parents:
                     for stream in streams:
                         parent.child_streams.append(stream)

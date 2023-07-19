@@ -16,10 +16,66 @@ else:
 class DynamicStream(ExactSyncStream if use_sync_endpoint else ExactStream):
     pass
 
+class MeStream(ExactStream):
+    name = "me"
+    all_divisions_available = True
+
+    schema = th.PropertiesList(
+        th.Property("CurrentDivision", th.StringType),
+    ).to_dict()
+
+    @property
+    def url_base(self):
+        return f"https://start.exactonline.{self.exact_environment}/api/v1"
+
+    @property
+    def path(self):
+        return "/current/Me"
+    @property
+    def select(self):
+        return "CurrentDivision"
+
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "current_division": record["CurrentDivision"],
+        }
+
+class DivisionsStream(ExactStream):
+    name = "divisions"
+    parent_stream_type = MeStream
+
+    schema = th.PropertiesList(
+        th.Property("Code", th.StringType),
+    ).to_dict()
+
+
+    @property
+    def path(self):
+        if not self.sync_all_divisions:
+            return "/hrm/Divisions"
+        return "/{current_division}/hrm/Divisions"
+
+    @property
+    def select(self):
+        return "Code"
+
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "division": record["Code"]
+        }
+
 class ItemsStream(DynamicStream):
     name = "items"
     primary_keys = ["ID"]
     replication_key = "Modified"
+    all_divisions_available = True
+
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+            return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("AverageCost", th.StringType),
@@ -132,7 +188,10 @@ class ItemsStream(DynamicStream):
     @property
     def path(self):
         type = "sync" if self.sync_endpoint else "bulk"
-        return f"/{type}/Logistics/Items"
+        url = f"/{type}/Logistics/Items"
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
 
     @property
     def select(self):
@@ -144,12 +203,19 @@ class ItemsStream(DynamicStream):
         """Return a context dictionary for child streams."""
         return {
             "item_id": record["ID"],
+            "division": (context or {}).get("division") 
         }
 
 class SalesOrderStream(DynamicStream):
     name = "sales_order"
     primary_keys = ["OrderID"]
     replication_key = "Modified"
+    all_divisions_available = True
+
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+             return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
@@ -198,9 +264,13 @@ class SalesOrderStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/SalesOrder/SalesOrderHeaders"
+            url = "/sync/SalesOrder/SalesOrderHeaders"
         else:
-            return f"/bulk/SalesOrder/SalesOrders"
+            url = "/bulk/SalesOrder/SalesOrders"
+        
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
 
     @property
     def select(self):
@@ -211,21 +281,28 @@ class SalesOrderStream(DynamicStream):
    
     @property
     def filter(self):  
-        use_multiple_warehouses = self.config.get("use_sales_orders_multiple_warehouses")
-        if self.default_warehouse_id and not use_multiple_warehouses:
-            warehouse_uuid = self.default_warehouse_uuid
-            return f"WarehouseID eq guid'{warehouse_uuid}'"
+        if not self.sync_all_divisions:
+            use_multiple_warehouses = self.config.get("use_sales_orders_multiple_warehouses")
+            if self.default_warehouse_id and not use_multiple_warehouses:
+                warehouse_uuid = self.default_warehouse_uuid
+                return f"WarehouseID eq guid'{warehouse_uuid}'"
+        return None
     
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
         """Return a context dictionary for child streams."""
         return {
             "order_id": record["OrderID"],
+            "division": (context or {}).get("division")
         }
             
 class PurchaseOrdersStream(DynamicStream):
     name = "purchase_orders"
     primary_keys = ["PurchaseOrderID"]
     replication_key = "Modified"
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+             return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property('AmountDC',th.StringType),
@@ -290,9 +367,13 @@ class PurchaseOrdersStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/PurchaseOrder/PurchaseOrders"
+            url = "/sync/PurchaseOrder/PurchaseOrders"
         else:
-            return f"/purchaseorder/PurchaseOrders"
+            url = "/purchaseorder/PurchaseOrders"
+        
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
 
     @property
     def select(self):
@@ -319,8 +400,11 @@ class PurchaseOrdersStream(DynamicStream):
 class WarehouseStream(ExactStream):
     name = "warehouses"
     primary_keys = ["ID"]
-    path = "/inventory/ItemWarehouses"
     replication_key = "Modified"
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+            return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("Created",th.StringType,),
@@ -364,21 +448,33 @@ class WarehouseStream(ExactStream):
     ).to_dict()
     
     @property
+    def path(self):
+        url = "/inventory/ItemWarehouses"
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
+
+    @property
     def select(self):
         return f"ID,Created,Creator,CreatorFullName,CurrentStock,DefaultStorageLocation,DefaultStorageLocationCode,DefaultStorageLocationDescription,Division,Item,ItemCode,ItemDescription,ItemEndDate,ItemIsFractionAllowedItem,ItemIsStockItem,ItemStartDate,ItemUnit,ItemUnitDescription,MaximumStock,Modified,Modifier,ModifierFullName,OrderPolicy,Period,PlannedStockIn,PlannedStockOut,PlanningDetailsUrl,ProjectedStock,ReorderPoint,ReorderQuantity,ReplenishmentType,ReservedStock,SafetyStock,StorageLocationUrl,Warehouse,WarehouseCode,WarehouseDescription"
 
     @property
     def filter(self):
-        use_multiple_warehouses = self.config.get("use_stock_multiple_warehouses")
-        if self.default_warehouse_id and not use_multiple_warehouses:
-            warehouse_uuid = self.default_warehouse_uuid
-            return f"Warehouse eq guid'{warehouse_uuid}'"
+        if not self.sync_all_divisions:
+            use_multiple_warehouses = self.config.get("use_stock_multiple_warehouses")
+            if self.default_warehouse_id and not use_multiple_warehouses:
+                warehouse_uuid = self.default_warehouse_uuid
+                return f"Warehouse eq guid'{warehouse_uuid}'"
+        return None
 
 class StockPositionsStream(ExactSyncStream):
     name = "stock_positions"
     primary_keys = ["ID"]
-    path= "/sync/Inventory/StockPositions"
     replication_key = "Timestamp"
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+            return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("ID",th.StringType),
@@ -401,6 +497,13 @@ class StockPositionsStream(ExactSyncStream):
     ).to_dict()
 
     @property
+    def path(self):
+        url = "/sync/Inventory/StockPositions"
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
+
+    @property
     def select(self):
         return f"Timestamp,CurrentStock,Division,FreeStock,ID,ItemCode,ItemDescription,ItemId,PlanningIn,PlanningOut,ProjectedStock,ReorderPoint,ReservedStock,UnitCode,UnitDescription,Warehouse,WarehouseDescription"
 
@@ -409,8 +512,8 @@ class LogisticsStockPositionsStream(ExactStream):
     primary_keys = ["ID"]
     parent_stream_type = ItemsStream
     records_jsonpath = "$.StockPosition.element"
-    path = "/read/logistics/StockPosition?itemId=guid'{item_id}'"
     select = None
+    ignore_parent_stream = False
 
     schema = th.PropertiesList(
         th.Property("ItemId",th.StringType,),
@@ -418,6 +521,13 @@ class LogisticsStockPositionsStream(ExactStream):
         th.Property("PlanningIn",th.StringType),
         th.Property("PlanningOut",th.StringType),
     ).to_dict()
+
+    @property
+    def path(self):
+        url = "/read/logistics/StockPosition?itemId=guid'{item_id}'"
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
 
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
@@ -446,6 +556,11 @@ class SupplierProductsStream(DynamicStream):
     name = "supplierProducts"
     primary_keys = ["ID"]
     replication_key = "Modified"
+
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+            return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("Creator",th.StringType,),
@@ -487,8 +602,13 @@ class SupplierProductsStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return "/sync/Logistics/SupplierItem"
-        return "/logistics/SupplierItem"
+            url = "/sync/Logistics/SupplierItem"
+        else:
+            url = "/logistics/SupplierItem"
+
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
     
     @property
     def select(self):
@@ -499,11 +619,19 @@ class SupplierProductsStream(DynamicStream):
 class SalesOrderLinesStream(DynamicStream):
     name = "sales_orderlines"
     primary_keys = ["ID"]
-    parent_stream_type = SalesOrderStream
     replication_key = "Timestamp"
+    all_divisions_available = True
+
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+             return DivisionsStream
+        else:
+            return SalesOrderStream
+        
     @property
     def ignore_parent_stream(self):
-        if self.sync_endpoint:
+        if self.sync_endpoint and not self.sync_all_divisions:
             return True
         else:
             False
@@ -557,8 +685,13 @@ class SalesOrderLinesStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/SalesOrder/SalesOrderLines"
-        return f"/bulk/SalesOrder/SalesOrderLines"
+            url = "/sync/SalesOrder/SalesOrderLines"
+        else:
+            url = "/bulk/SalesOrder/SalesOrderLines"
+
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
 
     @property
     def select(self):
@@ -575,8 +708,12 @@ class SalesOrderLinesStream(DynamicStream):
 class PurchaseOrderLinesStream(ExactStream):
     name = "purchase_orderlines"
     primary_keys = ["ID"]
-    path = "/purchaseorder/PurchaseOrderLines"
     replication_key = "Modified"
+
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+            return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("ID",th.StringType),
@@ -635,6 +772,13 @@ class PurchaseOrderLinesStream(ExactStream):
     ).to_dict()
 
     @property
+    def path(self):
+        url = "/purchaseorder/PurchaseOrderLines"
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
+
+    @property
     def select(self):
         return f"ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Description,Discount,Division,Expense,ExpenseDescription,InStock,InvoicedQuantity,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,Project,ProjectCode,ProjectDescription,ProjectedStock,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceivedQuantity,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SupplierItemCode,SupplierItemCopyRemarks,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage"
 
@@ -642,6 +786,11 @@ class SupplierStream(DynamicStream):
     name = "suppliers"
     primary_keys = ["ID"]
     replication_key = "Modified"
+
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+            return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("Timestamp",th.StringType),
@@ -656,9 +805,14 @@ class SupplierStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/CRM/Accounts"
-        return f"/crm/Accounts"
+            url = f"/sync/CRM/Accounts"
+        else:
+            url = f"/crm/Accounts"
 
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
+        
     @property
     def select(self):
         if self.sync_endpoint:
@@ -669,6 +823,10 @@ class SalesInvoicesStream(DynamicStream):
     name = "sales_invoices"
     primary_keys = ["InvoiceID"]
     replication_key = "Modified"
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+            return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("InvoiceID",th.StringType),
@@ -682,9 +840,13 @@ class SalesInvoicesStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/SalesInvoice/SalesInvoices"
+            url = "/sync/SalesInvoice/SalesInvoices"
         else:  
-            return f"/salesinvoice/SalesInvoices"
+            url = "/salesinvoice/SalesInvoices"
+        
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
 
     @property
     def select(self):
@@ -695,23 +857,26 @@ class SalesInvoicesStream(DynamicStream):
 
     @property
     def filter(self):
-        use_multiple_warehouses = self.config.get("use_sales_invoices_multiple_warehouses")
-        if self.default_warehouse_id and not use_multiple_warehouses:
-            warehouse_uuid = self.default_warehouse_uuid
-            return f"Warehouse eq guid'{warehouse_uuid}'"
+        if not self.sync_all_divisions:
+            use_multiple_warehouses = self.config.get("use_sales_invoices_multiple_warehouses")
+            if self.default_warehouse_id and not use_multiple_warehouses:
+                warehouse_uuid = self.default_warehouse_uuid
+                return f"Warehouse eq guid'{warehouse_uuid}'"
+        return None
     
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
         """Return a context dictionary for child streams."""
         return {
             "invoice_id": record["InvoiceID"],
+            "division": (context or {}).get("division")
         }
 
 class SalesInvoiceLinesStream(ExactStream):
     name = "sales_invoice_lines"
     primary_keys = ["ID"]
-    path = "/salesinvoice/SalesInvoiceLines?$select=ID,AmountDC,ItemCode,InvoiceID,Quantity,SalesOrderNumber&$filter=InvoiceID eq guid'{invoice_id}'"
     select = None
     parent_stream_type = SalesInvoicesStream
+    ignore_parent_stream = False
     
     schema = th.PropertiesList(
         th.Property("ID",th.StringType),
@@ -721,11 +886,23 @@ class SalesInvoiceLinesStream(ExactStream):
         th.Property("Quantity",th.StringType),
         th.Property("SalesOrderNumber", th.StringType)
     ).to_dict()
+    
+    @property
+    def path(self):
+        url = "/salesinvoice/SalesInvoiceLines?$select=ID,AmountDC,ItemCode,InvoiceID,Quantity,SalesOrderNumber&$filter=InvoiceID eq guid'{invoice_id}'"
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
 
 class SalesItemsPrices(DynamicStream):
     name = "sales_items_prices"
     primary_keys = ["ID"]
     replication_key = "Modified"
+
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+            return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("ID",th.StringType),
@@ -742,8 +919,13 @@ class SalesItemsPrices(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/Logistics/SalesItemPrices"
-        return f"/logistics/SalesItemPrices"
+            url = "/sync/Logistics/SalesItemPrices"
+        else:
+            url = "/logistics/SalesItemPrices"
+
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
 
     @property
     def select(self):
@@ -754,8 +936,12 @@ class SalesItemsPrices(DynamicStream):
 class Deleted(ExactSyncStream):
     name = "deleted"
     primary_keys = ["ID"]
-    path = "/sync/Deleted"
     replication_key = "Timestamp"
+
+    @property
+    def parent_stream_type(self):
+        if self.sync_all_divisions:
+            return DivisionsStream
 
     schema = th.PropertiesList(
         th.Property("Timestamp",th.StringType),
@@ -770,3 +956,10 @@ class Deleted(ExactSyncStream):
     @property
     def select(self):
         return f"DeletedBy,ID,EntityType,EntityKey,Timestamp"
+    
+    @property
+    def path(self):
+        url = "/sync/Deleted"
+        if self.sync_all_divisions:
+            return "/{division}" + url
+        return url
