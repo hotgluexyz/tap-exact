@@ -1,4 +1,4 @@
-from typing import List,Type,Dict
+from typing import List, Type, Dict
 
 from singer_sdk import Stream, Tap
 from singer_sdk import typing as th
@@ -22,7 +22,8 @@ from tap_exact.streams import (
     LogisticsStockPositionsStream,
     Deleted,
     MeStream,
-    DivisionsStream
+    DivisionsStream,
+    GLAccountsStream,
 )
 
 STREAM_TYPES = [
@@ -41,7 +42,8 @@ STREAM_TYPES = [
     StockPositionsStream,
     Deleted,
     MeStream,
-    DivisionsStream
+    DivisionsStream,
+    GLAccountsStream,
 ]
 
 
@@ -111,7 +113,7 @@ class TapExact(Tap):
             key=lambda x: x.name,
             reverse=False,
         )
-    
+
     @final
     def sync_all(self) -> None:
         """Sync all streams."""
@@ -122,7 +124,7 @@ class TapExact(Tap):
             if not stream.selected and not stream.has_selected_descendents:
                 self.logger.info(f"Skipping deselected stream '{stream.name}'.")
                 continue
-            
+
             if not stream.ignore_parent_stream and stream.parent_stream_type:
                 self.logger.debug(
                     f"Child stream '{type(stream).__name__}' is expected to be called "
@@ -133,6 +135,7 @@ class TapExact(Tap):
 
             stream.sync()
             stream.finalize_state_progress_markers()
+
 
 if __name__ == "__main__":
     TapExact.cli()

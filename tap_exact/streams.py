@@ -13,6 +13,7 @@ if "sync_endpoints" in data.keys():
 else:
     use_sync_endpoint = False
 
+
 class DynamicStream(ExactSyncStream if use_sync_endpoint else ExactStream):
     pass
 
@@ -80,7 +81,10 @@ class ItemsStream(DynamicStream):
     schema = th.PropertiesList(
         th.Property("AverageCost", th.StringType),
         th.Property("Code", th.StringType),
-        th.Property("CopyRemarks",th.StringType,),
+        th.Property(
+            "CopyRemarks",
+            th.StringType,
+        ),
         th.Property("CostPriceCurrency", th.StringType),
         th.Property("CostPriceNew", th.StringType),
         th.Property("CostPriceStandard", th.StringType),
@@ -130,13 +134,31 @@ class ItemsStream(DynamicStream):
         th.Property("GLStock", th.StringType),
         th.Property("ID", th.StringType),
         th.Property("IsBatchItem", th.StringType),
-        th.Property("IsFractionAllowedItem",th.BooleanType,),
+        th.Property(
+            "IsFractionAllowedItem",
+            th.BooleanType,
+        ),
         th.Property("IsMakeItem", th.StringType),
-        th.Property("IsNewContract",th.StringType,),
-        th.Property("IsOnDemandItem",th.StringType,),
-        th.Property("IsPackageItem",th.BooleanType,),
-        th.Property("IsPurchaseItem",th.BooleanType,),
-        th.Property("IsSalesItem", th.BooleanType,),
+        th.Property(
+            "IsNewContract",
+            th.StringType,
+        ),
+        th.Property(
+            "IsOnDemandItem",
+            th.StringType,
+        ),
+        th.Property(
+            "IsPackageItem",
+            th.BooleanType,
+        ),
+        th.Property(
+            "IsPurchaseItem",
+            th.BooleanType,
+        ),
+        th.Property(
+            "IsSalesItem",
+            th.BooleanType,
+        ),
         th.Property("IsSerialItem", th.BooleanType),
         th.Property("IsStockItem", th.BooleanType),
         th.Property("IsSubcontractedItem", th.BooleanType),
@@ -152,16 +174,25 @@ class ItemsStream(DynamicStream):
         th.Property("Class_08", th.StringType),
         th.Property("Class_09", th.StringType),
         th.Property("Class_10", th.StringType),
-        th.Property("Barcode",th.StringType),
-        th.Property("IsWebshopItem",th.StringType,),
+        th.Property("Barcode", th.StringType),
+        th.Property(
+            "IsWebshopItem",
+            th.StringType,
+        ),
         th.Property("ItemGroup", th.StringType),
         th.Property("ItemGroupCode", th.StringType),
         th.Property("ItemGroupDescription", th.StringType),
         th.Property("Modified", th.DateTimeType),
         th.Property("Modifier", th.StringType),
         th.Property("ModifierFullName", th.StringType),
-        th.Property("SecurityLevel",th.StringType,),
-        th.Property("StandardSalesPrice",th.StringType,),
+        th.Property(
+            "SecurityLevel",
+            th.StringType,
+        ),
+        th.Property(
+            "StandardSalesPrice",
+            th.StringType,
+        ),
         th.Property("Stock", th.DateTimeType),
         th.Property("Unit", th.DateTimeType),
         th.Property("UnitDescription", th.StringType),
@@ -198,13 +229,14 @@ class ItemsStream(DynamicStream):
         if self.sync_endpoint:
             return "ID,Timestamp,AverageCost,Barcode,Class_01,Class_02,Class_03,Class_04,Class_05,Class_06,Class_07,Class_08,Class_09,Class_10,Code,CopyRemarks,CostPriceCurrency,CostPriceNew,CostPriceStandard,Created,Creator,CreatorFullName,Description,Division,EndDate,ExtraDescription,FreeBoolField_01,FreeBoolField_02,FreeBoolField_03,FreeBoolField_04,FreeBoolField_05,FreeDateField_01,FreeDateField_02,FreeDateField_03,FreeDateField_04,FreeDateField_05,FreeNumberField_01,FreeNumberField_02,FreeNumberField_03,FreeNumberField_04,FreeNumberField_05,FreeNumberField_06,FreeNumberField_07,FreeNumberField_08,FreeTextField_01,FreeTextField_02,FreeTextField_03,FreeTextField_04,FreeTextField_05,FreeTextField_06,FreeTextField_07,FreeTextField_08,FreeTextField_09,FreeTextField_10,GLCosts,GLCostsCode,GLCostsDescription,GLRevenue,GLRevenueCode,GLRevenueDescription,GLStock,GLStockCode,GLStockDescription,GrossWeight,IsBatchItem,IsFractionAllowedItem,IsMakeItem,IsNewContract,IsOnDemandItem,IsPackageItem,IsPurchaseItem,IsSalesItem,IsSerialItem,IsStockItem,IsSubcontractedItem,IsTaxableItem,IsTime,IsWebshopItem,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NetWeight,NetWeightUnit,Notes,PictureName,PictureThumbnailUrl,PictureUrl,SalesVatCode,SalesVatCodeDescription,SearchCode,SecurityLevel,StartDate,StatisticalCode,StatisticalNetWeight,StatisticalUnits,StatisticalValue,Stock,Unit,UnitDescription,UnitType,Timestamp"
         return "ID,AverageCost,Barcode,Class_01,Class_02,Class_03,Class_04,Class_05,Class_06,Class_07,Class_08,Class_09,Class_10,Code,CopyRemarks,CostPriceCurrency,CostPriceNew,CostPriceStandard,Created,Creator,CreatorFullName,Description,Division,EndDate,ExtraDescription,FreeBoolField_01,FreeBoolField_02,FreeBoolField_03,FreeBoolField_04,FreeBoolField_05,FreeDateField_01,FreeDateField_02,FreeDateField_03,FreeDateField_04,FreeDateField_05,FreeNumberField_01,FreeNumberField_02,FreeNumberField_03,FreeNumberField_04,FreeNumberField_05,FreeNumberField_06,FreeNumberField_07,FreeNumberField_08,FreeTextField_01,FreeTextField_02,FreeTextField_03,FreeTextField_04,FreeTextField_05,FreeTextField_06,FreeTextField_07,FreeTextField_08,FreeTextField_09,FreeTextField_10,GLCosts,GLCostsCode,GLCostsDescription,GLRevenue,GLRevenueCode,GLRevenueDescription,GLStock,GLStockCode,GLStockDescription,GrossWeight,IsBatchItem,IsFractionAllowedItem,IsMakeItem,IsNewContract,IsOnDemandItem,IsPackageItem,IsPurchaseItem,IsSalesItem,IsSerialItem,IsStockItem,IsSubcontractedItem,IsTaxableItem,IsTime,IsWebshopItem,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NetWeight,NetWeightUnit,Notes,PictureName,PictureThumbnailUrl,PictureUrl,SalesVatCode,SalesVatCodeDescription,SearchCode,SecurityLevel,StandardSalesPrice,StartDate,StatisticalCode,StatisticalNetWeight,StatisticalUnits,StatisticalValue,Stock,Unit,UnitDescription,UnitType"
-    
+
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
         """Return a context dictionary for child streams."""
         return {
             "item_id": record["ID"],
             "division": (context or {}).get("division") 
         }
+
 
 class SalesOrderStream(DynamicStream):
     name = "sales_order"
@@ -219,40 +251,127 @@ class SalesOrderStream(DynamicStream):
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
-        th.Property("AmountDC",th.StringType,),
-        th.Property("AmountFC",th.StringType,),
-        th.Property("AmountFCExclVat",th.StringType,),
-        th.Property("DeliverToContactPerson",th.StringType,),
-        th.Property("DeliverToContactPersonFullName",th.StringType,),
-        th.Property("DeliverToName",th.StringType,),
-        th.Property("OrderedByName",th.StringType,),
-        th.Property("TaxSchedule",th.StringType,),
-        th.Property("WarohouseID",th.StringType,),
-        th.Property("YourRef",th.StringType,),
-        th.Property("AmountDiscount",th.StringType,),
-        th.Property("AmountDiscountExclVat",th.StringType,),
-        th.Property("ApprovalStatus",th.StringType,),
+        th.Property(
+            "AmountDC",
+            th.StringType,
+        ),
+        th.Property(
+            "AmountFC",
+            th.StringType,
+        ),
+        th.Property(
+            "AmountFCExclVat",
+            th.StringType,
+        ),
+        th.Property(
+            "DeliverToContactPerson",
+            th.StringType,
+        ),
+        th.Property(
+            "DeliverToContactPersonFullName",
+            th.StringType,
+        ),
+        th.Property(
+            "DeliverToName",
+            th.StringType,
+        ),
+        th.Property(
+            "OrderedByName",
+            th.StringType,
+        ),
+        th.Property(
+            "TaxSchedule",
+            th.StringType,
+        ),
+        th.Property(
+            "WarohouseID",
+            th.StringType,
+        ),
+        th.Property(
+            "YourRef",
+            th.StringType,
+        ),
+        th.Property(
+            "AmountDiscount",
+            th.StringType,
+        ),
+        th.Property(
+            "AmountDiscountExclVat",
+            th.StringType,
+        ),
+        th.Property(
+            "ApprovalStatus",
+            th.StringType,
+        ),
         th.Property("ApprovalStatusDescription", th.StringType),
-        th.Property("Approved",th.StringType,),
-        th.Property("Approver",th.StringType,),
-        th.Property("ApproverFullName",th.StringType,),
-        th.Property("Created",th.DateTimeType,),
-        th.Property("Creator",th.StringType,),
+        th.Property(
+            "Approved",
+            th.StringType,
+        ),
+        th.Property(
+            "Approver",
+            th.StringType,
+        ),
+        th.Property(
+            "ApproverFullName",
+            th.StringType,
+        ),
+        th.Property(
+            "Created",
+            th.DateTimeType,
+        ),
+        th.Property(
+            "Creator",
+            th.StringType,
+        ),
         th.Property("CreatorFullName", th.StringType),
         th.Property("Currency", th.StringType),
-        th.Property("DeliverTo",th.StringType,),
-        th.Property("DeliveryDate",th.DateTimeType,),
-        th.Property("DeliveryStatus",th.StringType,),
+        th.Property(
+            "DeliverTo",
+            th.StringType,
+        ),
+        th.Property(
+            "DeliveryDate",
+            th.DateTimeType,
+        ),
+        th.Property(
+            "DeliveryStatus",
+            th.StringType,
+        ),
         th.Property("DeliveryStatusDescription", th.StringType),
-        th.Property("DeliveryAddress",th.StringType,),
+        th.Property(
+            "DeliveryAddress",
+            th.StringType,
+        ),
         th.Property("Description", th.StringType),
-        th.Property("OrderDate",th.DateTimeType,),
-        th.Property("OrderedBy",th.StringType,),
-        th.Property("OrderedNyName",th.StringType,),
-        th.Property("OrderID",th.StringType,),
-        th.Property("OrderNumber",th.StringType,),
-        th.Property("Salesperson",th.StringType,),
-        th.Property("Status",th.StringType,),
+        th.Property(
+            "OrderDate",
+            th.DateTimeType,
+        ),
+        th.Property(
+            "OrderedBy",
+            th.StringType,
+        ),
+        th.Property(
+            "OrderedNyName",
+            th.StringType,
+        ),
+        th.Property(
+            "OrderID",
+            th.StringType,
+        ),
+        th.Property(
+            "OrderNumber",
+            th.StringType,
+        ),
+        th.Property(
+            "Salesperson",
+            th.StringType,
+        ),
+        th.Property(
+            "Status",
+            th.StringType,
+        ),
         th.Property("StatusDescription", th.StringType),
         th.Property("WarehouseCode", th.StringType),
         th.Property("WarehouseID", th.StringType),
@@ -278,7 +397,7 @@ class SalesOrderStream(DynamicStream):
             return f"OrderID,AmountDC,ID,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,WarehouseCode,WarehouseDescription,WarehouseID,YourRef,Timestamp,Modified"
         else:
             return f"OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef,Modified"
-   
+
     @property
     def filter(self):  
         if not self.sync_all_divisions:
@@ -294,7 +413,8 @@ class SalesOrderStream(DynamicStream):
             "order_id": record["OrderID"],
             "division": (context or {}).get("division")
         }
-            
+
+
 class PurchaseOrdersStream(DynamicStream):
     name = "purchase_orders"
     primary_keys = ["PurchaseOrderID"]
@@ -305,63 +425,63 @@ class PurchaseOrdersStream(DynamicStream):
              return DivisionsStream
 
     schema = th.PropertiesList(
-        th.Property('AmountDC',th.StringType),
-        th.Property('AmountFC',th.StringType),
-        th.Property('Created',th.DateTimeType),
-        th.Property('Creator',th.StringType),
-        th.Property('CreatorFullName',th.StringType),
-        th.Property('Currency',th.StringType),
-        th.Property('DeliveryAccount',th.StringType),
-        th.Property('DeliveryAccountCode',th.StringType),
-        th.Property('DeliveryAccountName',th.StringType),
-        th.Property('DeliveryAddress',th.StringType),
-        th.Property('DeliveryContact',th.StringType),
-        th.Property('DeliveryContactPersonFullName',th.StringType),
-        th.Property('Description',th.StringType),
-        th.Property('Division',th.StringType),
-        th.Property('Document',th.StringType),
-        th.Property('DocumentSubject',th.StringType),
-        th.Property('DropShipment',th.BooleanType),
-        th.Property('ExchangeRate',th.StringType),
-        th.Property('IncotermAddress',th.StringType),
-        th.Property('IncotermCode',th.StringType),
-        th.Property('IncotermVersion',th.StringType),
-        th.Property('InvoiceStatus',th.StringType),
-        th.Property('Modified',th.DateTimeType),
-        th.Property('Modifier',th.StringType),
-        th.Property('ModifierFullName',th.StringType),
-        th.Property('OrderDate',th.StringType),
-        th.Property('OrderNumber',th.StringType),
-        th.Property('OrderStatus',th.StringType),
-        th.Property('PaymentCondition',th.StringType),
-        th.Property('PaymentConditionDescription',th.StringType),
-        th.Property('PurchaseOrderID',th.StringType),
-        th.Property('PurchaseAgent',th.StringType),
-        th.Property('PurchaseAgentFullName',th.StringType),
-        th.Property('PurchaseOrderLineCount',th.StringType),
-        th.Property('ReceiptDate',th.StringType),
-        th.Property('ReceiptStatus',th.StringType),
-        th.Property('Remarks',th.StringType),
-        th.Property('SalesOrder',th.StringType),
-        th.Property('SalesOrderNumber',th.StringType),
-        th.Property('SelectionCode',th.StringType),
-        th.Property('SelectionCodeCode',th.StringType),
-        th.Property('SelectionCodeDescription',th.StringType),
-        th.Property('ShippingMethod',th.StringType),
-        th.Property('ShippingMethodCode',th.StringType),
-        th.Property('ShippingMethodDescription',th.StringType),
-        th.Property('Source',th.StringType),
-        th.Property('Supplier',th.StringType),
-        th.Property('SupplierCode',th.StringType),
-        th.Property('SupplierContact',th.StringType),
-        th.Property('SupplierContactPersonFullName',th.StringType),
-        th.Property('SupplierName',th.StringType),
-        th.Property('VATAmount',th.StringType),
-        th.Property('Warehouse',th.StringType),
-        th.Property('WarehouseCode',th.StringType),
-        th.Property('WarehouseDescription',th.StringType),
-        th.Property('YourRef',th.StringType),
-        th.Property('Timestamp',th.StringType),
+        th.Property("AmountDC", th.StringType),
+        th.Property("AmountFC", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("DeliveryAccount", th.StringType),
+        th.Property("DeliveryAccountCode", th.StringType),
+        th.Property("DeliveryAccountName", th.StringType),
+        th.Property("DeliveryAddress", th.StringType),
+        th.Property("DeliveryContact", th.StringType),
+        th.Property("DeliveryContactPersonFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Document", th.StringType),
+        th.Property("DocumentSubject", th.StringType),
+        th.Property("DropShipment", th.BooleanType),
+        th.Property("ExchangeRate", th.StringType),
+        th.Property("IncotermAddress", th.StringType),
+        th.Property("IncotermCode", th.StringType),
+        th.Property("IncotermVersion", th.StringType),
+        th.Property("InvoiceStatus", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("OrderDate", th.StringType),
+        th.Property("OrderNumber", th.StringType),
+        th.Property("OrderStatus", th.StringType),
+        th.Property("PaymentCondition", th.StringType),
+        th.Property("PaymentConditionDescription", th.StringType),
+        th.Property("PurchaseOrderID", th.StringType),
+        th.Property("PurchaseAgent", th.StringType),
+        th.Property("PurchaseAgentFullName", th.StringType),
+        th.Property("PurchaseOrderLineCount", th.StringType),
+        th.Property("ReceiptDate", th.StringType),
+        th.Property("ReceiptStatus", th.StringType),
+        th.Property("Remarks", th.StringType),
+        th.Property("SalesOrder", th.StringType),
+        th.Property("SalesOrderNumber", th.StringType),
+        th.Property("SelectionCode", th.StringType),
+        th.Property("SelectionCodeCode", th.StringType),
+        th.Property("SelectionCodeDescription", th.StringType),
+        th.Property("ShippingMethod", th.StringType),
+        th.Property("ShippingMethodCode", th.StringType),
+        th.Property("ShippingMethodDescription", th.StringType),
+        th.Property("Source", th.StringType),
+        th.Property("Supplier", th.StringType),
+        th.Property("SupplierCode", th.StringType),
+        th.Property("SupplierContact", th.StringType),
+        th.Property("SupplierContactPersonFullName", th.StringType),
+        th.Property("SupplierName", th.StringType),
+        th.Property("VATAmount", th.StringType),
+        th.Property("Warehouse", th.StringType),
+        th.Property("WarehouseCode", th.StringType),
+        th.Property("WarehouseDescription", th.StringType),
+        th.Property("YourRef", th.StringType),
+        th.Property("Timestamp", th.StringType),
     ).to_dict()
 
     @property
@@ -397,6 +517,7 @@ class PurchaseOrdersStream(DynamicStream):
         else:
             return "PurchaseOrderLines"
 
+
 class WarehouseStream(ExactStream):
     name = "warehouses"
     primary_keys = ["ID"]
@@ -407,25 +528,61 @@ class WarehouseStream(ExactStream):
             return DivisionsStream
 
     schema = th.PropertiesList(
-        th.Property("Created",th.StringType,),
-        th.Property("CreatorFullName",th.CustomType({"type": ["array", "object", "string"]}),),
-        th.Property("CurrentStock",th.StringType,),
+        th.Property(
+            "Created",
+            th.StringType,
+        ),
+        th.Property(
+            "CreatorFullName",
+            th.CustomType({"type": ["array", "object", "string"]}),
+        ),
+        th.Property(
+            "CurrentStock",
+            th.StringType,
+        ),
         th.Property("ID", th.StringType),
         th.Property("Item", th.StringType),
         th.Property("ItemCode", th.StringType),
         th.Property("ItemDescription", th.StringType),
-        th.Property("ItemStartDate",th.StringType,),
+        th.Property(
+            "ItemStartDate",
+            th.StringType,
+        ),
         th.Property("ItemUnit", th.StringType),
         th.Property("ItemUnitDescription", th.StringType),
-        th.Property("MaximumStock",th.StringType,),
-        th.Property("Modified",th.DateTimeType,),
-        th.Property("Modifier",th.StringType,),
-        th.Property("ModifierFullName",th.CustomType({"type": ["array", "object", "string"]}),),
-        th.Property("ProjectedStock",th.StringType,),
-        th.Property("ReorderPoint",th.StringType,),
-        th.Property("SafetyStock",th.StringType,),
+        th.Property(
+            "MaximumStock",
+            th.StringType,
+        ),
+        th.Property(
+            "Modified",
+            th.DateTimeType,
+        ),
+        th.Property(
+            "Modifier",
+            th.StringType,
+        ),
+        th.Property(
+            "ModifierFullName",
+            th.CustomType({"type": ["array", "object", "string"]}),
+        ),
+        th.Property(
+            "ProjectedStock",
+            th.StringType,
+        ),
+        th.Property(
+            "ReorderPoint",
+            th.StringType,
+        ),
+        th.Property(
+            "SafetyStock",
+            th.StringType,
+        ),
         th.Property("StorageLocationUrl", th.StringType),
-        th.Property("Warehouse",th.StringType,),
+        th.Property(
+            "Warehouse",
+            th.StringType,
+        ),
         th.Property("WarehouseCode", th.StringType),
         th.Property("WarehouseDescription", th.StringType),
         th.Property("ItemIsSotckItem", th.StringType),
@@ -446,7 +603,7 @@ class WarehouseStream(ExactStream):
         th.Property("ItemIsFractionAllowedItem", th.BooleanType),
         th.Property("ItemIsStockItem", th.BooleanType),
     ).to_dict()
-    
+
     @property
     def path(self):
         url = "/inventory/ItemWarehouses"
@@ -467,6 +624,7 @@ class WarehouseStream(ExactStream):
                 return f"Warehouse eq guid'{warehouse_uuid}'"
         return None
 
+
 class StockPositionsStream(ExactSyncStream):
     name = "stock_positions"
     primary_keys = ["ID"]
@@ -477,23 +635,29 @@ class StockPositionsStream(ExactSyncStream):
             return DivisionsStream
 
     schema = th.PropertiesList(
-        th.Property("ID",th.StringType),
-        th.Property("Timestamp",th.DateTimeType),
-        th.Property("ItemId",th.StringType),
-        th.Property("ItemCode",th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("Timestamp", th.DateTimeType),
+        th.Property("ItemId", th.StringType),
+        th.Property("ItemCode", th.StringType),
         th.Property("ItemDescription", th.StringType),
         th.Property("UnitCode", th.StringType),
         th.Property("UnitDescription", th.StringType),
         th.Property("CurrentStock", th.StringType),
-        th.Property("PlanningIn",th.StringType),
+        th.Property("PlanningIn", th.StringType),
         th.Property("PlanningOut", th.StringType),
         th.Property("ProjectedStock", th.StringType),
-        th.Property("ReservedStock",th.StringType),
-        th.Property("FreeStock",th.StringType,),
-        th.Property("ReorderPoint",th.StringType),
-        th.Property("Warehouse",th.StringType),
-        th.Property("WarehouseDescription",th.StringType,),
-        th.Property("Division",th.StringType),
+        th.Property("ReservedStock", th.StringType),
+        th.Property(
+            "FreeStock",
+            th.StringType,
+        ),
+        th.Property("ReorderPoint", th.StringType),
+        th.Property("Warehouse", th.StringType),
+        th.Property(
+            "WarehouseDescription",
+            th.StringType,
+        ),
+        th.Property("Division", th.StringType),
     ).to_dict()
 
     @property
@@ -507,6 +671,7 @@ class StockPositionsStream(ExactSyncStream):
     def select(self):
         return f"Timestamp,CurrentStock,Division,FreeStock,ID,ItemCode,ItemDescription,ItemId,PlanningIn,PlanningOut,ProjectedStock,ReorderPoint,ReservedStock,UnitCode,UnitDescription,Warehouse,WarehouseDescription"
 
+
 class LogisticsStockPositionsStream(ExactStream):
     name = "logistics_stock_positions"
     primary_keys = ["ID"]
@@ -516,10 +681,16 @@ class LogisticsStockPositionsStream(ExactStream):
     ignore_parent_stream = False
 
     schema = th.PropertiesList(
-        th.Property("ItemId",th.StringType,),
-        th.Property("InStock",th.StringType,),
-        th.Property("PlanningIn",th.StringType),
-        th.Property("PlanningOut",th.StringType),
+        th.Property(
+            "ItemId",
+            th.StringType,
+        ),
+        th.Property(
+            "InStock",
+            th.StringType,
+        ),
+        th.Property("PlanningIn", th.StringType),
+        th.Property("PlanningOut", th.StringType),
     ).to_dict()
 
     @property
@@ -551,7 +722,8 @@ class LogisticsStockPositionsStream(ExactStream):
                 new_content[key] = content[key].get("#text", None)
         row = new_content
         return row
-    
+
+
 class SupplierProductsStream(DynamicStream):
     name = "supplierProducts"
     primary_keys = ["ID"]
@@ -563,27 +735,60 @@ class SupplierProductsStream(DynamicStream):
             return DivisionsStream
 
     schema = th.PropertiesList(
-        th.Property("Creator",th.StringType,),
-        th.Property("CreatorFullName",th.StringType),
+        th.Property(
+            "Creator",
+            th.StringType,
+        ),
+        th.Property("CreatorFullName", th.StringType),
         th.Property("Currency", th.StringType),
         th.Property("CurrencyDescription", th.StringType),
-        th.Property("Division",th.StringType,),
-        th.Property("DropShipment",th.StringType,),
+        th.Property(
+            "Division",
+            th.StringType,
+        ),
+        th.Property(
+            "DropShipment",
+            th.StringType,
+        ),
         th.Property("ID", th.StringType),
         th.Property("Item", th.StringType),
         th.Property("ItemCode", th.StringType),
         th.Property("ItemDescription", th.StringType),
-        th.Property("MinimumQuantity",th.StringType,),
-        th.Property("Modified",th.DateTimeType,),
-        th.Property("Modifier",th.StringType,),
-        th.Property("ModifierFullName",th.StringType),
-        th.Property("PurchaseLeadTime",th.StringType,),
-        th.Property("PurchasePrice",th.StringType,),
+        th.Property(
+            "MinimumQuantity",
+            th.StringType,
+        ),
+        th.Property(
+            "Modified",
+            th.DateTimeType,
+        ),
+        th.Property(
+            "Modifier",
+            th.StringType,
+        ),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property(
+            "PurchaseLeadTime",
+            th.StringType,
+        ),
+        th.Property(
+            "PurchasePrice",
+            th.StringType,
+        ),
         th.Property("PurchaseUnit", th.StringType),
         th.Property("PurchaseUnitDescription", th.StringType),
-        th.Property("StartDate",th.StringType,),
-        th.Property("Supplier",th.StringType,),
-        th.Property("SupplierCode",th.StringType,),
+        th.Property(
+            "StartDate",
+            th.StringType,
+        ),
+        th.Property(
+            "Supplier",
+            th.StringType,
+        ),
+        th.Property(
+            "SupplierCode",
+            th.StringType,
+        ),
         th.Property("SupplierDescription", th.StringType),
         th.Property("SupplierItemCode", th.StringType),
         th.Property("CopyRemarks", th.StringType),
@@ -616,6 +821,7 @@ class SupplierProductsStream(DynamicStream):
             return f"ID,CopyRemarks,CountryOfOrigin,CountryOfOriginDescription,Created,Creator,CreatorFullName,Currency,CurrencyDescription,Division,DropShipment,EndDate,Item,ItemCode,ItemDescription,MainSupplier,MinimumQuantity,Modified,Modifier,ModifierFullName,Notes,PurchaseLeadTime,PurchasePrice,PurchaseUnit,PurchaseUnitDescription,PurchaseUnitFactor,PurchaseVATCode,PurchaseVATCodeDescription,StartDate,Supplier,SupplierCode,SupplierDescription,SupplierItemCode,Timestamp"
         return f"ID,CopyRemarks,CountryOfOrigin,CountryOfOriginDescription,Created,Creator,CreatorFullName,Currency,CurrencyDescription,Division,DropShipment,EndDate,Item,ItemCode,ItemDescription,MainSupplier,MinimumQuantity,Modified,Modifier,ModifierFullName,Notes,PurchaseLeadTime,PurchasePrice,PurchaseUnit,PurchaseUnitDescription,PurchaseUnitFactor,PurchaseVATCode,PurchaseVATCodeDescription,StartDate,Supplier,SupplierCode,SupplierDescription,SupplierItemCode"
 
+
 class SalesOrderLinesStream(DynamicStream):
     name = "sales_orderlines"
     primary_keys = ["ID"]
@@ -637,48 +843,147 @@ class SalesOrderLinesStream(DynamicStream):
             False
 
     schema = th.PropertiesList(
-        th.Property("AmountDC",th.StringType,),
-        th.Property("AmountFC",th.StringType,),
-        th.Property("DeliveryDate",th.StringType,),
+        th.Property(
+            "AmountDC",
+            th.StringType,
+        ),
+        th.Property(
+            "AmountFC",
+            th.StringType,
+        ),
+        th.Property(
+            "DeliveryDate",
+            th.StringType,
+        ),
         th.Property("Description", th.StringType),
-        th.Property("DeliveryDate",th.DateTimeType),
+        th.Property("DeliveryDate", th.DateTimeType),
         th.Property("Discount", th.StringType),
         th.Property("ID", th.StringType),
         th.Property("Item", th.StringType),
         th.Property("ItemCode", th.StringType),
         th.Property("ItemDescription", th.StringType),
-        th.Property("LineNumber",th.StringType,),
-        th.Property("NetPrice",th.StringType,),
-        th.Property("OrderID",th.StringType,),
-        th.Property("OrderNumber",th.StringType,),
-        th.Property("Quantity",th.StringType,),
+        th.Property(
+            "LineNumber",
+            th.StringType,
+        ),
+        th.Property(
+            "NetPrice",
+            th.StringType,
+        ),
+        th.Property(
+            "OrderID",
+            th.StringType,
+        ),
+        th.Property(
+            "OrderNumber",
+            th.StringType,
+        ),
+        th.Property(
+            "Quantity",
+            th.StringType,
+        ),
         th.Property("UnitCode", th.StringType),
         th.Property("UnitDescription", th.StringType),
-        th.Property("UnitPrice",th.StringType,),
-        th.Property("UseDropShipment",th.StringType,),
-        th.Property("VATAmount",th.StringType,),
-        th.Property("CostCenter",th.StringType,),
-        th.Property("CostCenterDescription",th.StringType,),
-        th.Property("CostPriceFC",th.StringType,),
-        th.Property("CostUnit",th.StringType,),
-        th.Property("CostUnitDescription",th.StringType,),
-        th.Property("CustomerItemCode",th.StringType,),
-        th.Property("Division",th.StringType,),
-        th.Property("ItemVersion",th.StringType,),
-        th.Property("ItemVersionDescription",th.StringType,),
-        th.Property("Notes",th.StringType,),
-        th.Property("Pricelist",th.StringType,),
-        th.Property("PricelistDescription",th.StringType,),
-        th.Property("ProjectDescription",th.StringType,),
-        th.Property("Project",th.StringType,),
-        th.Property("PurchaseOrder",th.StringType,),
-        th.Property("PurchaseOrderLine",th.CustomType({'type':['array','string']}),),
-        th.Property("PurchaseOrderLineNumber",th.StringType,),
-        th.Property("PurchaseOrderNumber",th.StringType,),
-        th.Property("ShopOrder",th.StringType,),
-        th.Property("VATCode",th.StringType,),
-        th.Property("VATCodeDescription",th.StringType,),
-        th.Property("VATPercentage",th.StringType,),
+        th.Property(
+            "UnitPrice",
+            th.StringType,
+        ),
+        th.Property(
+            "UseDropShipment",
+            th.StringType,
+        ),
+        th.Property(
+            "VATAmount",
+            th.StringType,
+        ),
+        th.Property(
+            "CostCenter",
+            th.StringType,
+        ),
+        th.Property(
+            "CostCenterDescription",
+            th.StringType,
+        ),
+        th.Property(
+            "CostPriceFC",
+            th.StringType,
+        ),
+        th.Property(
+            "CostUnit",
+            th.StringType,
+        ),
+        th.Property(
+            "CostUnitDescription",
+            th.StringType,
+        ),
+        th.Property(
+            "CustomerItemCode",
+            th.StringType,
+        ),
+        th.Property(
+            "Division",
+            th.StringType,
+        ),
+        th.Property(
+            "ItemVersion",
+            th.StringType,
+        ),
+        th.Property(
+            "ItemVersionDescription",
+            th.StringType,
+        ),
+        th.Property(
+            "Notes",
+            th.StringType,
+        ),
+        th.Property(
+            "Pricelist",
+            th.StringType,
+        ),
+        th.Property(
+            "PricelistDescription",
+            th.StringType,
+        ),
+        th.Property(
+            "ProjectDescription",
+            th.StringType,
+        ),
+        th.Property(
+            "Project",
+            th.StringType,
+        ),
+        th.Property(
+            "PurchaseOrder",
+            th.StringType,
+        ),
+        th.Property(
+            "PurchaseOrderLine",
+            th.CustomType({"type": ["array", "string"]}),
+        ),
+        th.Property(
+            "PurchaseOrderLineNumber",
+            th.StringType,
+        ),
+        th.Property(
+            "PurchaseOrderNumber",
+            th.StringType,
+        ),
+        th.Property(
+            "ShopOrder",
+            th.StringType,
+        ),
+        th.Property(
+            "VATCode",
+            th.StringType,
+        ),
+        th.Property(
+            "VATCodeDescription",
+            th.StringType,
+        ),
+        th.Property(
+            "VATPercentage",
+            th.StringType,
+        ),
         th.Property("Timestamp", th.StringType),
     ).to_dict()
 
@@ -702,9 +1007,12 @@ class SalesOrderLinesStream(DynamicStream):
     @property
     def filter(self):
         if not self.sync_endpoint:
-            order_id = self.tap_state["bookmarks"]["sales_orderlines"]["partitions"][-1]["context"]["order_id"]
+            order_id = self.tap_state["bookmarks"]["sales_orderlines"]["partitions"][
+                -1
+            ]["context"]["order_id"]
             return f"OrderID eq guid'{order_id}'"
-        
+
+
 class PurchaseOrderLinesStream(ExactStream):
     name = "purchase_orderlines"
     primary_keys = ["ID"]
@@ -716,59 +1024,59 @@ class PurchaseOrderLinesStream(ExactStream):
             return DivisionsStream
 
     schema = th.PropertiesList(
-        th.Property("ID",th.StringType),
-        th.Property("AmountDC",th.StringType),
-        th.Property("AmountFC",th.StringType),
-        th.Property("CostCenter",th.StringType),
-        th.Property("CostCenterDescription",th.StringType),
-        th.Property("CostUnit",th.StringType),
-        th.Property("CostUnitDescription",th.StringType),
-        th.Property("Created",th.DateTimeType),
-        th.Property("Creator",th.StringType),
-        th.Property("CreatorFullName",th.StringType),
-        th.Property("Description",th.StringType),
-        th.Property("Discount",th.StringType),
-        th.Property("Expense",th.StringType),
-        th.Property("Division",th.StringType),
-        th.Property("ExpenseDescription",th.StringType),
-        th.Property("InStock",th.StringType),
-        th.Property("InvoiceQuantity",th.StringType),
-        th.Property("IsBatchNumberItem",th.BooleanType),
-        th.Property("IsSerialNumberItem",th.BooleanType),
-        th.Property("Item",th.StringType),
-        th.Property("ItemBarcode",th.StringType),
-        th.Property("ItemCode",th.StringType),
-        th.Property("ItemDescription",th.StringType),
-        th.Property("ItemDivisable",th.BooleanType),
-        th.Property("LineNumber",th.StringType),
-        th.Property("Modified",th.DateTimeType),
-        th.Property("Modifier",th.StringType),
-        th.Property("ModifierFullName",th.StringType),
-        th.Property("NetPrice",th.StringType),
-        th.Property("Notes",th.StringType),
-        th.Property("Project",th.StringType),
-        th.Property("ProjectCode",th.StringType),
-        th.Property("ProjectDescription",th.StringType),
-        th.Property("ProjectedStock",th.StringType),
-        th.Property("PurchaseOrderID",th.StringType),
-        th.Property("Quantity",th.StringType),
-        th.Property("QuantityInPurchaseUnits",th.StringType),
-        th.Property("Rebill",th.BooleanType),
-        th.Property("ReceiptDate",th.StringType),
-        th.Property("ReceivedQuantity",th.StringType),
-        th.Property("SalesOrder",th.StringType),
-        th.Property("SalesOrderLine",th.StringType),
-        th.Property("SalesOrderLineNumber",th.StringType),
-        th.Property("SalesOrderNumber",th.StringType),
-        th.Property("SupplierItemCode",th.StringType),
-        th.Property("SupplierItemCopyRemarks",th.StringType),
-        th.Property("Unit",th.StringType),
-        th.Property("UnitDescription",th.StringType),
-        th.Property("UnitPrice",th.StringType),
-        th.Property("VATAmount",th.StringType),
-        th.Property("VATCode",th.StringType),
-        th.Property("VATDescription",th.StringType),
-        th.Property("VATPercentage",th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("AmountDC", th.StringType),
+        th.Property("AmountFC", th.StringType),
+        th.Property("CostCenter", th.StringType),
+        th.Property("CostCenterDescription", th.StringType),
+        th.Property("CostUnit", th.StringType),
+        th.Property("CostUnitDescription", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Discount", th.StringType),
+        th.Property("Expense", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("ExpenseDescription", th.StringType),
+        th.Property("InStock", th.StringType),
+        th.Property("InvoiceQuantity", th.StringType),
+        th.Property("IsBatchNumberItem", th.BooleanType),
+        th.Property("IsSerialNumberItem", th.BooleanType),
+        th.Property("Item", th.StringType),
+        th.Property("ItemBarcode", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("ItemDivisable", th.BooleanType),
+        th.Property("LineNumber", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("NetPrice", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("Project", th.StringType),
+        th.Property("ProjectCode", th.StringType),
+        th.Property("ProjectDescription", th.StringType),
+        th.Property("ProjectedStock", th.StringType),
+        th.Property("PurchaseOrderID", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("QuantityInPurchaseUnits", th.StringType),
+        th.Property("Rebill", th.BooleanType),
+        th.Property("ReceiptDate", th.StringType),
+        th.Property("ReceivedQuantity", th.StringType),
+        th.Property("SalesOrder", th.StringType),
+        th.Property("SalesOrderLine", th.StringType),
+        th.Property("SalesOrderLineNumber", th.StringType),
+        th.Property("SalesOrderNumber", th.StringType),
+        th.Property("SupplierItemCode", th.StringType),
+        th.Property("SupplierItemCopyRemarks", th.StringType),
+        th.Property("Unit", th.StringType),
+        th.Property("UnitDescription", th.StringType),
+        th.Property("UnitPrice", th.StringType),
+        th.Property("VATAmount", th.StringType),
+        th.Property("VATCode", th.StringType),
+        th.Property("VATDescription", th.StringType),
+        th.Property("VATPercentage", th.StringType),
     ).to_dict()
 
     @property
@@ -782,6 +1090,7 @@ class PurchaseOrderLinesStream(ExactStream):
     def select(self):
         return f"ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Description,Discount,Division,Expense,ExpenseDescription,InStock,InvoicedQuantity,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,Project,ProjectCode,ProjectDescription,ProjectedStock,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceivedQuantity,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SupplierItemCode,SupplierItemCopyRemarks,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage"
 
+
 class SupplierStream(DynamicStream):
     name = "suppliers"
     primary_keys = ["ID"]
@@ -793,15 +1102,15 @@ class SupplierStream(DynamicStream):
             return DivisionsStream
 
     schema = th.PropertiesList(
-        th.Property("Timestamp",th.StringType),
-        th.Property("ID",th.StringType),
-        th.Property("Name",th.StringType),
-        th.Property("Email",th.StringType),
-        th.Property("PurchaseLeadDays",th.StringType),
-        th.Property("Modified",th.DateTimeType),
-        th.Property("IsSupplier",th.BooleanType),
+        th.Property("Timestamp", th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("Name", th.StringType),
+        th.Property("Email", th.StringType),
+        th.Property("PurchaseLeadDays", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("IsSupplier", th.BooleanType),
     ).to_dict()
-    
+
     @property
     def path(self):
         if self.sync_endpoint:
@@ -819,6 +1128,7 @@ class SupplierStream(DynamicStream):
             return f"ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier"
         return f"ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier"
 
+
 class SalesInvoicesStream(DynamicStream):
     name = "sales_invoices"
     primary_keys = ["InvoiceID"]
@@ -829,12 +1139,12 @@ class SalesInvoicesStream(DynamicStream):
             return DivisionsStream
 
     schema = th.PropertiesList(
-        th.Property("InvoiceID",th.StringType),
-        th.Property("AmountDC",th.StringType),
-        th.Property("InvoiceDate",th.DateTimeType),
-        th.Property("Modified",th.DateTimeType),
-        th.Property("Timestamp",th.StringType),
-        th.Property("Warehouse",th.StringType),
+        th.Property("InvoiceID", th.StringType),
+        th.Property("AmountDC", th.StringType),
+        th.Property("InvoiceDate", th.DateTimeType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Timestamp", th.StringType),
+        th.Property("Warehouse", th.StringType),
     ).to_dict()
 
     @property
@@ -851,8 +1161,10 @@ class SalesInvoicesStream(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,Timestamp,Warehouse"
-        else:  
+            return (
+                f"InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,Timestamp,Warehouse"
+            )
+        else:
             return f"InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,Warehouse"
 
     @property
@@ -871,6 +1183,7 @@ class SalesInvoicesStream(DynamicStream):
             "division": (context or {}).get("division")
         }
 
+
 class SalesInvoiceLinesStream(ExactStream):
     name = "sales_invoice_lines"
     primary_keys = ["ID"]
@@ -879,12 +1192,12 @@ class SalesInvoiceLinesStream(ExactStream):
     ignore_parent_stream = False
     
     schema = th.PropertiesList(
-        th.Property("ID",th.StringType),
-        th.Property("AmountDC",th.StringType),
-        th.Property("ItemCode",th.StringType),
-        th.Property("InvoiceID",th.StringType),
-        th.Property("Quantity",th.StringType),
-        th.Property("SalesOrderNumber", th.StringType)
+        th.Property("ID", th.StringType),
+        th.Property("AmountDC", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("InvoiceID", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("SalesOrderNumber", th.StringType),
     ).to_dict()
     
     @property
@@ -893,6 +1206,7 @@ class SalesInvoiceLinesStream(ExactStream):
         if self.sync_all_divisions:
             return "/{division}" + url
         return url
+
 
 class SalesItemsPrices(DynamicStream):
     name = "sales_items_prices"
@@ -905,15 +1219,15 @@ class SalesItemsPrices(DynamicStream):
             return DivisionsStream
 
     schema = th.PropertiesList(
-        th.Property("ID",th.StringType),
-        th.Property("Item",th.StringType),
-        th.Property("ItemCode",th.StringType),
-        th.Property("Price",th.StringType),
-        th.Property("Quantity",th.StringType),
-        th.Property("StartDate",th.DateTimeType),
-        th.Property("EndDate",th.DateTimeType),
-        th.Property("Timestamp",th.StringType),
-        th.Property("Modified",th.DateTimeType),
+        th.Property("ID", th.StringType),
+        th.Property("Item", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("Price", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("StartDate", th.DateTimeType),
+        th.Property("EndDate", th.DateTimeType),
+        th.Property("Timestamp", th.StringType),
+        th.Property("Modified", th.DateTimeType),
     ).to_dict()
 
     @property
@@ -930,8 +1244,11 @@ class SalesItemsPrices(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp"
+            return (
+                f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp"
+            )
         return f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified"
+
 
 class Deleted(ExactSyncStream):
     name = "deleted"
@@ -944,22 +1261,75 @@ class Deleted(ExactSyncStream):
             return DivisionsStream
 
     schema = th.PropertiesList(
-        th.Property("Timestamp",th.StringType),
-        th.Property("DeletedBy",th.StringType),
-        th.Property("DeletedDate",th.DateTimeType),
-        th.Property("Division",th.StringType),
-        th.Property("EntityKey",th.StringType),
-        th.Property("EntityType",th.StringType),
-        th.Property("ID",th.StringType),
+        th.Property("Timestamp", th.StringType),
+        th.Property("DeletedBy", th.StringType),
+        th.Property("DeletedDate", th.DateTimeType),
+        th.Property("Division", th.StringType),
+        th.Property("EntityKey", th.StringType),
+        th.Property("EntityType", th.StringType),
+        th.Property("ID", th.StringType),
     ).to_dict()
 
     @property
     def select(self):
         return f"DeletedBy,ID,EntityType,EntityKey,Timestamp"
-    
+
     @property
     def path(self):
         url = "/sync/Deleted"
         if self.sync_all_divisions:
             return "/{division}" + url
         return url
+
+
+class GLAccountsStream(DynamicStream):
+    name = "gl_accounts"
+    primary_keys = ["ID"]
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("AllowCostsInSales", th.StringType),
+        th.Property("AssimilatedVATBox", th.NumberType),
+        th.Property("BalanceSide", th.StringType),
+        th.Property("BalanceType", th.StringType),
+        th.Property("BelcotaxType", th.NumberType),
+        th.Property("Code", th.StringType),
+        th.Property("Compress", th.BooleanType),
+        th.Property("Costcenter", th.StringType),
+        th.Property("CostcenterDescription", th.StringType),
+        th.Property("Costunit", th.StringType),
+        th.Property("CostunitDescription", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("CustomField", th.StringType),
+        th.Property("DeductibilityPercentages", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("ExcludeVATListing", th.StringType),
+        th.Property("ExpenseNonDeductiblePercentage", th.StringType),
+        th.Property("IsBlocked", th.BooleanType),
+        th.Property("Matching", th.BooleanType),
+        th.Property("ExcludeVATListing", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("PrivateGLAccount", th.StringType),
+        th.Property("PrivatePercentage", th.StringType),
+        th.Property("ReportingCode", th.StringType),
+        th.Property("RevalueCurrency", th.BooleanType),
+        th.Property("SearchCode", th.StringType),
+        th.Property("Type", th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        if self.sync_endpoint:
+            return f"/sync/financial/GLAccounts"
+        return f"/financial/GLAccounts"
+
+    @property
+    def select(self):
+        if self.sync_endpoint:
+            return f"ID,AllowCostsInSales,AssimilatedVATBox,BalanceSide,BalanceType,BelcotaxType,Code,Compress,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,CustomField,DeductibilityPercentages,Description,Division,ExcludeVATListing,ExpenseNonDeductiblePercentage,IsBlocked,Matching,Modified,Modifier,ModifierFullName,PrivateGLAccount,PrivatePercentage,ReportingCode,RevalueCurrency,SearchCode,Type,Timestamp"
+        return f"ID,AllowCostsInSales,AssimilatedVATBox,BalanceSide,BalanceType,BelcotaxType,Code,Compress,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,CustomField,DeductibilityPercentages,Description,Division,ExcludeVATListing,ExpenseNonDeductiblePercentage,IsBlocked,Matching,Modified,Modifier,ModifierFullName,PrivateGLAccount,PrivatePercentage,ReportingCode,RevalueCurrency,SearchCode,Type"

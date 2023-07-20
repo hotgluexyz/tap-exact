@@ -18,8 +18,8 @@ import datetime
 REPLICATION_INCREMENTAL = "INCREMENTAL"
 REPLICATION_LOG_BASED = "LOG_BASED"
 
-class ExactStream(RESTStream):
 
+class ExactStream(RESTStream):
     @property
     def exact_environment(self) -> str:
         refresh_token = self.config["refresh_token"].split(".")[0]
@@ -63,7 +63,9 @@ class ExactStream(RESTStream):
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
-        oauth_url = f"https://start.exactonline.{self.exact_environment}/api/oauth2/token"
+        oauth_url = (
+            f"https://start.exactonline.{self.exact_environment}/api/oauth2/token"
+        )
 
         return OAuth2Authenticator(self, self.config, auth_endpoint=oauth_url)
 
@@ -73,30 +75,32 @@ class ExactStream(RESTStream):
         if "user_agent" in self.config:
             headers["User-Agent"] = self.config.get("user_agent")
         return headers
-    
+
     @property
     def default_warehouse_uuid(self) -> str:
         if self.config.get("default_warehouse_id"):
             default_warehouse_id = self.config.get("default_warehouse_id")
-            url=f"{self.url_base}/inventory/Warehouses"
-            params={"$filter": f"Code eq '{default_warehouse_id}'"}
-            headers=self.authenticator.auth_headers
+            url = f"{self.url_base}/inventory/Warehouses"
+            params = {"$filter": f"Code eq '{default_warehouse_id}'"}
+            headers = self.authenticator.auth_headers
 
-            response = requests.request("GET", url=url, params=params,headers=headers)
+            response = requests.request("GET", url=url, params=params, headers=headers)
             res_json = self.xml_to_dict(response)
-            warehouse_uuid = res_json["feed"]["entry"]["content"]["m:properties"]["d:ID"]["#text"]
+            warehouse_uuid = res_json["feed"]["entry"]["content"]["m:properties"][
+                "d:ID"
+            ]["#text"]
             self._tap._config["warehouse_uuid"] = warehouse_uuid
             with open(self._tap.config_file, "w") as outfile:
                 json.dump(self._tap._config, outfile, indent=4)
             return warehouse_uuid
         return None
-    
+
     @property
     def sync_endpoint(self):
         if self.config.get("sync_endpoints") != None:
             return self.config.get("sync_endpoints")
         return False
-    
+
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
     ) -> Optional[Any]:
@@ -114,7 +118,7 @@ class ExactStream(RESTStream):
                     return next_page_token
         else:
             return None
-    
+
     def get_starting_time(self, context):
         start_date = self.config.get("start_date")
         if start_date:
@@ -132,9 +136,13 @@ class ExactStream(RESTStream):
         filter = None
         date_filter = None
         if self.config.get("sync_endpoints") != None:
-            if self.replication_key and self.replication_key !="Timestamp" and start_date:
+            if (
+                self.replication_key
+                and self.replication_key != "Timestamp"
+                and start_date
+            ):
                 start_date = start_date + datetime.timedelta(seconds=1)
-                start_date = start_date.strftime('%Y-%m-%dT%H:%M:%S')
+                start_date = start_date.strftime("%Y-%m-%dT%H:%M:%S")
                 date_filter = f"Modified gt datetime'{start_date}'"
             if hasattr(self, "filter"):
                 filter = self.filter
@@ -174,14 +182,28 @@ class ExactStream(RESTStream):
         return row
 
     def get_records(self, context: Optional[dict]) -> Iterable[Dict[str, Any]]:
-        use_sales_orders = self.config.get("use_sales_orders") if self.config.get("use_sales_orders") != None else True
-        use_sales_invoices = self.config.get("use_sales_invoices") if self.config.get("use_sales_invoices") != None else False
-        use_stock_multiple_warehouses = self.config.get("use_stock_multiple_warehouses") or False
-        if ((self.name == "sales_order" and not use_sales_orders) or 
-            (self.name == "sales_invoices" and not use_sales_invoices) or
-            (self.name == "warehouses" and use_stock_multiple_warehouses) or
-            (self.name == "logistics_stock_positions" and not use_stock_multiple_warehouses)
-            ):
+        use_sales_orders = (
+            self.config.get("use_sales_orders")
+            if self.config.get("use_sales_orders") != None
+            else True
+        )
+        use_sales_invoices = (
+            self.config.get("use_sales_invoices")
+            if self.config.get("use_sales_invoices") != None
+            else False
+        )
+        use_stock_multiple_warehouses = (
+            self.config.get("use_stock_multiple_warehouses") or False
+        )
+        if (
+            (self.name == "sales_order" and not use_sales_orders)
+            or (self.name == "sales_invoices" and not use_sales_invoices)
+            or (self.name == "warehouses" and use_stock_multiple_warehouses)
+            or (
+                self.name == "logistics_stock_positions"
+                and not use_stock_multiple_warehouses
+            )
+        ):
             pass
         else:
             for record in self.request_records(context):
@@ -201,4 +223,3 @@ class ExactStream(RESTStream):
         elif 400 <= response.status_code < 500:
             msg = self.response_error_message(response)
             raise FatalAPIError(msg)
-        
