@@ -1,7 +1,7 @@
-from typing import Any, Dict, Optional,List,Union
+from typing import Any, Dict, Optional, List, Union
 
 from tap_exact.client import ExactStream
-from singer_sdk.helpers._state import (increment_state, log_sort_error)
+from singer_sdk.helpers._state import increment_state, log_sort_error
 import datetime
 import pendulum
 import copy
@@ -15,8 +15,8 @@ PROGRESS_MARKER_NOTE = "Note"
 SIGNPOST_MARKER = "replication_key_signpost"
 STARTING_MARKER = "starting_replication_value"
 
+
 class ExactSyncStream(ExactStream):
-    
     def get_starting_time(self, context):
         state = self.get_context_state(context)
         rep_key = None
@@ -40,7 +40,7 @@ class ExactSyncStream(ExactStream):
         if next_page_token:
             params["$skiptoken"] = next_page_token
         return params
-    
+
     def get_starting_timestamp(
         self, context: Optional[dict]
     ) -> Optional[datetime.datetime]:
@@ -52,7 +52,7 @@ class ExactSyncStream(ExactStream):
         if isinstance(value, datetime.date):
             return None
         return value
-    
+
     def _increment_stream_state(
         self, latest_record: Dict[str, Any], *, context: Optional[dict] = None
     ) -> None:
@@ -77,9 +77,9 @@ class ExactSyncStream(ExactStream):
                     latest_record=latest_record,
                     is_sorted=treat_as_sorted,
                 )
-    
+
     def finalize_state_progress_markers(self, state: Optional[dict] = None) -> None:
-        #all logic is the same, only overwritten to use the customized finalize_state_progress_markers function for timestamp
+        # all logic is the same, only overwritten to use the customized finalize_state_progress_markers function for timestamp
         if state is None or state == {}:
             for child_stream in self.child_streams or []:
                 child_stream.finalize_state_progress_markers()
@@ -101,7 +101,7 @@ class ExactSyncStream(ExactStream):
         context_list: Optional[List[dict]]
         context_list = [context] if context is not None else self.partitions
         selected = self.selected
-        #all logic is the same, only overwritten to use the customized finalize_state_progress_markers function for timestamp
+        # all logic is the same, only overwritten to use the customized finalize_state_progress_markers function for timestamp
         for current_context in context_list or [{}]:
             partition_record_count = 0
             current_context = current_context or None
