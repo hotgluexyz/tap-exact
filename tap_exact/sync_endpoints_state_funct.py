@@ -1,7 +1,5 @@
 from typing import Optional
-from singer_sdk.helpers._state import (
-    reset_state_progress_markers
-)
+from singer_sdk.helpers._state import reset_state_progress_markers
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"
 REPLICATION_LOG_BASED = "LOG_BASED"
@@ -9,6 +7,7 @@ PROGRESS_MARKERS = "progress_markers"
 PROGRESS_MARKER_NOTE = "Note"
 SIGNPOST_MARKER = "replication_key_signpost"
 STARTING_MARKER = "starting_replication_value"
+
 
 def finalize_state_progress_markers(stream_or_partition_state: dict) -> Optional[dict]:
     # function for sync endpoints, only change signpost > than timestamp has been removed as timestamp is an integer that can´t be converted to a date
