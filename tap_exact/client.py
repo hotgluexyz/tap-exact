@@ -13,27 +13,20 @@ from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from time import sleep
 from singer_sdk.helpers._state import increment_state
 import datetime
-
+import re
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"
 REPLICATION_LOG_BASED = "LOG_BASED"
 
 
 class ExactStream(RESTStream):
-    @property
-    def exact_environment(self) -> str:
-        refresh_token = self.config["refresh_token"].split(".")[0]
-        if "US" in refresh_token:
-            return "com"
-        elif "UK" in refresh_token:
-            return "co.uk"
-        else:
-            return "nl"
 
     @property
     def url_base(self) -> str:
+        url = self.config.get("auth_url", "https://start.exactonline.nl/api/oauth2/token")
+        url = re.findall("(.*)/oauth2",url)[0]
         current_division = self.config.get("current_division")
-        url = f"https://start.exactonline.{self.exact_environment}/api/v1/{current_division}"
+        url = f"{url}/v1/{current_division}"
         return url
 
     records_jsonpath = "$.feed.entry[*]"
@@ -51,10 +44,7 @@ class ExactStream(RESTStream):
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
-        oauth_url = (
-            f"https://start.exactonline.{self.exact_environment}/api/oauth2/token"
-        )
-
+        oauth_url = self.config.get("auth_url", "https://start.exactonline.nl/api/oauth2/token")
         return OAuth2Authenticator(self, self.config, auth_endpoint=oauth_url)
 
     @property
