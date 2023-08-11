@@ -56,12 +56,14 @@ class OAuth2Authenticator(APIAuthenticatorBase):
         token_response = requests.post(
             self._auth_endpoint, data=self.oauth_request_body, headers=headers
         )
-
-        if (
-            token_response.json().get("error_description")
-            == "Rate limit exceeded: access_token not expired"
-        ):
-            return None
+        try:
+            if (
+                token_response.json().get("error_description")
+                == "Rate limit exceeded: access_token not expired"
+            ):
+                return None
+        except Exception as e:
+            raise Exception(f"Failed converting response to a json, OAuth response: {token_response.text}")
 
         try:
             token_response.raise_for_status()
