@@ -176,6 +176,7 @@ class ItemsStream(DynamicStream):
         """Return a context dictionary for child streams."""
         return {
             "item_id": record["ID"],
+            "division_id": record["Division"],
         }
 
 
@@ -1029,7 +1030,7 @@ class SalesInvoicesStream(DynamicStream):
 class SalesInvoiceLinesStream(ExactStream):
     name = "sales_invoice_lines"
     primary_keys = ["ID"]
-    path = "/salesinvoice/SalesInvoiceLines?$select=ID,AmountDC,ItemCode,InvoiceID,Quantity,SalesOrderNumber&$filter=InvoiceID eq guid'{invoice_id}'"
+    path = "/salesinvoice/SalesInvoiceLines?$select=ID,Item,AmountDC,ItemCode,InvoiceID,Quantity,SalesOrderNumber&$filter=InvoiceID eq guid'{invoice_id}'"
     select = None
     parent_stream_type = SalesInvoicesStream
 
@@ -1037,6 +1038,7 @@ class SalesInvoiceLinesStream(ExactStream):
         th.Property("ID", th.StringType),
         th.Property("AmountDC", th.StringType),
         th.Property("ItemCode", th.StringType),
+        th.Property("Item", th.StringType),
         th.Property("InvoiceID", th.StringType),
         th.Property("Quantity", th.StringType),
         th.Property("SalesOrderNumber", th.StringType),
@@ -1147,6 +1149,8 @@ class GLAccountsStream(DynamicStream):
         if self.sync_endpoint:
             return f"ID,AllowCostsInSales,AssimilatedVATBox,BalanceSide,BalanceType,BelcotaxType,Code,Compress,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,CustomField,DeductibilityPercentages,Description,Division,ExcludeVATListing,ExpenseNonDeductiblePercentage,IsBlocked,Matching,Modified,Modifier,ModifierFullName,PrivateGLAccount,PrivatePercentage,ReportingCode,RevalueCurrency,SearchCode,Type,Timestamp"
         return f"ID,AllowCostsInSales,AssimilatedVATBox,BalanceSide,BalanceType,BelcotaxType,Code,Compress,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,CustomField,DeductibilityPercentages,Description,Division,ExcludeVATListing,ExpenseNonDeductiblePercentage,IsBlocked,Matching,Modified,Modifier,ModifierFullName,PrivateGLAccount,PrivatePercentage,ReportingCode,RevalueCurrency,SearchCode,Type"
+
+
 class PurchaseInvoicesStream(DynamicStream):
     name = "purchase_invoices"
     primary_keys = ["ID"]
@@ -1169,10 +1173,14 @@ class PurchaseInvoicesStream(DynamicStream):
         th.Property("Modified", th.DateTimeType),
         th.Property("PaymentCondition", th.StringType),
         th.Property("PaymentReference", th.StringType),
-        th.Property("PurchaseInvoiceLines", th.CustomType({"type": ["object", "array"]})),
+        th.Property(
+            "PurchaseInvoiceLines", th.CustomType({"type": ["object", "array"]})
+        ),
         th.Property("Remarks", th.StringType),
         th.Property("Source", th.CustomType({"type": ["number", "string"]})),
-        th.Property("Status", th.CustomType({"type": ["number", "string"]})), # The status of the invoice. 10 Draft, 20 Open, 50 Processed.
+        th.Property(
+            "Status", th.CustomType({"type": ["number", "string"]})
+        ),  # The status of the invoice. 10 Draft, 20 Open, 50 Processed.
         th.Property("Supplier", th.StringType),
         th.Property("Type", th.CustomType({"type": ["number", "string"]})),
         th.Property("VATAmount", th.CustomType({"type": ["number", "string"]})),
@@ -1191,6 +1199,8 @@ class PurchaseInvoicesStream(DynamicStream):
         if self.sync_endpoint:
             return f"ID,Amount,ContactPerson,Currency,Description,Document,DueDate,EntryNumber,ExchangeRate,FinancialPeriod,FinancialYear,InvoiceDate,Journal,Modified,PaymentCondition,PaymentReference,PurchaseInvoiceLines,Remarks,Source,Status,Supplier,Type,VATAmount,Warehouse,YourRef,Timestamp"
         return f"ID,Amount,ContactPerson,Currency,Description,Document,DueDate,EntryNumber,ExchangeRate,FinancialPeriod,FinancialYear,InvoiceDate,Journal,Modified,PaymentCondition,PaymentReference,PurchaseInvoiceLines,Remarks,Source,Status,Supplier,Type,VATAmount,Warehouse,YourRef"
+
+
 class VatCodesStream(DynamicStream):
     name = "vat_codes"
     primary_keys = ["ID"]
@@ -1254,3 +1264,154 @@ class VatCodesStream(DynamicStream):
         if self.sync_endpoint:
             return f"ID,Account,AccountCode,AccountName,CalculationBasis,Charged,Code,Country,Created,Creator,CreatorFullName,CustomField,Description,Division,EUSalesListing,ExcludeVATListing,GLDiscountPurchase,GLDiscountPurchaseCode,GLDiscountPurchaseDescription,GLDiscountSales,GLDiscountSalesCode,GLDiscountSalesDescription,GLToClaim,GLToClaimCode,GLToClaimDescription,GLToPay,GLToPayCode,GLToPayDescription,IntraStat,IntrastatType,IsBlocked,LegalText,Modified,Modifier,ModifierFullName,Percentage,TaxReturnType,Type,VatDocType,VatMargin,VATPartialRatio,VATPercentages,VATTransactionType,Timestamp"
         return f"ID,Account,AccountCode,AccountName,CalculationBasis,Charged,Code,Country,Created,Creator,CreatorFullName,CustomField,Description,Division,EUSalesListing,ExcludeVATListing,GLDiscountPurchase,GLDiscountPurchaseCode,GLDiscountPurchaseDescription,GLDiscountSales,GLDiscountSalesCode,GLDiscountSalesDescription,GLToClaim,GLToClaimCode,GLToClaimDescription,GLToPay,GLToPayCode,GLToPayDescription,IntraStat,IntrastatType,IsBlocked,LegalText,Modified,Modifier,ModifierFullName,Percentage,TaxReturnType,Type,VatDocType,VatMargin,VATPartialRatio,VATPercentages,VATTransactionType"
+
+
+class BillOfMaterialsVersionsStream(DynamicStream):
+    name = "bill_of_materials_versions"
+    primary_keys = ["ID"]
+
+    @property
+    def path(self):
+        # Bill of materials versions doesnt have a sync endpoint
+        return f"/manufacturing/BillOfMaterialVersions"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("BatchQuantity", th.CustomType({"type": ["number", "string"]})),
+        th.Property("CadDrawingUrl", th.StringType),
+        th.Property("CalculatedCostPrice", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.CustomType({"type": ["number", "string"]})),
+        th.Property("IsDefault", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Item", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("OrderLeadDays", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ProductionLeadDays", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Status", th.CustomType({"type": ["number", "string"]})),
+        th.Property("StatusDescription", th.StringType),
+        th.Property("Type", th.CustomType({"type": ["number", "string"]})),
+        th.Property("TypeDescription", th.StringType),
+        th.Property("VersionDate", th.DateTimeType),
+        th.Property("VersionNumber", th.StringType),
+    ).to_dict()
+
+    @property
+    def select(self):
+        return "ID,BatchQuantity,CadDrawingUrl,CalculatedCostPrice,Created,Creator,CreatorFullName,Description,Division,IsDefault,Item,ItemDescription,Modified,Modifier,ModifierFullName,Notes,OrderLeadDays,ProductionLeadDays,Status,StatusDescription,Type,TypeDescription,VersionDate,VersionNumber"
+
+    def get_child_context(self, record, context):
+        return {
+            "bill_of_material_id": record["ID"],
+            "division_id": self.config.get("current_division"),
+        }
+
+
+
+class ManufacturingShopOrdersStream(DynamicStream):
+    name = "manufacturing_shop_orders"
+    primary_keys = ["ID"]
+    replication_key = "Modified"
+
+    @property
+    def path(self):
+        if self.sync_endpoint:
+            return f"/sync/manufacturing/ShopOrders"
+        return f"/manufacturing/ShopOrders"
+
+    schema = th.PropertiesList(
+        th.Property("CADDrawingURL", th.StringType),
+        th.Property("Costcenter", th.StringType),
+        th.Property("CostcenterDescription", th.StringType),
+        th.Property("Costunit", th.StringType),
+        th.Property("CostunitDescription", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.CustomType({"type": ["number", "string"]})),
+        th.Property("EntryDate", th.DateTimeType),
+        th.Property("ID", th.StringType),
+        th.Property("IsBatch", th.CustomType({"type": ["number", "string"]})),
+        th.Property("IsFractionAllowedItem", th.CustomType({"type": ["number", "string"]})),
+        th.Property("IsInPlanning", th.CustomType({"type": ["number", "string"]})),
+        th.Property("IsOnHold", th.CustomType({"type": ["number", "string"]})),
+        th.Property("IsReleased", th.CustomType({"type": ["number", "string"]})),
+        th.Property("IsSerial", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Item", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("ItemPictureUrl", th.StringType),
+        th.Property("ItemVersion", th.StringType),
+        th.Property("ItemVersionDescription", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("PlannedDate", th.DateTimeType),
+        th.Property("PlannedQuantity", th.CustomType({"type": ["number", "string"]})),
+        th.Property("PlannedStartDate", th.DateTimeType),
+        th.Property("ProducedQuantity", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ProductionLeadDays", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Project", th.StringType),
+        th.Property("ProjectDescription", th.StringType),
+        th.Property("ReadyToShipQuantity", th.CustomType({"type": ["number", "string"]})),
+        th.Property("SalesOrderLineCount", th.CustomType({"type": ["number", "string"]})),
+        th.Property("SelectionCode", th.StringType),
+        th.Property("SelectionCodeCode", th.StringType),
+        th.Property("SelectionCodeDescription", th.StringType),
+        th.Property("ShopOrderMain", th.StringType),
+        th.Property("ShopOrderMainNumber", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ShopOrderByProductPlanCount", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ShopOrderByProductPlanBackflushCount", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ShopOrderMaterialPlanCount", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ShopOrderMaterialPlanBackflushCount", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ShopOrderNumber", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ShopOrderNumberString", th.StringType),
+        th.Property("ShopOrderParent", th.StringType),
+        th.Property("ShopOrderParentNumber", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ShopOrderRoutingStepPlanCount", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Status", th.CustomType({"type": ["number", "string"]})),
+        th.Property("SubShopOrderCount", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Type", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Unit", th.StringType),
+        th.Property("UnitDescription", th.StringType),
+        th.Property("Warehouse", th.StringType),
+        th.Property("YourRef", th.StringType),
+    ).to_dict()
+
+    @property
+    def select(self):
+        if self.sync_endpoint:
+            return f"ID,CADDrawingURL,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,Description,Division,EntryDate,IsBatch,IsFractionAllowedItem,IsInPlanning,IsOnHold,IsReleased,IsSerial,Item,ItemCode,ItemDescription,ItemPictureUrl,ItemVersion,ItemVersionDescription,Modified,Modifier,ModifierFullName,Notes,PlannedDate,PlannedQuantity,PlannedStartDate,ProducedQuantity,ProductionLeadDays,Project,ProjectDescription,ReadyToShipQuantity,SalesOrderLineCount,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShopOrderByProductPlanBackflushCount,ShopOrderByProductPlanCount,ShopOrderMain,ShopOrderMainNumber,ShopOrderMaterialPlanBackflushCount,ShopOrderMaterialPlanCount,ShopOrderNumber,ShopOrderNumberString,ShopOrderParent,ShopOrderParentNumber,ShopOrderRoutingStepPlanCount,Status,SubShopOrderCount,Type,Unit,UnitDescription,Warehouse,YourRef"
+        return f"ID,CADDrawingURL,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,Description,Division,EntryDate,IsBatch,IsFractionAllowedItem,IsInPlanning,IsOnHold,IsReleased,IsSerial,Item,ItemCode,ItemDescription,ItemPictureUrl,ItemVersion,ItemVersionDescription,Modified,Modifier,ModifierFullName,Notes,PlannedDate,PlannedQuantity,PlannedStartDate,ProducedQuantity,ProductionLeadDays,Project,ProjectDescription,ReadyToShipQuantity,SalesOrderLineCount,SalesOrderLines,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShopOrderByProductPlanBackflushCount,ShopOrderByProductPlanCount,ShopOrderMain,ShopOrderMainNumber,ShopOrderMaterialPlanBackflushCount,ShopOrderMaterialPlanCount,ShopOrderMaterialPlans,ShopOrderNumber,ShopOrderNumberString,ShopOrderParent,ShopOrderParentNumber,ShopOrderRoutingStepPlanCount,ShopOrderRoutingStepPlans,Status,SubShopOrderCount,Type,Unit,UnitDescription,Warehouse,YourRef"
+
+# class BillOfMaterialDownloadStream(DynamicStream):
+#     # Download Streams don't have a sync endpoint
+#     dont_use_current_division = True
+
+#     name = "bill_of_material_download"
+#     primary_keys = ["ID"]
+#     parent_stream_type = BillOfMaterialsVersionsStream
+#     ignore_parent_replication_keys = True
+
+#     @property
+#     def path(self):
+#         return f"/docs/XMLDownload.aspx"
+    
+#     def get_url_params(self, context, next_page_token):
+#         return {
+#             "Topic": "BillOfMaterials",
+#             "Params_DownloadID": context["bill_of_material_id"],
+#             "_Division_": context["division_id"],
+#         }
+
+#     schema = th.PropertiesList(
+#         th.Property("ID", th.StringType),
+#     ).to_dict()
