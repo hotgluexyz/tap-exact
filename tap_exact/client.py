@@ -20,11 +20,15 @@ REPLICATION_LOG_BASED = "LOG_BASED"
 
 
 class ExactStream(RESTStream):
+    dont_use_current_division = False
 
     @property
     def url_base(self) -> str:
         url = self.config.get("auth_url", "https://start.exactonline.nl/api/oauth2/token")
         url = re.findall("(.*)/oauth2",url)[0]
+        if self.dont_use_current_division:
+            return url.replace("/api", "")
+
         current_division = self.config.get("current_division")
         url = f"{url}/v1/{current_division}"
         return url
