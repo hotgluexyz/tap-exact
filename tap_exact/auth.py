@@ -73,6 +73,9 @@ class OAuth2Authenticator(APIAuthenticatorBase):
                 f"Failed OAuth login, response was '{token_response.json()}'. {ex}"
             )
         token_json = token_response.json()
+        #Log the refresh_token
+        self.logger.info(f"Latest refresh token: {token_json['refresh_token']}")
+
         self.access_token = token_json["access_token"]
 
         self._tap._config["access_token"] = token_json["access_token"]
