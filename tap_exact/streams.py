@@ -1426,7 +1426,7 @@ class BillOfMaterialDownloadStream(ExactStream):
     def get_url_params(self, context, next_page_token):
         return {
             "Topic": "BillOfMaterials",
-            "Params_DownloadID": "f_new_materials_DownloadID",
+            "Params_DownloadID": self.config.get("download_id", "f_new_materials_DownloadID"),
             "_Division_": self.config.get("current_division"),
         }
 
