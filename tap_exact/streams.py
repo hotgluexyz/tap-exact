@@ -1306,13 +1306,6 @@ class BillOfMaterialsVersionsStream(DynamicStream):
     def select(self):
         return "ID,BatchQuantity,CadDrawingUrl,CalculatedCostPrice,Created,Creator,CreatorFullName,Description,Division,IsDefault,Item,ItemDescription,Modified,Modifier,ModifierFullName,Notes,OrderLeadDays,ProductionLeadDays,Status,StatusDescription,Type,TypeDescription,VersionDate,VersionNumber"
 
-    def get_child_context(self, record, context):
-        return {
-            "bill_of_material_id": record["ID"],
-            "division_id": self.config.get("current_division"),
-        }
-
-
 
 class ManufacturingShopOrdersStream(DynamicStream):
     name = "manufacturing_shop_orders"
@@ -1392,26 +1385,79 @@ class ManufacturingShopOrdersStream(DynamicStream):
             return f"ID,CADDrawingURL,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,Description,Division,EntryDate,IsBatch,IsFractionAllowedItem,IsInPlanning,IsOnHold,IsReleased,IsSerial,Item,ItemCode,ItemDescription,ItemPictureUrl,ItemVersion,ItemVersionDescription,Modified,Modifier,ModifierFullName,Notes,PlannedDate,PlannedQuantity,PlannedStartDate,ProducedQuantity,ProductionLeadDays,Project,ProjectDescription,ReadyToShipQuantity,SalesOrderLineCount,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShopOrderByProductPlanBackflushCount,ShopOrderByProductPlanCount,ShopOrderMain,ShopOrderMainNumber,ShopOrderMaterialPlanBackflushCount,ShopOrderMaterialPlanCount,ShopOrderNumber,ShopOrderNumberString,ShopOrderParent,ShopOrderParentNumber,ShopOrderRoutingStepPlanCount,Status,SubShopOrderCount,Type,Unit,UnitDescription,Warehouse,YourRef"
         return f"ID,CADDrawingURL,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,Description,Division,EntryDate,IsBatch,IsFractionAllowedItem,IsInPlanning,IsOnHold,IsReleased,IsSerial,Item,ItemCode,ItemDescription,ItemPictureUrl,ItemVersion,ItemVersionDescription,Modified,Modifier,ModifierFullName,Notes,PlannedDate,PlannedQuantity,PlannedStartDate,ProducedQuantity,ProductionLeadDays,Project,ProjectDescription,ReadyToShipQuantity,SalesOrderLineCount,SalesOrderLines,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShopOrderByProductPlanBackflushCount,ShopOrderByProductPlanCount,ShopOrderMain,ShopOrderMainNumber,ShopOrderMaterialPlanBackflushCount,ShopOrderMaterialPlanCount,ShopOrderMaterialPlans,ShopOrderNumber,ShopOrderNumberString,ShopOrderParent,ShopOrderParentNumber,ShopOrderRoutingStepPlanCount,ShopOrderRoutingStepPlans,Status,SubShopOrderCount,Type,Unit,UnitDescription,Warehouse,YourRef"
 
-# class BillOfMaterialDownloadStream(DynamicStream):
-#     # Download Streams don't have a sync endpoint
-#     dont_use_current_division = True
 
-#     name = "bill_of_material_download"
-#     primary_keys = ["ID"]
-#     parent_stream_type = BillOfMaterialsVersionsStream
-#     ignore_parent_replication_keys = True
+class BillOfMaterialDownloadStream(ExactStream):
+    # Download Streams don't have a sync endpoint
+    # Obs: This endpoint is going to be very hard to replicate 
+    # in development environment if the data is not persistent
+    # after one download.
 
-#     @property
-#     def path(self):
-#         return f"/docs/XMLDownload.aspx"
+    dont_use_current_division = True
+
+    name = "bill_of_material_download"
+    primary_keys = ["ID"]
+    records_jsonpath = "$.eExact.BillOfMaterials.[*]"
+    replication_key = None
+
+
+    schema = th.PropertiesList(
+        th.Property("Id", th.StringType()),
+        th.Property("Code", th.StringType()),
+        th.Property("Description", th.StringType()),
+        th.Property("CostPrice", th.StringType()),
+        th.Property("BatchQuantity", th.StringType()),
+        th.Property("AssembledLeadDays", th.StringType()),
+        th.Property("AssembledAtDelivery", th.StringType()),
+        th.Property("BillOfMaterialItemDetails", th.ArrayType(
+            th.ObjectType(
+                th.Property("Id", th.StringType()),
+                th.Property("LineNumber", th.StringType()),
+                th.Property("Description", th.StringType()),
+                th.Property("QuantityPerBatch", th.StringType()),
+                th.Property("Notes", th.StringType()),
+            )
+        )),
+    ).to_dict()
+
+    @property
+    def path(self):
+        return f"/docs/XMLDownload.aspx"
     
-#     def get_url_params(self, context, next_page_token):
-#         return {
-#             "Topic": "BillOfMaterials",
-#             "Params_DownloadID": context["bill_of_material_id"],
-#             "_Division_": context["division_id"],
-#         }
+    def get_url_params(self, context, next_page_token):
+        return {
+            "Topic": "BillOfMaterials",
+            "Params_DownloadID": "f_new_materials_DownloadID",
+            "_Division_": self.config.get("current_division"),
+        }
 
-#     schema = th.PropertiesList(
-#         th.Property("ID", th.StringType),
-#     ).to_dict()
+    def post_process(self, row: dict, context: Optional[dict]) -> dict:
+        row = row["BillOfMaterial"]
+        content = {}
+        for key, value in row.items():
+            if isinstance(value, (str, int, float)):
+                content[key] = value
+
+        for key, value in row.get("Item", {}).items():
+            if "@" in key:
+                key = key[1:].capitalize()
+            content[key] = value
+        content["Id"] = content["Id"].replace("{", "").replace("}", "")
+        content['BillOfMaterialItemDetails'] = []
+        bom_item_detail = row["BillOfMaterialItemDetails"]["BillOfMaterialItemDetail"]
+
+        if isinstance(bom_item_detail, dict):
+            bom_item_detail = [bom_item_detail]
+
+        for item_detail in bom_item_detail:
+            item_detail_content = {}
+            for key, value in item_detail.items():
+                if isinstance(value, (str, int, float)):
+                    if "@" in key:
+                        key = key[1:].capitalize()
+                    item_detail_content[key] = value
+                
+                item_detail_content["ItemId"] = item_detail["Item"]["@ID"].replace("{", "").replace("}", "")
+                item_detail_content["ItemCode"] = item_detail["Item"]["@code"]
+
+            content['BillOfMaterialItemDetails'].append(item_detail_content)
+        return content

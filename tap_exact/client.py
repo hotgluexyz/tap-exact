@@ -67,6 +67,7 @@ class ExactStream(RESTStream):
             headers = self.authenticator.auth_headers
 
             response = requests.request("GET", url=url, params=params, headers=headers)
+            self.validate_response(response)
             res_json = self.xml_to_dict(response)
             warehouse_uuid = res_json["feed"]["entry"]["content"]["m:properties"][
                 "d:ID"
@@ -87,7 +88,7 @@ class ExactStream(RESTStream):
         self, response: requests.Response, previous_token: Optional[Any]
     ) -> Optional[Any]:
         res_json = self.xml_to_dict(response)
-        if "link" in res_json["feed"].keys():
+        if "link" in res_json.get("feed", {}).keys():
             link_dict = {}
             links = res_json["feed"]["link"]
             if type(links) == list:
@@ -139,7 +140,10 @@ class ExactStream(RESTStream):
         return params
 
     def xml_to_dict(self, response):
-        data = json.loads(json.dumps(xmltodict.parse(response.text)))
+        try:
+            data = json.loads(json.dumps(xmltodict.parse(response.text)))
+        except:
+            data = json.loads(json.dumps(xmltodict.parse(response.content.decode("utf-8-sig").encode("utf-8"))))
         return data
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
