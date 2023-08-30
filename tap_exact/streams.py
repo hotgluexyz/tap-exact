@@ -953,8 +953,9 @@ class PurchaseOrderLinesStream(ExactStream):
         return f"ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Description,Discount,Division,Expense,ExpenseDescription,InStock,InvoicedQuantity,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,Project,ProjectCode,ProjectDescription,ProjectedStock,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceivedQuantity,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SupplierItemCode,SupplierItemCopyRemarks,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage"
 
 
-class SupplierStream(DynamicStream):
-    name = "suppliers"
+
+class AccountsStream(DynamicStream):
+    name = "accounts"
     primary_keys = ["ID"]
     replication_key = "Modified"
 
@@ -973,12 +974,32 @@ class SupplierStream(DynamicStream):
         if self.sync_endpoint:
             return f"/sync/CRM/Accounts"
         return f"/crm/Accounts"
-
+    
     @property
     def select(self):
         if self.sync_endpoint:
             return f"ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier"
         return f"ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier"
+
+
+class SupplierStream(AccountsStream):
+    name = "suppliers"
+    primary_keys = ["ID"]
+    replication_key = "Modified"
+    
+    @property
+    def filter(self):
+        if not self.sync_endpoint:
+            return "IsSupplier eq true"
+    
+    def post_process(self, row, context):
+        row = super().post_process(row, context)
+
+        if not self.sync_endpoint:
+            return row
+        
+        if row.get("IsSupplier"):
+            return row
 
 
 class SalesInvoicesStream(DynamicStream):
