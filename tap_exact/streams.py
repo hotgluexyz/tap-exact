@@ -1452,33 +1452,42 @@ class BillOfMaterialDownloadStream(ExactStream):
         }
 
     def post_process(self, row: dict, context: Optional[dict]) -> dict:
-        row = row["BillOfMaterial"]
-        content = {}
-        for key, value in row.items():
-            if isinstance(value, (str, int, float)):
-                content[key] = value
+        self.logger.info(f"Processing row {row}")
+        rows = row["BillOfMaterial"]
+        if isinstance(rows, dict):
+            self.logger.info(f"Row has single Download")
+            rows = [rows]
 
-        for key, value in row.get("Item", {}).items():
-            if "@" in key:
-                key = key[1:].capitalize()
-            content[key] = value
-        content["Id"] = content["Id"].replace("{", "").replace("}", "")
-        content['BillOfMaterialItemDetails'] = []
-        bom_item_detail = row["BillOfMaterialItemDetails"]["BillOfMaterialItemDetail"]
-
-        if isinstance(bom_item_detail, dict):
-            bom_item_detail = [bom_item_detail]
-
-        for item_detail in bom_item_detail:
-            item_detail_content = {}
-            for key, value in item_detail.items():
+        all_content = []
+        for input_row in rows:
+            content = {}
+            for key, value in input_row.items():
                 if isinstance(value, (str, int, float)):
-                    if "@" in key:
-                        key = key[1:].capitalize()
-                    item_detail_content[key] = value
-                
-                item_detail_content["ItemId"] = item_detail["Item"]["@ID"].replace("{", "").replace("}", "")
-                item_detail_content["ItemCode"] = item_detail["Item"]["@code"]
+                    content[key] = value
 
-            content['BillOfMaterialItemDetails'].append(item_detail_content)
-        return content
+            for key, value in input_row.get("Item", {}).items():
+                if "@" in key:
+                    key = key[1:].capitalize()
+                content[key] = value
+            content["Id"] = content["Id"].replace("{", "").replace("}", "")
+            content['BillOfMaterialItemDetails'] = []
+            bom_item_detail = input_row["BillOfMaterialItemDetails"]["BillOfMaterialItemDetail"]
+
+            if isinstance(bom_item_detail, dict):
+                bom_item_detail = [bom_item_detail]
+
+            for item_detail in bom_item_detail:
+                item_detail_content = {}
+                for key, value in item_detail.items():
+                    if isinstance(value, (str, int, float)):
+                        if "@" in key:
+                            key = key[1:].capitalize()
+                        item_detail_content[key] = value
+                    
+                    item_detail_content["ItemId"] = item_detail["Item"]["@ID"].replace("{", "").replace("}", "")
+                    item_detail_content["ItemCode"] = item_detail["Item"]["@code"]
+
+                content['BillOfMaterialItemDetails'].append(item_detail_content)
+            all_content.append(content)
+    
+        return all_content
