@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 from typing import Any, Dict, Optional
+import backoff
 
 import requests
 from singer_sdk.authenticators import APIAuthenticatorBase
@@ -51,6 +52,7 @@ class OAuth2Authenticator(APIAuthenticatorBase):
 
         return not ((expires_in - now) < 120)
 
+    @backoff.on_exception(backoff.expo, Exception, max_tries=3,interval = 2)
     def update_access_token(self) -> None:
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         token_response = requests.post(
