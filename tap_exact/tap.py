@@ -24,6 +24,7 @@ from tap_exact.streams import (
     MeStream,
     DivisionsStream,
     GLAccountsStream,
+    PurchaseInvoicesStream,
 )
 
 STREAM_TYPES = [
@@ -44,6 +45,7 @@ STREAM_TYPES = [
     MeStream,
     DivisionsStream,
     GLAccountsStream,
+    PurchaseInvoicesStream,
 ]
 
 

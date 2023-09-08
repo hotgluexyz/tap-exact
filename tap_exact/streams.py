@@ -1282,6 +1282,56 @@ class Deleted(ExactSyncStream):
         return url
 
 
+class PurchaseInvoicesStream(DynamicStream):
+    name = "purchase_invoices"
+    primary_keys = ["ID"]
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Amount", th.StringType),
+        th.Property("ContactPerson", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Document", th.StringType),
+        th.Property("DueDate", th.DateTimeType),
+        th.Property("EntryNumber", th.CustomType({"type": ["number", "string"]})),
+        th.Property("ExchangeRate", th.StringType),
+        th.Property("FinancialPeriod", th.StringType),
+        th.Property("FinancialYear", th.StringType),
+        th.Property("InvoiceDate", th.DateTimeType),
+        th.Property("Journal", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("PaymentCondition", th.StringType),
+        th.Property("PaymentReference", th.StringType),
+        th.Property(
+            "PurchaseInvoiceLines", th.CustomType({"type": ["object", "array"]})
+        ),
+        th.Property("Remarks", th.StringType),
+        th.Property("Source", th.CustomType({"type": ["number", "string"]})),
+        th.Property(
+            "Status", th.CustomType({"type": ["number", "string"]})
+        ),  # The status of the invoice. 10 Draft, 20 Open, 50 Processed.
+        th.Property("Supplier", th.StringType),
+        th.Property("Type", th.CustomType({"type": ["number", "string"]})),
+        th.Property("VATAmount", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Warehouse", th.StringType),
+        th.Property("YourRef", th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        if self.sync_endpoint:
+            return f"/sync/purchase/PurchaseInvoices"
+        return f"/purchase/PurchaseInvoices"
+
+    @property
+    def select(self):
+        if self.sync_endpoint:
+            return f"ID,Amount,ContactPerson,Currency,Description,Document,DueDate,EntryNumber,ExchangeRate,FinancialPeriod,FinancialYear,InvoiceDate,Journal,Modified,PaymentCondition,PaymentReference,PurchaseInvoiceLines,Remarks,Source,Status,Supplier,Type,VATAmount,Warehouse,YourRef,Timestamp"
+        return f"ID,Amount,ContactPerson,Currency,Description,Document,DueDate,EntryNumber,ExchangeRate,FinancialPeriod,FinancialYear,InvoiceDate,Journal,Modified,PaymentCondition,PaymentReference,PurchaseInvoiceLines,Remarks,Source,Status,Supplier,Type,VATAmount,Warehouse,YourRef"
+
+
 class GLAccountsStream(DynamicStream):
     name = "gl_accounts"
     primary_keys = ["ID"]
