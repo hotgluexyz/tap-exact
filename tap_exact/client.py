@@ -71,13 +71,20 @@ class ExactStream(RESTStream):
             self.logger.info(f"RESPONSE TEXT : {response.text}")
             self.validate_response(response)
             res_json = self.xml_to_dict(response)
-            warehouse_uuid = res_json["feed"]["entry"]["content"]["m:properties"][
-                "d:ID"
-            ]["#text"]
+
+            warehouse_res = res_json["feed"].get("entry")
+            if warehouse_res:
+                warehouse_uuid = warehouse_res["content"]["m:properties"][
+                    "d:ID"
+                ]["#text"]
+            else:
+                raise Exception(f"No warehouses found with Code {default_warehouse_id}")
+            
             self._tap._config["warehouse_uuid"] = warehouse_uuid
             with open(self._tap.config_file, "w") as outfile:
                 json.dump(self._tap._config, outfile, indent=4)
             return warehouse_uuid
+            
         return None
 
     @property
