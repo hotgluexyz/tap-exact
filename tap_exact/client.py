@@ -64,9 +64,11 @@ class ExactStream(RESTStream):
             default_warehouse_id = self.config.get("default_warehouse_id")
             url = f"{self.url_base}/inventory/Warehouses"
             params = {"$filter": f"Code eq '{default_warehouse_id}'"}
+            self.logger.info(f"PARAMS - {params}")
             headers = self.authenticator.auth_headers
 
             response = requests.request("GET", url=url, params=params, headers=headers)
+            self.logger.info(f"RESPONSE TEXT : {response.text}")
             self.validate_response(response)
             res_json = self.xml_to_dict(response)
             warehouse_uuid = res_json["feed"]["entry"]["content"]["m:properties"][
