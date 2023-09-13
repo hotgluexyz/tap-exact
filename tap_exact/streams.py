@@ -1491,3 +1491,46 @@ class BillOfMaterialDownloadStream(ExactStream):
             all_content.append(content)
     
         return all_content
+
+
+class GoodsReceiptLinesStream(ExactStream):
+    name = "good_receipt_lines_stream"
+    primary_keys = ["ID"]
+    replication_key = "Modified"
+
+    @property
+    def path(self):
+        return f"/purchaseorder/GoodsReceiptLines"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property('Item', th.StringType),
+        th.Property('ItemCode', th.StringType),
+        th.Property('ItemDescription', th.StringType),
+        th.Property('ItemUnitCode', th.StringType),
+        th.Property('LineNumber', th.StringType),
+        th.Property('Location', th.StringType),
+        th.Property('LocationCode', th.StringType),
+        th.Property('LocationDescription', th.StringType),
+        th.Property('Modifier', th.StringType),
+        th.Property('ModifierFullName', th.StringType),
+        th.Property('Notes', th.StringType),
+        th.Property('Project', th.StringType),
+        th.Property('ProjectCode', th.StringType),
+        th.Property('ProjectDescription', th.StringType),
+        th.Property('PurchaseOrderLineID', th.StringType),
+        th.Property('PurchaseOrderID', th.StringType),
+        th.Property('PurchaseOrderNumber', th.StringType),
+        th.Property('QuantityOrdered', th.StringType),
+        th.Property('QuantityReceived', th.StringType),
+        th.Property('Rebill', th.StringType),
+        th.Property('SupplierItemCode', th.StringType)
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,BatchNumbers,Created,Creator,CreatorFullName,Description,Division,Expense,ExpenseDescription,GoodsReceiptID,Item,ItemCode,ItemDescription,ItemUnitCode,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderID,PurchaseOrderLineID,PurchaseOrderNumber,QuantityOrdered,QuantityReceived,Rebill,SerialNumbers,SupplierItemCode"
+
+    def post_process(self, row: dict, context: Optional[dict]) -> dict:
+        return super().post_process(row, context)
