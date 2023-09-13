@@ -1422,22 +1422,24 @@ class BillOfMaterialDownloadStream(ExactStream):
 
 
     schema = th.PropertiesList(
-        th.Property("Id", th.StringType()),
-        th.Property("Code", th.StringType()),
-        th.Property("Description", th.StringType()),
-        th.Property("CostPrice", th.StringType()),
-        th.Property("BatchQuantity", th.StringType()),
-        th.Property("AssembledLeadDays", th.StringType()),
-        th.Property("AssembledAtDelivery", th.StringType()),
-        th.Property("BillOfMaterialItemDetails", th.ArrayType(
-            th.ObjectType(
-                th.Property("Id", th.StringType()),
-                th.Property("LineNumber", th.StringType()),
-                th.Property("Description", th.StringType()),
-                th.Property("QuantityPerBatch", th.StringType()),
-                th.Property("Notes", th.StringType()),
-            )
-        )),
+        th.Property("Items", th.ArrayType(th.ObjectType(
+                    th.Property("Id", th.StringType()),
+                    th.Property("Code", th.StringType()),
+                    th.Property("Description", th.StringType()),
+                    th.Property("CostPrice", th.StringType()),
+                    th.Property("BatchQuantity", th.StringType()),
+                    th.Property("AssembledLeadDays", th.StringType()),
+                    th.Property("AssembledAtDelivery", th.StringType()),
+                    th.Property("BillOfMaterialItemDetails", th.ArrayType(
+                        th.ObjectType(
+                            th.Property("Id", th.StringType()),
+                            th.Property("LineNumber", th.StringType()),
+                            th.Property("Description", th.StringType()),
+                            th.Property("QuantityPerBatch", th.StringType()),
+                            th.Property("Notes", th.StringType()),
+                        )
+                ))
+        )))
     ).to_dict()
 
     @property
@@ -1451,34 +1453,87 @@ class BillOfMaterialDownloadStream(ExactStream):
             "_Division_": self.config.get("current_division"),
         }
 
+    def parse_response(self, response):
+        for row in super().parse_response(response):
+            yield row["BillOfMaterial"]
+
     def post_process(self, row: dict, context: Optional[dict]) -> dict:
-        row = row["BillOfMaterial"]
-        content = {}
-        for key, value in row.items():
-            if isinstance(value, (str, int, float)):
-                content[key] = value
-
-        for key, value in row.get("Item", {}).items():
-            if "@" in key:
-                key = key[1:].capitalize()
-            content[key] = value
-        content["Id"] = content["Id"].replace("{", "").replace("}", "")
-        content['BillOfMaterialItemDetails'] = []
-        bom_item_detail = row["BillOfMaterialItemDetails"]["BillOfMaterialItemDetail"]
-
-        if isinstance(bom_item_detail, dict):
-            bom_item_detail = [bom_item_detail]
-
-        for item_detail in bom_item_detail:
-            item_detail_content = {}
-            for key, value in item_detail.items():
+        self.logger.info(f"Processing row {row}")
+        content_list = []
+        rows = row
+        if isinstance(rows, dict):
+            rows = [row]
+        for row in rows:
+            content = {}
+            for key, value in row.items():
                 if isinstance(value, (str, int, float)):
-                    if "@" in key:
-                        key = key[1:].capitalize()
-                    item_detail_content[key] = value
-                
-                item_detail_content["ItemId"] = item_detail["Item"]["@ID"].replace("{", "").replace("}", "")
-                item_detail_content["ItemCode"] = item_detail["Item"]["@code"]
+                    content[key] = value
 
-            content['BillOfMaterialItemDetails'].append(item_detail_content)
-        return content
+            for key, value in row.get("Item", {}).items():
+                if "@" in key:
+                    key = key[1:].capitalize()
+                content[key] = value
+            content["Id"] = content["Id"].replace("{", "").replace("}", "")
+            content['BillOfMaterialItemDetails'] = []
+            bom_item_detail = row["BillOfMaterialItemDetails"]["BillOfMaterialItemDetail"]
+
+            if isinstance(bom_item_detail, dict):
+                bom_item_detail = [bom_item_detail]
+
+            for item_detail in bom_item_detail:
+                item_detail_content = {}
+                for key, value in item_detail.items():
+                    if isinstance(value, (str, int, float)):
+                        if "@" in key:
+                            key = key[1:].capitalize()
+                        item_detail_content[key] = value
+                    
+                    item_detail_content["ItemId"] = item_detail["Item"]["@ID"].replace("{", "").replace("}", "")
+                    item_detail_content["ItemCode"] = item_detail["Item"]["@code"]
+
+                content['BillOfMaterialItemDetails'].append(item_detail_content)
+            content_list.append(content)
+        return {"Items": content_list}
+
+
+class GoodsReceiptLinesStream(ExactStream):
+    name = "good_receipt_lines_stream"
+    primary_keys = ["ID"]
+    replication_key = "Modified"
+
+    @property
+    def path(self):
+        return f"/purchaseorder/GoodsReceiptLines"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property('Item', th.StringType),
+        th.Property('ItemCode', th.StringType),
+        th.Property('ItemDescription', th.StringType),
+        th.Property('ItemUnitCode', th.StringType),
+        th.Property('LineNumber', th.StringType),
+        th.Property('Location', th.StringType),
+        th.Property('LocationCode', th.StringType),
+        th.Property('LocationDescription', th.StringType),
+        th.Property('Modifier', th.StringType),
+        th.Property('ModifierFullName', th.StringType),
+        th.Property('Notes', th.StringType),
+        th.Property('Project', th.StringType),
+        th.Property('ProjectCode', th.StringType),
+        th.Property('ProjectDescription', th.StringType),
+        th.Property('PurchaseOrderLineID', th.StringType),
+        th.Property('PurchaseOrderID', th.StringType),
+        th.Property('PurchaseOrderNumber', th.StringType),
+        th.Property('QuantityOrdered', th.StringType),
+        th.Property('QuantityReceived', th.StringType),
+        th.Property('Rebill', th.StringType),
+        th.Property('SupplierItemCode', th.StringType)
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,BatchNumbers,Created,Creator,CreatorFullName,Description,Division,Expense,ExpenseDescription,GoodsReceiptID,Item,ItemCode,ItemDescription,ItemUnitCode,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderID,PurchaseOrderLineID,PurchaseOrderNumber,QuantityOrdered,QuantityReceived,Rebill,SerialNumbers,SupplierItemCode"
+
+    def post_process(self, row: dict, context: Optional[dict]) -> dict:
+        return super().post_process(row, context)
