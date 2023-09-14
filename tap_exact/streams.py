@@ -1507,7 +1507,15 @@ class GoodsReceiptLinesStream(ExactStream):
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
-        th.Property("Modified", th.DateTimeType),
+        th.Property('BatchNumbers', th.StringType),
+        th.Property('Created', th.StringType),
+        th.Property('Creator', th.StringType),
+        th.Property('CreatorFullName', th.StringType),
+        th.Property('Description', th.StringType),
+        th.Property('Division', th.StringType),
+        th.Property('Expense', th.StringType),
+        th.Property('ExpenseDescription', th.StringType),
+        th.Property('GoodsReceiptID', th.StringType),
         th.Property('Item', th.StringType),
         th.Property('ItemCode', th.StringType),
         th.Property('ItemDescription', th.StringType),
@@ -1516,6 +1524,7 @@ class GoodsReceiptLinesStream(ExactStream):
         th.Property('Location', th.StringType),
         th.Property('LocationCode', th.StringType),
         th.Property('LocationDescription', th.StringType),
+        th.Property("Modified", th.DateTimeType),
         th.Property('Modifier', th.StringType),
         th.Property('ModifierFullName', th.StringType),
         th.Property('Notes', th.StringType),
@@ -1527,8 +1536,9 @@ class GoodsReceiptLinesStream(ExactStream):
         th.Property('PurchaseOrderNumber', th.StringType),
         th.Property('QuantityOrdered', th.StringType),
         th.Property('QuantityReceived', th.StringType),
-        th.Property('Rebill', th.StringType),
-        th.Property('SupplierItemCode', th.StringType)
+        th.Property('Rebill', th.BooleanType),
+        th.Property('SupplierItemCode', th.StringType),
+        th.Property('SerialNumbers', th.StringType),
     ).to_dict()
 
     @property
