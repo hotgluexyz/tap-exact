@@ -355,10 +355,22 @@ class PurchaseOrdersStream(DynamicStream):
         th.Property("ID", th.StringType),
         th.Property("AmountDC", th.StringType),
         th.Property("AmountFC", th.StringType),
+        th.Property("ApprovalStatus", th.StringType),
+        th.Property("ApprovalStatusDescription", th.StringType),
+        th.Property("Approved", th.StringType),
+        th.Property("Approver", th.StringType),
+        th.Property("ApproverFullName", th.StringType),
+        th.Property("CostCenter", th.StringType),
+        th.Property("CostCenterCode", th.StringType),
+        th.Property("CostCenterDescription", th.StringType),
+        th.Property("CostUnit", th.StringType),
+        th.Property("CostUnitCode", th.StringType),
+        th.Property("CostUnitDescription", th.StringType),
         th.Property("Created", th.DateTimeType),
         th.Property("Creator", th.StringType),
         th.Property("CreatorFullName", th.StringType),
         th.Property("Currency", th.StringType),
+        th.Property("CustomField", th.StringType),
         th.Property("DeliveryAccount", th.StringType),
         th.Property("DeliveryAccountCode", th.StringType),
         th.Property("DeliveryAccountName", th.StringType),
@@ -366,35 +378,61 @@ class PurchaseOrdersStream(DynamicStream):
         th.Property("DeliveryContact", th.StringType),
         th.Property("DeliveryContactPersonFullName", th.StringType),
         th.Property("Description", th.StringType),
+        th.Property("Discount", th.StringType),
         th.Property("Division", th.StringType),
         th.Property("Document", th.StringType),
+        th.Property("DocumentNumber", th.StringType),
         th.Property("DocumentSubject", th.StringType),
         th.Property("DropShipment", th.BooleanType),
         th.Property("ExchangeRate", th.StringType),
+        th.Property("Expense", th.StringType),
+        th.Property("ExpenseDescription", th.StringType),
+        th.Property("ID", th.StringType),
         th.Property("IncotermAddress", th.StringType),
         th.Property("IncotermCode", th.StringType),
         th.Property("IncotermVersion", th.StringType),
+        th.Property("InvoicedQuantity", th.StringType),
         th.Property("InvoiceStatus", th.StringType),
+        th.Property("IsBatchNumberItem", th.StringType),
+        th.Property("IsSerialNumberItem", th.StringType),
+        th.Property("Item", th.StringType),
+        th.Property("ItemBarcode", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("ItemDivisable", th.BooleanType),
+        th.Property("LineNumber", th.StringType),
         th.Property("Modified", th.DateTimeType),
         th.Property("Modifier", th.StringType),
         th.Property("ModifierFullName", th.StringType),
+        th.Property("NetPrice", th.StringType),
+        th.Property("Notes", th.StringType),
         th.Property("OrderDate", th.StringType),
         th.Property("OrderNumber", th.StringType),
         th.Property("OrderStatus", th.StringType),
         th.Property("PaymentCondition", th.StringType),
         th.Property("PaymentConditionDescription", th.StringType),
-        th.Property("PurchaseOrderID", th.StringType),
+        th.Property("Project", th.StringType),
+        th.Property("ProjectCode", th.StringType),
+        th.Property("ProjectDescription", th.StringType),
         th.Property("PurchaseAgent", th.StringType),
         th.Property("PurchaseAgentFullName", th.StringType),
+        th.Property("PurchaseOrderID", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("QuantityInPurchaseUnits", th.StringType),
+        th.Property("Rebill", th.BooleanType),
         th.Property("PurchaseOrderLineCount", th.StringType),
         th.Property("ReceiptDate", th.StringType),
+        th.Property("ReceivedQuantity", th.StringType),
         th.Property("ReceiptStatus", th.StringType),
         th.Property("Remarks", th.StringType),
         th.Property("SalesOrder", th.StringType),
+        th.Property("SalesOrderLine", th.StringType),
+        th.Property("SalesOrderLineNumber", th.StringType),
         th.Property("SalesOrderNumber", th.StringType),
         th.Property("SelectionCode", th.StringType),
         th.Property("SelectionCodeCode", th.StringType),
         th.Property("SelectionCodeDescription", th.StringType),
+        th.Property("SendingMethod", th.StringType),
         th.Property("ShippingMethod", th.StringType),
         th.Property("ShippingMethodCode", th.StringType),
         th.Property("ShippingMethodDescription", th.StringType),
@@ -404,7 +442,13 @@ class PurchaseOrdersStream(DynamicStream):
         th.Property("SupplierContact", th.StringType),
         th.Property("SupplierContactPersonFullName", th.StringType),
         th.Property("SupplierName", th.StringType),
+        th.Property("Unit", th.StringType),
+        th.Property("UnitDescription", th.StringType),
+        th.Property("UnitPrice", th.StringType),
         th.Property("VATAmount", th.StringType),
+        th.Property("VATCode", th.StringType),
+        th.Property("VATDescription", th.StringType),
+        th.Property("VATPercentage", th.StringType),
         th.Property("Warehouse", th.StringType),
         th.Property("WarehouseCode", th.StringType),
         th.Property("WarehouseDescription", th.StringType),
@@ -422,7 +466,7 @@ class PurchaseOrdersStream(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"PurchaseOrderID,AmountDC,AmountFC,Created,Creator,CreatorFullName,Currency,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Division,Document,DocumentSubject,DropShipment,ExchangeRate,IncotermAddress,IncotermCode,IncotermVersion,InvoiceStatus,Modified,Modifier,ModifierFullName,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,PurchaseAgent,PurchaseAgentFullName,ReceiptDate,ReceiptStatus,Remarks,SalesOrder,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierName,VATAmount,Warehouse,WarehouseCode,WarehouseDescription,YourRef,Timestamp,ID"
+            return f"Timestamp,AmountDC,AmountFC,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,CostCenter,CostCenterCode,CostCenterDescription,CostUnit,CostUnitCode,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomField,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Discount,Division,Document,DocumentNumber,DocumentSubject,DropShipment,ExchangeRate,Expense,ExpenseDescription,ID,IncotermAddress,IncotermCode,IncotermVersion,InvoicedQuantity,InvoiceStatus,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,Project,ProjectCode,ProjectDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceiptStatus,ReceivedQuantity,Remarks,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,SendingMethod,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierItemCode,SupplierItemCopyRemarks,SupplierName,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage,Warehouse,WarehouseCode,WarehouseDescription,YourRef"
         else:
             return f"PurchaseOrderID,AmountDC,AmountFC,Created,Creator,CreatorFullName,Currency,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Division,Document,DocumentSubject,DropShipment,ExchangeRate,IncotermAddress,IncotermCode,IncotermVersion,InvoiceStatus,Modified,Modifier,ModifierFullName,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderLineCount,PurchaseOrderLines,ReceiptDate,ReceiptStatus,Remarks,SalesOrder,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierName,VATAmount,Warehouse,WarehouseCode,WarehouseDescription,YourRef"
 
@@ -974,7 +1018,7 @@ class AccountsStream(DynamicStream):
         if self.sync_endpoint:
             return f"/sync/CRM/Accounts"
         return f"/crm/Accounts"
-    
+
     @property
     def select(self):
         if self.sync_endpoint:
@@ -986,18 +1030,18 @@ class SupplierStream(AccountsStream):
     name = "suppliers"
     primary_keys = ["ID"]
     replication_key = "Modified"
-    
+
     @property
     def filter(self):
         if not self.sync_endpoint:
             return "IsSupplier eq true"
-    
+
     def post_process(self, row, context):
         row = super().post_process(row, context)
 
         if not self.sync_endpoint:
             return row
-        
+
         if row.get("IsSupplier"):
             return row
 
@@ -1409,7 +1453,7 @@ class ManufacturingShopOrdersStream(DynamicStream):
 
 class BillOfMaterialDownloadStream(ExactStream):
     # Download Streams don't have a sync endpoint
-    # Obs: This endpoint is going to be very hard to replicate 
+    # Obs: This endpoint is going to be very hard to replicate
     # in development environment if the data is not persistent
     # after one download.
 
@@ -1445,7 +1489,7 @@ class BillOfMaterialDownloadStream(ExactStream):
     @property
     def path(self):
         return f"/docs/XMLDownload.aspx"
-    
+
     def get_url_params(self, context, next_page_token):
         return {
             "Topic": "BillOfMaterials",
@@ -1487,7 +1531,7 @@ class BillOfMaterialDownloadStream(ExactStream):
                         if "@" in key:
                             key = key[1:].capitalize()
                         item_detail_content[key] = value
-                    
+
                     item_detail_content["ItemId"] = item_detail["Item"]["@ID"].replace("{", "").replace("}", "")
                     item_detail_content["ItemCode"] = item_detail["Item"]["@code"]
 
