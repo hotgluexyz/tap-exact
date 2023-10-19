@@ -5,7 +5,10 @@ from typing import Any, Dict, Optional
 import requests
 from singer_sdk.authenticators import APIAuthenticatorBase
 from singer_sdk.streams import Stream as RESTStreamBase
+import backoff
 
+class EmptyResponseError(Exception):
+    """Raised when the response is empty"""
 
 class OAuth2Authenticator(APIAuthenticatorBase):
     def __init__(
@@ -51,6 +54,7 @@ class OAuth2Authenticator(APIAuthenticatorBase):
 
         return not ((expires_in - now) < 120)
 
+    @backoff.on_exception(backoff.expo,EmptyResponseError,max_tries=5,factor=2)
     def update_access_token(self) -> None:
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         token_response = requests.post(
@@ -58,12 +62,12 @@ class OAuth2Authenticator(APIAuthenticatorBase):
         )
         try:
             if (
-                token_response.json().get("error_description")
+                token_response.json().get("error_description") 
                 == "Rate limit exceeded: access_token not expired"
             ):
                 return None
         except Exception as e:
-            raise Exception(f"Failed converting response to a json, OAuth response: {token_response.text}")
+            raise EmptyResponseError(f"Failed converting response to a json, because response is empty")
 
         try:
             token_response.raise_for_status()
