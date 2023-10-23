@@ -12,6 +12,30 @@ Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
 pipx install tap-exact
 ```
 
+## Credentials
+
+### Create a Config file
+
+```
+{
+  "client_id": "client_id",
+  "client_secret": "client_secret",
+  "refresh_token": "refresh_token",
+  "access_token": "access_token",
+  "start_date": "2000-01-01T00:00:00Z",
+  "sync_endpoints": true,
+  "current_division": "exact_division",
+}
+```
+
+The `client_id` and `client_secret` keys are your OAuth Quickbooks App secrets. The `refresh_token` is a secret created during the OAuth flow. For more info on the Exact OAuth flow, visit the [Exact documentation](https://support.exactonline.com/community/s/knowledge-base#All-All-DNO-Content-oauth-eol-oauth-dev-impleovervw).
+
+The `start_date` is used by the tap to fetch records from that date on.  This should be an [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) formatted date-time, like "2018-01-08T00:00:00Z". For more details, see the [Singer best practices for dates](https://github.com/singer-io/getting-started/blob/master/BEST_PRACTICES.md#dates).
+
+When `sync_endpoints`is true, the tap will use Exact's sync endpoints instead of bulk or standard endpoints for streams that support them. Using the sync endpoints is generally recommended, as it is the most efficient way to get new or changed records.
+
+Most Exact Online REST API resource URIs require a Division parameter `current_division`. This parameter identifies the division that is accessed. For more details on how to get the current division for your credentials see the [Me endpoint](https://start.exactonline.nl/docs/HlpRestAPIResourcesDetails.aspx?name=SystemSystemMe) 
+
 ## Configuration
 
 ### Accepted Config Options
