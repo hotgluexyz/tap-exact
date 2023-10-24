@@ -190,6 +190,10 @@ class ExactStream(RESTStream):
         use_stock_multiple_warehouses = (
             self.config.get("use_stock_multiple_warehouses") or False
         )
+        use_bill_of_materials = (
+            self.config.get("use_bill_of_materials",True)
+        )
+
         if (
             (self.name == "sales_order" and not use_sales_orders)
             or (self.name == "sales_invoices" and not use_sales_invoices)
@@ -197,6 +201,10 @@ class ExactStream(RESTStream):
             or (
                 self.name == "logistics_stock_positions"
                 and not use_stock_multiple_warehouses
+            )
+            or (
+                self.name =="bill_of_material_download"
+                and not use_bill_of_materials
             )
         ):
             pass
