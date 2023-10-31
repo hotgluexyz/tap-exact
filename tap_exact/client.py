@@ -125,23 +125,24 @@ class ExactStream(RESTStream):
         if self.select:
             params["$select"] = self.select
         start_date = self.get_starting_time(context)
+        start_date = start_date + datetime.timedelta(seconds=1)
+        start_date = start_date.strftime("%Y-%m-%dT%H:%M:%S")
         filter = None
-        date_filter = None
+        date_filter = None 
+        if (
+            self.replication_key
+            and self.replication_key != "Timestamp"
+            and start_date
+        ):
+            date_filter = f"Modified gt datetime'{start_date}'"
+            params["$filter"] = date_filter
         if self.config.get("sync_endpoints") != None:
-            if (
-                self.replication_key
-                and self.replication_key != "Timestamp"
-                and start_date
-            ):
-                start_date = start_date + datetime.timedelta(seconds=1)
-                start_date = start_date.strftime("%Y-%m-%dT%H:%M:%S")
-                date_filter = f"Modified gt datetime'{start_date}'"
             if hasattr(self, "filter"):
                 filter = self.filter
             if filter and date_filter:
                 params["$filter"] = f"{filter} and {date_filter}"
             elif filter or date_filter:
-                params["$filter"] = filter or date_filter
+                params["$filter"] = filter or date_filter 
         if hasattr(self, "expand"):
             params["$expand"] = self.expand
         if next_page_token:
