@@ -14,6 +14,7 @@ from time import sleep
 from singer_sdk.helpers._state import increment_state
 import datetime
 import re
+from lxml import etree
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"
 REPLICATION_LOG_BASED = "LOG_BASED"
@@ -150,7 +151,12 @@ class ExactStream(RESTStream):
 
     def xml_to_dict(self, response):
         try:
-            data = json.loads(json.dumps(xmltodict.parse(response.text)))
+            #clean invalid xml characters
+            my_parser = etree.XMLParser(recover=True)
+            xml = etree.fromstring(response.content, parser=my_parser)
+            cleaned_xml_string = etree.tostring(xml)
+            #parse xml to dict
+            data = json.loads(json.dumps(xmltodict.parse(cleaned_xml_string)))
         except:
             data = json.loads(json.dumps(xmltodict.parse(response.content.decode("utf-8-sig").encode("utf-8"))))
         return data
