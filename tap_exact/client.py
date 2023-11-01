@@ -25,8 +25,15 @@ class ExactStream(RESTStream):
 
     @property
     def url_base(self) -> str:
-        url = self.config.get("auth_url", "https://start.exactonline.nl/api/oauth2/token")
-        url = re.findall("(.*)/oauth2",url)[0]
+        url = self.config.get("auth_url")
+        if url is None or url == "":
+            url = "https://start.exactonline.nl/api/oauth2/token"
+
+        try:
+            url = re.findall("(.*)/oauth2", url)[0]
+        except:
+            raise ValueError("Invalid URL for auth_url. Please update your config.")
+
         if self.dont_use_current_division:
             return url.replace("/api", "")
 
@@ -80,12 +87,12 @@ class ExactStream(RESTStream):
                 ]["#text"]
             else:
                 raise Exception(f"No warehouses found with Code {default_warehouse_id}")
-            
+
             self._tap._config["warehouse_uuid"] = warehouse_uuid
             with open(self._tap.config_file, "w") as outfile:
                 json.dump(self._tap._config, outfile, indent=4)
             return warehouse_uuid
-            
+
         return None
 
     @property
