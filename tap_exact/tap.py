@@ -28,7 +28,8 @@ from tap_exact.streams import (
     ManufacturingShopOrdersStream,
     BillOfMaterialDownloadStream,
     AccountsStream,
-    GoodsReceiptLinesStream
+    GoodsReceiptLinesStream,
+    PurchaseEntiesStream
 )
 
 STREAM_TYPES = [
@@ -53,7 +54,8 @@ STREAM_TYPES = [
     ManufacturingShopOrdersStream,
     BillOfMaterialDownloadStream,
     AccountsStream,
-    GoodsReceiptLinesStream
+    GoodsReceiptLinesStream,
+    PurchaseEntiesStream
 ]
 
 

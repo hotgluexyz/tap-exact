@@ -1705,3 +1705,117 @@ class GoodsReceiptLinesStream(ExactStream):
 
     def post_process(self, row: dict, context: Optional[dict]) -> dict:
         return super().post_process(row, context)
+
+class PurchaseEntiesStream(ExactStream):
+    name = "purchase_entries"
+    primary_keys = ["EntryID"]
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("EntryID", th.StringType),
+        th.Property("AmountDC", th.StringType),
+        th.Property("AmountFC", th.StringType),
+        th.Property("BatchNumber", th.IntegerType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("CustomField", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Document", th.StringType),
+        th.Property("DocumentNumber", th.StringType),
+        th.Property("DocumentSubject", th.StringType),
+        th.Property("DueDate", th.DateTimeType),
+        th.Property("EntryDate", th.DateTimeType),
+        th.Property("EntryNumber", th.StringType),
+        th.Property("ExternalLinkDescription", th.StringType),
+        th.Property("ExternalLinkReference", th.StringType),
+        th.Property("GAccountAmountFC", th.StringType),
+        th.Property("InvoiceNumber", th.StringType),
+        th.Property("Journal", th.StringType),
+        th.Property("JournalDescription", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("OrderNumber", th.StringType),
+        th.Property("PaymentCondition", th.StringType),
+        th.Property("PaymentConditionDescription", th.StringType),
+        th.Property("PaymentConditionPaymentMethod", th.StringType),
+        th.Property("PaymentReference", th.StringType),
+        th.Property("ProcessNumber", th.StringType),
+        th.Property("PurchaseEntryLines", th.ArrayType(
+            th.ObjectType(
+                th.Property("AmountDC", th.StringType),
+                th.Property("AmountFC", th.StringType),
+                th.Property("Asset", th.StringType),
+                th.Property("AssetDescription", th.BooleanType),
+                th.Property("CostCenter", th.StringType),
+                th.Property("CostCenterDescription", th.StringType),
+                th.Property("CostUnit", th.StringType),
+                th.Property("CostUnitDescription", th.StringType),
+                th.Property("CustomField", th.StringType),
+                th.Property("Description", th.StringType),
+                th.Property("Division", th.StringType),
+                th.Property("EntryID", th.StringType),
+                th.Property("From", th.StringType),
+                th.Property("GLAccount", th.StringType),
+                th.Property("GLAccountCode", th.StringType),
+                th.Property("GLAccountDescription", th.StringType),
+                th.Property("IntraStatArea", th.BooleanType),
+                th.Property("IntraStatCountry", th.StringType),
+                th.Property("IntraStatDeliveryTerm", th.StringType),
+                th.Property("IntraStatTransactionA", th.StringType),
+                th.Property("IntraStatTransactionB", th.StringType),
+                th.Property("IntraStatTransportMethod", th.StringType),
+                th.Property("LineNumber", th.StringType),
+                th.Property("Notes", th.StringType),
+                th.Property("PrivateUsePercentage", th.StringType),
+                th.Property("Project", th.StringType),
+                th.Property("ProjectDescription", th.StringType),
+                th.Property("Quantity", th.StringType),
+                th.Property("SerialNumber", th.StringType),
+                th.Property("StatisticalNetWeight", th.StringType),
+                th.Property("StatisticalNumber", th.StringType),
+                th.Property("StatisticalQuantity", th.StringType),
+                th.Property("StatisticalValue", th.StringType),
+                th.Property("Subscription", th.StringType),
+                th.Property("SubscriptionDescription", th.StringType),
+                th.Property("To", th.DateTimeType),
+                th.Property("TrackingNumber", th.StringType),
+                th.Property("TrackingNumberDescription", th.StringType),
+                th.Property("Type", th.StringType),
+                th.Property("VATAmountDC", th.StringType),
+                th.Property("VATAmountFC", th.StringType),
+                th.Property("VATBaseAmountDC", th.StringType),
+                th.Property("VATBaseAmountFC", th.StringType),
+                th.Property("VATCode", th.StringType),
+                th.Property("VATCodeDescription", th.StringType),
+                th.Property("VATNonDeductiblePercentage", th.StringType),
+                th.Property("VATPercentage", th.StringType),
+                th.Property("WithholdingAmountDC", th.StringType),
+                th.Property("WithholdingTax", th.DateTimeType),
+            )
+        )),
+        th.Property("Rate", th.StringType),
+        th.Property("ReportingPeriod", th.StringType),
+        th.Property("ReportingYear", th.StringType),
+        th.Property("Reversal", th.BooleanType),
+        th.Property("Status", th.StringType),
+        th.Property("StatusDescription", th.StringType),
+        th.Property("Supplier", th.StringType),
+        th.Property("SupplierName", th.StringType),
+        th.Property("Type", th.StringType),
+        th.Property("TypeDescription", th.StringType),
+        th.Property("VATAmountDC", th.StringType),
+        th.Property("VATAmountFC", th.StringType),
+        th.Property("YourRef", th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        return f"/purchaseentry/PurchaseEntries"
+
+    @property
+    def select(self):
+        return f"*"
