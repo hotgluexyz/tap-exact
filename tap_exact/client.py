@@ -25,14 +25,7 @@ class ExactStream(RESTStream):
 
     @property
     def url_base(self) -> str:
-        url = self.config.get("auth_url")
-        if url is None or url == "":
-            url = "https://start.exactonline.nl/api/oauth2/token"
-
-        try:
-            url = re.findall("(.*)/oauth2", url)[0]
-        except:
-            raise ValueError("Invalid URL for auth_url. Please update your config.")
+        url = self.config.get("auth_url") or "https://start.exactonline.nl/api/oauth2/token"
 
         if self.dont_use_current_division:
             return url.replace("/api", "")
