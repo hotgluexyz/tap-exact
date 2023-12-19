@@ -1011,6 +1011,7 @@ class AccountsStream(DynamicStream):
         th.Property("PurchaseLeadDays", th.StringType),
         th.Property("Modified", th.DateTimeType),
         th.Property("IsSupplier", th.BooleanType),
+        th.Property("Code", th.BooleanType),
     ).to_dict()
 
     @property
@@ -1022,8 +1023,8 @@ class AccountsStream(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier"
-        return f"ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier"
+            return f"ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier,Code"
+        return f"ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier,Code"
 
 
 class SupplierStream(AccountsStream):
