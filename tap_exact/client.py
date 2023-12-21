@@ -178,7 +178,7 @@ class ExactStream(RESTStream):
         for key in content:
             if type(content[key]) == type(""):
                 new_content[key[2:]] = content[key]
-            elif "Edm.Boolean" == content[key].get("@m:type"):
+            elif "Edm.Boolean" == (content.get(key) or {}).get("@m:type"):
                 if content[key].get("#text") == "true":
                     new_content[key[2:]] = True
                 elif content[key].get("#text") == "false":
