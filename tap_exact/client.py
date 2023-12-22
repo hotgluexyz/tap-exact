@@ -186,7 +186,7 @@ class ExactStream(RESTStream):
                 else:
                     new_content[key[2:]] = None
             else:
-                new_content[key[2:]] = content[key].get("#text", None)
+                new_content[key[2:]] = (content.get(key) or {}).get("#text", None)
         row = new_content
         return row
 
