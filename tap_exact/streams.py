@@ -1821,3 +1821,35 @@ class PurchaseEntiesStream(ExactStream):
     @property
     def select(self):
         return f"*"
+
+
+class PurchaseItemsPricesStream(DynamicStream):
+    name = "purchase_items_prices"
+    primary_keys = ["ID"]
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Item", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("Price", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("StartDate", th.DateTimeType),
+        th.Property("EndDate", th.DateTimeType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Timestamp", th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        if self.sync_endpoint:
+            return f"/sync/Logistics/PurchaseItemPrices"
+        return f"/logistics/PurchaseItemPrices"
+
+    @property
+    def select(self):
+        if self.sync_endpoint:
+            return (
+                f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp"
+            )
+        return f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified"
