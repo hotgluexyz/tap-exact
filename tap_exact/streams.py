@@ -1822,22 +1822,21 @@ class PurchaseEntiesStream(ExactStream):
     def select(self):
         return f"*"
 
-class PurchaseItemPrices(DynamicStream):
+class PurchaseItemsPricesStream(DynamicStream):
     name = "purchase_items_prices"
     primary_keys = ["ID"]
     replication_key = "Modified"
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
-        th.Property("Account", th.StringType),
         th.Property("Item", th.StringType),
         th.Property("ItemCode", th.StringType),
         th.Property("Price", th.StringType),
         th.Property("Quantity", th.StringType),
         th.Property("StartDate", th.DateTimeType),
         th.Property("EndDate", th.DateTimeType),
-        th.Property("Timestamp", th.StringType),
         th.Property("Modified", th.DateTimeType),
+        th.Property("Timestamp", th.StringType),
     ).to_dict()
 
     @property
