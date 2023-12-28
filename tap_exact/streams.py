@@ -1838,6 +1838,7 @@ class PurchaseItemsPricesStream(DynamicStream):
         th.Property("EndDate", th.DateTimeType),
         th.Property("Modified", th.DateTimeType),
         th.Property("Timestamp", th.StringType),
+        th.Property("Accounts", th.StringType),
     ).to_dict()
 
     @property
@@ -1850,6 +1851,6 @@ class PurchaseItemsPricesStream(DynamicStream):
     def select(self):
         if self.sync_endpoint:
             return (
-                f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp"
+                f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp,Accounts"
             )
-        return f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified"
+        return f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Accounts"
