@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional, Union
 
 import requests
 import xmltodict
@@ -15,12 +15,26 @@ from singer_sdk.helpers._state import increment_state
 import datetime
 import re
 from lxml import etree
+from singer_sdk.plugin_base import PluginBase as TapBaseClass
+from singer.schema import Schema
+
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"
 REPLICATION_LOG_BASED = "LOG_BASED"
 
 
 class ExactStream(RESTStream):
+
+    def __init__(
+        self,
+        tap: TapBaseClass,
+        name: Optional[str] = None,
+        schema: Optional[Union[Dict[str, Any], Schema]] = None,
+        path: Optional[str] = None,
+    ) -> None:
+        super().__init__(tap, name=name, schema=schema, path=path)
+        self.default_warehouse_uuid
+
     dont_use_current_division = False
 
     @property
@@ -68,6 +82,12 @@ class ExactStream(RESTStream):
 
     @property
     def default_warehouse_uuid(self) -> str:
+        if not self._tap.warehouse_uuid:
+            self.get_warehouse_uuid
+        return self._tap.warehouse_uuid
+
+    @property
+    def get_warehouse_uuid(self) -> str:
         if self.config.get("default_warehouse_id"):
             default_warehouse_id = self.config.get("default_warehouse_id")
             url = f"{self.url_base}/inventory/Warehouses"
@@ -91,10 +111,8 @@ class ExactStream(RESTStream):
             self._tap._config["warehouse_uuid"] = warehouse_uuid
             with open(self._tap.config_file, "w") as outfile:
                 json.dump(self._tap._config, outfile, indent=4)
-            return warehouse_uuid
-
-        return None
-
+            self._tap.warehouse_uuid = warehouse_uuid
+        
     @property
     def sync_endpoint(self):
         if self.config.get("sync_endpoints") != None:
