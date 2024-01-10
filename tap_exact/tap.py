@@ -65,6 +65,7 @@ class TapExact(Tap):
     """Exact tap class."""
 
     name = "tap-exact"
+    warehouse_uuid = None
 
     def __init__(
         self,
@@ -74,8 +75,9 @@ class TapExact(Tap):
         parse_env_config=False,
         validate_config=True,
     ) -> None:
-        super().__init__(config, catalog, state, parse_env_config, validate_config)
         self.config_file = config[0]
+        super().__init__(config, catalog, state, parse_env_config, validate_config)
+
 
     config_jsonschema = th.PropertiesList(
         th.Property("access_token", th.StringType, required=False),
