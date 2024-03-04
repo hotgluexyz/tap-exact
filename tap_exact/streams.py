@@ -1149,7 +1149,11 @@ class AccountsStream(DynamicStream):
         th.Property("SeparateInvPerSubscription", th.StringType),
         th.Property("ShippingLeadDays", th.StringType),
         th.Property("ShippingMethod", th.StringType),
+<<<<<<< HEAD
         th.Property("ShowRemarkForSales", th.BooleanType),
+=======
+        th.Property("ShowRemarkForSales", th.StringType),
+>>>>>>> cd4a5d4 (add streams)
         th.Property("StartDate", th.DateTimeType),
         th.Property("State", th.StringType),
         th.Property("StateName", th.StringType),
@@ -2147,10 +2151,6 @@ class PurchaseReturnLinesStream(ExactStream):
         th.Property("Location", th.StringType),
         th.Property("LocationCode", th.StringType),
         th.Property("LocationDescription", th.StringType),
-        th.Property("Modified", th.DateTimeType),
-        th.Property("Modifier", th.StringType),
-        th.Property("ModifierFullName", th.StringType),
-        th.Property("Notes", th.StringType),
         th.Property("Project", th.StringType),
         th.Property("ProjectCode", th.StringType),
         th.Property("ProjectDescription", th.StringType),
@@ -2173,6 +2173,123 @@ class PurchaseReturnLinesStream(ExactStream):
         return f"ID,BatchNumbers,CreateCredit,Created,Creator,CreatorFullName,Division,EntryID,Expense,ExpenseDescription,GoodsReceiptLineId,Item,ItemCode,ItemDescription,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderLineID,PurchaseOrderNumber,Rebill,ReceiptNumber,ReceivedQuantity,ReturnQuantity,ReturnReasonCodeDescription,ReturnReasonCodeID,SerialNumbers,SupplierItemCode,UniCode"
 
 
+<<<<<<< HEAD
+=======
+class CostCentersStream(ExactStream):
+    name = "cost_centers"
+    primary_keys = ["ID"]
+    path = "/hrm/Costunits"
+    select = "*"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("Code", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EndDate", th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("CustomField", th.StringType),
+    ).to_dict()
+
+
+class CostUnitsStream(ExactStream):
+    name = "cost_units"
+    primary_keys = ["ID"]
+    path = "/hrm/Costunits"
+    select = "*"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("Code", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EndDate", th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("CustomField", th.StringType),
+    ).to_dict()
+
+
+class ProjectsStream(ExactStream):
+    name = "projects"
+    primary_keys = ["ID"]
+    path = "/project/Projects"
+    select = "*"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("Account", th.StringType),
+        th.Property("AccountContact", th.StringType),
+        th.Property("AccountCode", th.StringType),
+        th.Property("AccountName", th.StringType),
+        th.Property("AllowAdditionalInvoicing", th.BooleanType),
+        th.Property("BlockEntry", th.BooleanType),
+        th.Property("BlockInvoicing", th.BooleanType),
+        th.Property("BlockPlanning", th.BooleanType),
+        th.Property("BudgetedAmount", th.StringType),
+        th.Property("BudgetedCosts", th.StringType),
+        th.Property("BudgetedRevenue", th.StringType),
+        th.Property("BudgetType", th.IntegerType),
+        th.Property("BudgetTypeDescription", th.StringType),
+        th.Property("BlockPurchasing", th.BooleanType),
+        th.Property("BlockRebilling", th.BooleanType),
+        th.Property("Classification", th.StringType),
+        th.Property("ClassificationDescription", th.StringType),
+        th.Property("Code", th.StringType),
+        th.Property("CostsAmountFC", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("CustomerPOnumber", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("DivisionName", th.StringType),
+        th.Property("EndDate", th.DateTimeType),
+        th.Property("FixedPriceItem", th.StringType),
+        th.Property("FixedPriceItemDescription", th.StringType),
+        th.Property("HasWBSLines", th.BooleanType),
+        th.Property("ID", th.StringType),
+        th.Property("IncludeInvoiceSpecification", th.StringType),
+        th.Property("IncludeSpecificationInInvoicePdf", th.BooleanType),
+        th.Property("InvoiceAddress", th.StringType),
+        th.Property("InvoiceAsQuoted", th.BooleanType),
+        th.Property("Manager", th.StringType),
+        th.Property("ManagerFullname", th.StringType),
+        th.Property("MarkupPercentage", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("InternalNotes", th.StringType),
+        th.Property("SalesTimeQuantity", th.StringType),
+        th.Property("SourceQuotation", th.StringType),
+        th.Property("StartDate", th.DateTimeType),
+        th.Property("TimeQuantityToAlert", th.StringType),
+        th.Property("Type", th.StringType),
+        th.Property("TypeDescription", th.StringType),
+        th.Property("PaymentCondition", th.StringType),
+        th.Property("PrepaidItem", th.StringType),
+        th.Property("PrepaidItemDescription", th.StringType),
+        th.Property("PrepaidType", th.StringType),
+        th.Property("PrepaidTypeDescription", th.StringType),
+        th.Property("UseBillingMilestones", th.BooleanType),
+        th.Property("BudgetOverrunHours", th.IntegerType),
+        th.Property("CustomField", th.StringType),
+        th.Property("AllowMemberEntryOnly", th.BooleanType),
+    ).to_dict()
+
+>>>>>>> cd4a5d4 (add streams)
 
 class PaymentConditionsStream(ExactStream):
     name = "payment_conditions"
@@ -2319,4 +2436,3 @@ class BankAccountsStream(ExactStream):
         th.Property("Type", th.StringType),
         th.Property("TypeDescription", th.StringType),
     ).to_dict()
-

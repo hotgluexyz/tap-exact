@@ -70,7 +70,7 @@ STREAM_TYPES = [
     ProjectsStream,
     PaymentConditionsStream,
     PaymentsStream,
-    BankAccountsStream
+    BankAccountsStream,
     PurchaseReturnLinesStream
 ]
 
