@@ -2118,6 +2118,60 @@ class ProjectsStream(ExactStream):
         th.Property("CustomField", th.StringType),
         th.Property("AllowMemberEntryOnly", th.BooleanType),
     ).to_dict()
+    
+
+class PurchaseReturnLinesStream(ExactStream):
+    name = "purchase_returnlines"
+    primary_keys = ["ID"]
+    path = "/purchaseorder/PurchaseReturnLines"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("BatchNumbers", th.StringType),
+        th.Property("CreateCredit", th.BooleanType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EntryID", th.StringType),
+        th.Property("Expense", th.StringType),
+        th.Property("ExpenseDescription", th.StringType),
+        th.Property("GoodsReceiptLineId", th.StringType),
+        th.Property("Item", th.StringType),
+        th.Property("Expense", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("LineNumber", th.StringType),
+        th.Property("Location", th.StringType),
+        th.Property("LocationCode", th.StringType),
+        th.Property("LocationDescription", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("Project", th.StringType),
+        th.Property("ProjectCode", th.StringType),
+        th.Property("ProjectDescription", th.StringType),
+        th.Property("Project", th.StringType),
+        th.Property("PurchaseOrderLineID", th.StringType),
+        th.Property("PurchaseOrderNumber", th.StringType),
+        th.Property("Rebill", th.BooleanType),
+        th.Property("ReceiptNumber", th.StringType),
+        th.Property("ReceivedQuantity", th.StringType),
+        th.Property("ReturnQuantity", th.StringType),
+        th.Property("ReturnReasonCodeDescription", th.StringType),
+        th.Property("ReturnReasonCodeID", th.StringType),
+        th.Property("SerialNumbers", th.StringType),
+        th.Property("SupplierItemCode", th.BooleanType),
+        th.Property("UniCode", th.StringType),
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,BatchNumbers,CreateCredit,Created,Creator,CreatorFullName,Division,EntryID,Expense,ExpenseDescription,GoodsReceiptLineId,Item,ItemCode,ItemDescription,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderLineID,PurchaseOrderNumber,Rebill,ReceiptNumber,ReceivedQuantity,ReturnQuantity,ReturnReasonCodeDescription,ReturnReasonCodeID,SerialNumbers,SupplierItemCode,UniCode"
+
 
 
 class PaymentConditionsStream(ExactStream):
@@ -2265,3 +2319,4 @@ class BankAccountsStream(ExactStream):
         th.Property("Type", th.StringType),
         th.Property("TypeDescription", th.StringType),
     ).to_dict()
+
