@@ -1149,7 +1149,7 @@ class AccountsStream(DynamicStream):
         th.Property("SeparateInvPerSubscription", th.StringType),
         th.Property("ShippingLeadDays", th.StringType),
         th.Property("ShippingMethod", th.StringType),
-        th.Property("ShowRemarkForSales", th.StringType),
+        th.Property("ShowRemarkForSales", th.BooleanType),
         th.Property("StartDate", th.DateTimeType),
         th.Property("State", th.StringType),
         th.Property("StateName", th.StringType),
