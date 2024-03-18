@@ -2118,6 +2118,7 @@ class ProjectsStream(ExactStream):
         th.Property("CustomField", th.StringType),
         th.Property("AllowMemberEntryOnly", th.BooleanType),
     ).to_dict()
+
     
 
 class PurchaseReturnLinesStream(ExactStream):
@@ -2433,3 +2434,4 @@ class BankAccountsStream(ExactStream):
         th.Property("Type", th.StringType),
         th.Property("TypeDescription", th.StringType),
     ).to_dict()
+
