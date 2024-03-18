@@ -1149,11 +1149,7 @@ class AccountsStream(DynamicStream):
         th.Property("SeparateInvPerSubscription", th.StringType),
         th.Property("ShippingLeadDays", th.StringType),
         th.Property("ShippingMethod", th.StringType),
-<<<<<<< HEAD
         th.Property("ShowRemarkForSales", th.BooleanType),
-=======
-        th.Property("ShowRemarkForSales", th.StringType),
->>>>>>> cd4a5d4 (add streams)
         th.Property("StartDate", th.DateTimeType),
         th.Property("State", th.StringType),
         th.Property("StateName", th.StringType),
@@ -2173,8 +2169,6 @@ class PurchaseReturnLinesStream(ExactStream):
         return f"ID,BatchNumbers,CreateCredit,Created,Creator,CreatorFullName,Division,EntryID,Expense,ExpenseDescription,GoodsReceiptLineId,Item,ItemCode,ItemDescription,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderLineID,PurchaseOrderNumber,Rebill,ReceiptNumber,ReceivedQuantity,ReturnQuantity,ReturnReasonCodeDescription,ReturnReasonCodeID,SerialNumbers,SupplierItemCode,UniCode"
 
 
-<<<<<<< HEAD
-=======
 class CostCentersStream(ExactStream):
     name = "cost_centers"
     primary_keys = ["ID"]
@@ -2289,7 +2283,6 @@ class ProjectsStream(ExactStream):
         th.Property("AllowMemberEntryOnly", th.BooleanType),
     ).to_dict()
 
->>>>>>> cd4a5d4 (add streams)
 
 class PaymentConditionsStream(ExactStream):
     name = "payment_conditions"
