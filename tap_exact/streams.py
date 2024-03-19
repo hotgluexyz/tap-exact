@@ -1063,7 +1063,7 @@ class AccountsStream(DynamicStream):
         th.Property("DunsNumber", th.StringType),
         th.Property("Email", th.StringType),
         th.Property("EnableSalesPaymentLink", th.BooleanType),
-        th.Property("EndDate", th.StringType),
+        th.Property("EndDate", th.DateTimeType),
         th.Property("EstablishedDate", th.StringType),
         th.Property("Fax", th.StringType),
         th.Property("GLAccountPurchase", th.StringType),
