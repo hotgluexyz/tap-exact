@@ -1006,7 +1006,9 @@ class AccountsStream(DynamicStream):
     select = "*"
 
     schema = th.PropertiesList(
+        th.Property("Timestamp", th.StringType),
         th.Property("ID", th.StringType),
+        th.Property("Name", th.StringType),
         th.Property("Accountant", th.StringType),
         th.Property("AccountManager", th.StringType),
         th.Property("AccountManagerFullName", th.StringType),
@@ -1060,6 +1062,8 @@ class AccountsStream(DynamicStream):
         th.Property("Document", th.StringType),
         th.Property("DunsNumber", th.StringType),
         th.Property("Email", th.StringType),
+        th.Property("PurchaseLeadDays", th.StringType),
+        th.Property("Modified", th.DateTimeType),
         th.Property("EnableSalesPaymentLink", th.BooleanType),
         th.Property("EndDate", th.StringType),
         th.Property("EstablishedDate", th.StringType),
@@ -1102,6 +1106,8 @@ class AccountsStream(DynamicStream):
         th.Property("IsReseller", th.BooleanType),
         th.Property("IsSales", th.BooleanType),
         th.Property("IsSupplier", th.BooleanType),
+        th.Property("Code", th.BooleanType),
+        th.Property("EndDate", th.DateTimeType),
         th.Property("Language", th.StringType),
         th.Property("LanguageDescription", th.StringType),
         th.Property("Latitude", th.StringType),
@@ -1149,7 +1155,7 @@ class AccountsStream(DynamicStream):
         th.Property("SeparateInvPerSubscription", th.StringType),
         th.Property("ShippingLeadDays", th.StringType),
         th.Property("ShippingMethod", th.StringType),
-        th.Property("ShowRemarkForSales", th.BooleanType),
+        th.Property("ShowRemarkForSales", th.StringType),
         th.Property("StartDate", th.DateTimeType),
         th.Property("State", th.StringType),
         th.Property("StateName", th.StringType),
