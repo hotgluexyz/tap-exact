@@ -2178,11 +2178,12 @@ class PurchaseReturnLinesStream(ExactStream):
 class CostCentersStream(ExactStream):
     name = "cost_centers"
     primary_keys = ["ID"]
-    path = "/hrm/Costunits"
+    path = "/hrm/Costcenters"
     select = "*"
     replication_key = "Modified"
 
     schema = th.PropertiesList(
+        th.Property("Active", th.BooleanType),
         th.Property("Code", th.StringType),
         th.Property("Created", th.DateTimeType),
         th.Property("Creator", th.StringType),
