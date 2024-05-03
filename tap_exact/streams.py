@@ -2239,7 +2239,7 @@ class PaymentsStream(ExactStream):
         th.Property("DiscountDueDate", th.DateTimeType),
         th.Property("Division", th.StringType),
         th.Property("Document", th.StringType),
-        th.Property("DocumentNumber", th.IntegerType),
+        th.Property("DocumentNumber", th.StringType),
         th.Property("DocumentSubject", th.StringType),
         th.Property("DueDate", th.DateTimeType),
         th.Property("EndDate", th.DateTimeType),
