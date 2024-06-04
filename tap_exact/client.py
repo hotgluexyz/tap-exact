@@ -164,7 +164,7 @@ class ExactStream(RESTStream):
         ):
             date_filter = f"Modified gt datetime'{start_date}'"
             params["$filter"] = date_filter
-        if self.config.get("sync_endpoints") != None:
+        if not self.config.get("sync_endpoints"):
             if hasattr(self, "filter"):
                 filter = self.filter
             if filter and date_filter:

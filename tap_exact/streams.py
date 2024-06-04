@@ -1003,17 +1003,171 @@ class AccountsStream(DynamicStream):
     name = "accounts"
     primary_keys = ["ID"]
     replication_key = "Modified"
+    select = "*"
 
     schema = th.PropertiesList(
         th.Property("Timestamp", th.StringType),
         th.Property("ID", th.StringType),
         th.Property("Name", th.StringType),
+        th.Property("Accountant", th.StringType),
+        th.Property("AccountManager", th.StringType),
+        th.Property("AccountManagerFullName", th.StringType),
+        th.Property("AccountManagerHID", th.StringType),
+        th.Property("ActivitySector", th.StringType),
+        th.Property("ActivitySubSector", th.StringType),
+        th.Property("AddressLine1", th.StringType),
+        th.Property("AddressLine2", th.StringType),
+        th.Property("AddressLine3", th.StringType),
+        th.Property("Blocked", th.BooleanType),
+        th.Property("BRIN", th.StringType),
+        th.Property("BSN", th.StringType),
+        th.Property("BusinessType", th.StringType),
+        th.Property("CanDropShip", th.BooleanType),
+        th.Property("ChamberOfCommerce", th.StringType),
+        th.Property("City", th.StringType),
+        th.Property("Classification", th.StringType),
+        th.Property("Classification1", th.StringType),
+        th.Property("Classification2", th.StringType),
+        th.Property("Classification3", th.StringType),
+        th.Property("Classification4", th.StringType),
+        th.Property("Classification5", th.StringType),
+        th.Property("Classification6", th.StringType),
+        th.Property("Classification7", th.StringType),
+        th.Property("Classification8", th.StringType),
+        th.Property("ClassificationDescription", th.StringType),
+        th.Property("Code", th.StringType),
+        th.Property("CodeAtSupplier", th.StringType),
+        th.Property("CompanySize", th.StringType),
+        th.Property("ConsolidationScenario", th.StringType),
+        th.Property("ControlledDate", th.StringType),
+        th.Property("Costcenter", th.StringType),
+        th.Property("CostcenterDescription", th.StringType),
+        th.Property("CostPaid", th.StringType),
+        th.Property("Country", th.StringType),
+        th.Property("CountryName", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("CreditLinePurchase", th.StringType),
+        th.Property("CreditLineSales", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("CustomField", th.StringType),
+        th.Property("CustomerSince", th.StringType),
+        th.Property("DatevCreditorCode", th.StringType),
+        th.Property("DatevDebtorCode", th.StringType),
+        th.Property("DeliveryAdvice", th.StringType),
+        th.Property("DiscountPurchase", th.StringType),
+        th.Property("DiscountSales", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Document", th.StringType),
+        th.Property("DunsNumber", th.StringType),
         th.Property("Email", th.StringType),
-        th.Property("PurchaseLeadDays", th.StringType),
-        th.Property("Modified", th.DateTimeType),
-        th.Property("IsSupplier", th.BooleanType),
-        th.Property("Code", th.BooleanType),
+        th.Property("EnableSalesPaymentLink", th.BooleanType),
         th.Property("EndDate", th.DateTimeType),
+        th.Property("EstablishedDate", th.StringType),
+        th.Property("Fax", th.StringType),
+        th.Property("GLAccountPurchase", th.StringType),
+        th.Property("GLAccountSales", th.StringType),
+        th.Property("GLAP", th.StringType),
+        th.Property("GLAR", th.StringType),
+        th.Property("GlnNumber", th.StringType),
+        th.Property("HasWithholdingTaxSales", th.BooleanType),
+        th.Property("IgnoreDatevWarningMessage", th.BooleanType),
+        th.Property("IncotermAddressPurchase", th.StringType),
+        th.Property("IncotermCodePurchase", th.StringType),
+        th.Property("IncotermVersionPurchase", th.StringType),
+        th.Property("IncotermAddressSales", th.StringType),
+        th.Property("IncotermCodeSales", th.StringType),
+        th.Property("IncotermVersionSales", th.StringType),
+        th.Property("IntraStatArea", th.StringType),
+        th.Property("IntraStatDeliveryTerm", th.StringType),
+        th.Property("IntraStatSystem", th.StringType),
+        th.Property("IntraStatTransactionA", th.StringType),
+        th.Property("IntraStatTransactionB", th.StringType),
+        th.Property("IntraStatTransportMethod", th.StringType),
+        th.Property("InvoiceAccount", th.StringType),
+        th.Property("InvoiceAccountCode", th.StringType),
+        th.Property("InvoiceAccountName", th.StringType),
+        th.Property("InvoiceAttachmentType", th.StringType),
+        th.Property("InvoicingMethod", th.StringType),
+        th.Property("AutomaticProcessProposedEntry", th.StringType),
+        th.Property("IsAccountant", th.StringType),
+        th.Property("IsAgency", th.StringType),
+        th.Property("IsAnonymised", th.StringType),
+        th.Property("IsBank", th.BooleanType),
+        th.Property("IsCompetitor", th.StringType),
+        th.Property("IsExtraDuty", th.StringType),
+        th.Property("IsMailing", th.StringType),
+        th.Property("IsMember", th.BooleanType),
+        th.Property("IsPilot", th.BooleanType),
+        th.Property("IsPurchase", th.BooleanType),
+        th.Property("IsReseller", th.BooleanType),
+        th.Property("IsSales", th.BooleanType),
+        th.Property("IsSupplier", th.BooleanType),
+        th.Property("Language", th.StringType),
+        th.Property("LanguageDescription", th.StringType),
+        th.Property("Latitude", th.StringType),
+        th.Property("LeadSource", th.StringType),
+        th.Property("LeadPurpose", th.StringType),
+        th.Property("LogoFileName", th.StringType),
+        th.Property("LogoThumbnailUrl", th.StringType),
+        th.Property("LogoUrl", th.StringType),
+        th.Property("Logo", th.StringType),
+        th.Property("Longitude", th.StringType),
+        th.Property("MainContact", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("OINNumber", th.StringType),
+        th.Property("Parent", th.StringType),
+        th.Property("PaymentConditionPurchase", th.StringType),
+        th.Property("PaymentConditionPurchaseDescription", th.StringType),
+        th.Property("PaymentConditionSales", th.StringType),
+        th.Property("PaymentConditionSalesDescription", th.StringType),
+        th.Property("PayAsYouEarn", th.StringType),
+        th.Property("Phone", th.StringType),
+        th.Property("PhoneExtension", th.StringType),
+        th.Property("Postcode", th.StringType),
+        th.Property("PriceList", th.StringType),
+        th.Property("PurchaseCurrency", th.StringType),
+        th.Property("PurchaseCurrencyDescription", th.StringType),
+        th.Property("PurchaseLeadDays", th.StringType),
+        th.Property("PurchaseVATCode", th.StringType),
+        th.Property("PurchaseVATCodeDescription", th.StringType),
+        th.Property("Remarks", th.StringType),
+        th.Property("RecepientOfCommissions", th.BooleanType),
+        th.Property("Reseller", th.StringType),
+        th.Property("ResellerCode", th.StringType),
+        th.Property("ResellerName", th.StringType),
+        th.Property("RSIN", th.StringType),
+        th.Property("SalesCurrency", th.StringType),
+        th.Property("SalesCurrencyDescription", th.StringType),
+        th.Property("SalesVATCode", th.StringType),
+        th.Property("SalesVATCodeDescription", th.StringType),
+        th.Property("SearchCode", th.StringType),
+        th.Property("SecurityLevel", th.StringType),
+        th.Property("SeparateInvPerProject", th.StringType),
+        th.Property("SeparateInvPerSubscription", th.StringType),
+        th.Property("ShippingLeadDays", th.StringType),
+        th.Property("ShippingMethod", th.StringType),
+        th.Property("ShowRemarkForSales", th.BooleanType),
+        th.Property("StartDate", th.DateTimeType),
+        th.Property("State", th.StringType),
+        th.Property("StateName", th.StringType),
+        th.Property("Status", th.StringType),
+        th.Property("StatusSince", th.DateTimeType),
+        th.Property("SalesTaxSchedule", th.StringType),
+        th.Property("SalesTaxScheduleCode", th.StringType),
+        th.Property("SalesTaxScheduleDescription", th.StringType),
+        th.Property("TradeName", th.StringType),
+        th.Property("Type", th.StringType),
+        th.Property("UniqueTaxpayerReference", th.StringType),
+        th.Property("VATLiability", th.StringType),
+        th.Property("VATNumber", th.StringType),
+        th.Property("Website", th.StringType),
+        th.Property("EORINumber", th.StringType),
+        th.Property("AddressSource", th.StringType),
+        th.Property("Source", th.StringType),
     ).to_dict()
 
     @property
@@ -1021,12 +1175,6 @@ class AccountsStream(DynamicStream):
         if self.sync_endpoint:
             return f"/sync/CRM/Accounts"
         return f"/crm/Accounts"
-
-    @property
-    def select(self):
-        if self.sync_endpoint:
-            return f"ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier,Code,EndDate"
-        return f"ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier,Code,EndDate"
 
 
 class SupplierStream(AccountsStream):
@@ -1856,7 +2004,7 @@ class PurchaseItemsPricesStream(DynamicStream):
                 f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp,Account"
             )
         return f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Account"
-    
+
 
 class PurchaseReturnLinesStream(ExactStream):
     name = "purchase_returnlines"
@@ -1909,3 +2057,267 @@ class PurchaseReturnLinesStream(ExactStream):
     @property
     def select(self):
         return f"ID,BatchNumbers,CreateCredit,Created,Creator,CreatorFullName,Division,EntryID,Expense,ExpenseDescription,GoodsReceiptLineId,Item,ItemCode,ItemDescription,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderLineID,PurchaseOrderNumber,Rebill,ReceiptNumber,ReceivedQuantity,ReturnQuantity,ReturnReasonCodeDescription,ReturnReasonCodeID,SerialNumbers,SupplierItemCode,UniCode"
+
+
+class CostCentersStream(ExactStream):
+    name = "cost_centers"
+    primary_keys = ["ID"]
+    path = "/hrm/Costcenters"
+    select = "*"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("Active", th.BooleanType),
+        th.Property("Code", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EndDate", th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("CustomField", th.StringType),
+    ).to_dict()
+
+
+class CostUnitsStream(ExactStream):
+    name = "cost_units"
+    primary_keys = ["ID"]
+    path = "/hrm/Costunits"
+    select = "*"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("Code", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EndDate", th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("CustomField", th.StringType),
+    ).to_dict()
+
+
+class ProjectsStream(ExactStream):
+    name = "projects"
+    primary_keys = ["ID"]
+    path = "/project/Projects"
+    select = "*"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("Account", th.StringType),
+        th.Property("AccountContact", th.StringType),
+        th.Property("AccountCode", th.StringType),
+        th.Property("AccountName", th.StringType),
+        th.Property("AllowAdditionalInvoicing", th.BooleanType),
+        th.Property("BlockEntry", th.BooleanType),
+        th.Property("BlockInvoicing", th.BooleanType),
+        th.Property("BlockPlanning", th.BooleanType),
+        th.Property("BudgetedAmount", th.StringType),
+        th.Property("BudgetedCosts", th.StringType),
+        th.Property("BudgetedRevenue", th.StringType),
+        th.Property("BudgetType", th.IntegerType),
+        th.Property("BudgetTypeDescription", th.StringType),
+        th.Property("BlockPurchasing", th.BooleanType),
+        th.Property("BlockRebilling", th.BooleanType),
+        th.Property("Classification", th.StringType),
+        th.Property("ClassificationDescription", th.StringType),
+        th.Property("Code", th.StringType),
+        th.Property("CostsAmountFC", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("CustomerPOnumber", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("DivisionName", th.StringType),
+        th.Property("EndDate", th.DateTimeType),
+        th.Property("FixedPriceItem", th.StringType),
+        th.Property("FixedPriceItemDescription", th.StringType),
+        th.Property("HasWBSLines", th.BooleanType),
+        th.Property("ID", th.StringType),
+        th.Property("IncludeInvoiceSpecification", th.StringType),
+        th.Property("IncludeSpecificationInInvoicePdf", th.BooleanType),
+        th.Property("InvoiceAddress", th.StringType),
+        th.Property("InvoiceAsQuoted", th.BooleanType),
+        th.Property("Manager", th.StringType),
+        th.Property("ManagerFullname", th.StringType),
+        th.Property("MarkupPercentage", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("InternalNotes", th.StringType),
+        th.Property("SalesTimeQuantity", th.StringType),
+        th.Property("SourceQuotation", th.StringType),
+        th.Property("StartDate", th.DateTimeType),
+        th.Property("TimeQuantityToAlert", th.StringType),
+        th.Property("Type", th.StringType),
+        th.Property("TypeDescription", th.StringType),
+        th.Property("PaymentCondition", th.StringType),
+        th.Property("PrepaidItem", th.StringType),
+        th.Property("PrepaidItemDescription", th.StringType),
+        th.Property("PrepaidType", th.StringType),
+        th.Property("PrepaidTypeDescription", th.StringType),
+        th.Property("UseBillingMilestones", th.BooleanType),
+        th.Property("BudgetOverrunHours", th.IntegerType),
+        th.Property("CustomField", th.StringType),
+        th.Property("AllowMemberEntryOnly", th.BooleanType),
+    ).to_dict()
+
+
+class PaymentConditionsStream(ExactStream):
+    name = "payment_conditions"
+    primary_keys = ["ID"]
+    path = "/cashflow/PaymentConditions"
+    select = "*"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("Code", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("CreditManagementScenario", th.StringType),
+        th.Property("CreditManagementScenarioCode", th.StringType),
+        th.Property("CreditManagementScenarioDescription", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("DiscountCalculation", th.StringType),
+        th.Property("DiscountPaymentDays", th.StringType),
+        th.Property("DiscountPercentage", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("PaymentDays", th.StringType),
+        th.Property("PaymentDiscountType", th.StringType),
+        th.Property("PaymentEndOfMonths", th.StringType),
+        th.Property("PaymentMethod", th.StringType),
+        th.Property("Percentage", th.StringType),
+        th.Property("VATCalculation", th.StringType),
+    ).to_dict()
+
+
+class PaymentsStream(ExactStream):
+    name = "payments"
+    primary_keys = ["ID"]
+    path = "/cashflow/Payments"
+    select = "*"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Account", th.StringType),
+        th.Property("AccountBankAccountID", th.StringType),
+        th.Property("AccountBankAccountNumber", th.StringType),
+        th.Property("AccountCode", th.StringType),
+        th.Property("AccountContact", th.StringType),
+        th.Property("AccountContactName", th.StringType),
+        th.Property("AccountName", th.StringType),
+        th.Property("AmountDC", th.StringType),
+        th.Property("AmountDiscountDC", th.StringType),
+        th.Property("AmountFC", th.StringType),
+        th.Property("AmountDiscountFC", th.StringType),
+        th.Property("BankAccountID", th.StringType),
+        th.Property("BankAccountNumber", th.StringType),
+        th.Property("CashflowTransactionBatchCode", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("DiscountDueDate", th.DateTimeType),
+        th.Property("Division", th.StringType),
+        th.Property("Document", th.StringType),
+        th.Property("DocumentNumber", th.StringType),
+        th.Property("DocumentSubject", th.StringType),
+        th.Property("DueDate", th.DateTimeType),
+        th.Property("EndDate", th.DateTimeType),
+        th.Property("EndPeriod", th.StringType),
+        th.Property("EndYear", th.StringType),
+        th.Property("EntryDate", th.DateTimeType),
+        th.Property("EntryID", th.StringType),
+        th.Property("EntryNumber", th.StringType),
+        th.Property("GLAccount", th.StringType),
+        th.Property("GLAccountCode", th.StringType),
+        th.Property("GLAccountDescription", th.StringType),
+        th.Property("InvoiceDate", th.DateTimeType),
+        th.Property("InvoiceNumber", th.StringType),
+        th.Property("IsBatchBooking", th.StringType),
+        th.Property("Journal", th.StringType),
+        th.Property("JournalDescription", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("PaymentSelected", th.DateTimeType),
+        th.Property("PaymentSelector", th.StringType),
+        th.Property("PaymentSelectorFullName", th.StringType),
+        th.Property("PaymentBatchNumber", th.StringType),
+        th.Property("PaymentCondition", th.StringType),
+        th.Property("PaymentConditionDescription", th.StringType),
+        th.Property("PaymentDays", th.StringType),
+        th.Property("PaymentDaysDiscount", th.StringType),
+        th.Property("PaymentDiscountPercentage", th.StringType),
+        th.Property("PaymentMethod", th.StringType),
+        th.Property("PaymentReference", th.StringType),
+        th.Property("RateFC", th.StringType),
+        th.Property("Source", th.StringType),
+        th.Property("Status", th.StringType),
+        th.Property("TransactionAmountDC", th.StringType),
+        th.Property("TransactionAmountFC", th.StringType),
+        th.Property("TransactionDueDate", th.DateTimeType),
+        th.Property("TransactionEntryID", th.StringType),
+        th.Property("TransactionID", th.StringType),
+        th.Property("TransactionIsReversal", th.BooleanType),
+        th.Property("TransactionReportingPeriod", th.StringType),
+        th.Property("TransactionReportingYear", th.StringType),
+        th.Property("TransactionStatus", th.StringType),
+        th.Property("TransactionType", th.StringType),
+        th.Property("YourRef", th.StringType),
+    ).to_dict()
+
+
+class BankAccountsStream(ExactStream):
+    name = "bank_accounts"
+    primary_keys = ["ID"]
+    path = "/crm/BankAccounts"
+    select = "*"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("Account", th.StringType),
+        th.Property("AccountName", th.StringType),
+        th.Property("Bank", th.StringType),
+        th.Property("BankAccount", th.StringType),
+        th.Property("BankAccountHolderName", th.StringType),
+        th.Property("BankDescription", th.StringType),
+        th.Property("BankName", th.StringType),
+        th.Property("BICCode", th.StringType),
+        th.Property("Blocked", th.BooleanType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Format", th.StringType),
+        th.Property("IBAN", th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("Main", th.BooleanType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("PaymentServiceAccount", th.StringType),
+        th.Property("Type", th.StringType),
+        th.Property("TypeDescription", th.StringType),
+    ).to_dict()
+
