@@ -232,6 +232,11 @@ class ExactStream(RESTStream):
         use_bill_of_materials = (
             self.config.get("use_bill_of_materials",True)
         )
+        use_assembly_orders = (
+            self.config.get("use_assembly_orders")
+            if self.config.get("use_assembly_orders") != None
+            else True
+        )
 
         if (
             (self.name == "sales_order" and not use_sales_orders)
@@ -246,6 +251,7 @@ class ExactStream(RESTStream):
                 self.name =="bill_of_material_download"
                 and not use_bill_of_materials
             )
+            or (self.name =="assembly_orders" and not use_assembly_orders)
         ):
             pass
         else:
