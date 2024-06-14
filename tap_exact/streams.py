@@ -4,6 +4,7 @@ from singer_sdk import typing as th
 from typing import Optional, Any, Dict
 from tap_exact.client import ExactStream
 from tap_exact.client_sync import ExactSyncStream
+from datetime import timedelta
 
 with open("config.json", "r") as jsonfile:
     data = json.load(jsonfile)
@@ -1916,6 +1917,7 @@ class AssemblyOrdersStream(ExactStream):
     primary_keys = ["ID"]
     path = "/inventory/AssemblyOrders"
     replication_key = "OrderDate"
+    expand = "PartItems"
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
@@ -1948,4 +1950,26 @@ class AssemblyOrdersStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,AssemblyDate,Description,Division,FinishedAssemblyDate,FinishedQuantity,Item,ItemCode,ItemDescription,Notes,OrderDate,OrderNumber,OrderStatus,PartItems,PlannedQuantity,StorageLocation,StorageLocationCode,StorageLocationDescription,StorageLocationSequenceNumber,Type,Unit,UnitCode,UnitDescription,Warehouse,WarehouseCode,WarehouseDescription&$expand=PartItems"
+        return f"ID,AssemblyDate,Description,Division,FinishedAssemblyDate,FinishedQuantity,Item,ItemCode,ItemDescription,Notes,OrderDate,OrderNumber,OrderStatus,PartItems,PlannedQuantity,StorageLocation,StorageLocationCode,StorageLocationDescription,StorageLocationSequenceNumber,Type,Unit,UnitCode,UnitDescription,Warehouse,WarehouseCode,WarehouseDescription"
+
+
+    def get_url_params(
+        self, context: Optional[dict], next_page_token: Optional[Any]
+    ) -> Dict[str, Any]:
+        params: dict = {}
+        if self.select:
+            params["$select"] = self.select
+        if hasattr(self, "expand"):
+            params["$expand"] = self.expand
+        if next_page_token:
+            params["$skiptoken"] = next_page_token
+    
+        start_date = self.get_starting_time(context)
+        # if it's an incremental sync use state date - 120 days to filter
+        if self.stream_state.get("replication_key_value"):
+            start_date = start_date - timedelta(days=120)
+            
+        start_date = start_date.strftime("%Y-%m-%dT%H:%M:%S")
+        params["$filter"] = f"{self.replication_key} gt datetime'{start_date}'"
+        
+        return params
