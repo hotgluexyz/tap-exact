@@ -1909,3 +1909,43 @@ class PurchaseReturnLinesStream(ExactStream):
     @property
     def select(self):
         return f"ID,BatchNumbers,CreateCredit,Created,Creator,CreatorFullName,Division,EntryID,Expense,ExpenseDescription,GoodsReceiptLineId,Item,ItemCode,ItemDescription,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderLineID,PurchaseOrderNumber,Rebill,ReceiptNumber,ReceivedQuantity,ReturnQuantity,ReturnReasonCodeDescription,ReturnReasonCodeID,SerialNumbers,SupplierItemCode,UniCode"
+
+
+class AssemblyOrdersStream(ExactStream):
+    name = "assembly_orders"
+    primary_keys = ["ID"]
+    path = "/inventory/AssemblyOrders"
+    replication_key = "OrderDate"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("AssemblyDate", th.DateTimeType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("FinishedAssemblyDate", th.DateTimeType),
+        th.Property("FinishedQuantity", th.StringType),
+        th.Property("Item", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("OrderDate", th.DateTimeType),
+        th.Property("OrderNumber", th.StringType),
+        th.Property("OrderStatus", th.StringType),
+        th.Property("PartItems", th.StringType),
+        th.Property("PlannedQuantity", th.StringType),
+        th.Property("StorageLocation", th.StringType),
+        th.Property("StorageLocationCode", th.StringType),
+        th.Property("StorageLocationDescription", th.StringType),
+        th.Property("StorageLocationSequenceNumber", th.StringType),
+        th.Property("Type", th.StringType),
+        th.Property("Unit", th.StringType),
+        th.Property("UnitCode", th.StringType),
+        th.Property("UnitDescription", th.StringType),
+        th.Property("Warehouse", th.StringType),
+        th.Property("WarehouseCode", th.StringType),
+        th.Property("WarehouseDescription", th.StringType)
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,AssemblyDate,Description,Division,FinishedAssemblyDate,FinishedQuantity,Item,ItemCode,ItemDescription,Notes,OrderDate,OrderNumber,OrderStatus,PartItems,PlannedQuantity,StorageLocation,StorageLocationCode,StorageLocationDescription,StorageLocationSequenceNumber,Type,Unit,UnitCode,UnitDescription,Warehouse,WarehouseCode,WarehouseDescription&$expand=PartItems"
