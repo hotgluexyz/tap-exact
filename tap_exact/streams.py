@@ -1235,8 +1235,21 @@ class SalesItemsPrices(DynamicStream):
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
+        th.Property("Account", th.StringType),
+        th.Property("AccountName", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("DefaultItemUnit", th.StringType),
+        th.Property("DefaultItemUnitDescription", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Employee", th.StringType),
         th.Property("Item", th.StringType),
         th.Property("ItemCode", th.StringType),
+        th.Property("NumberOfItemsPerUnit", th.StringType),
+        th.Property("Unit", th.StringType),
+        th.Property("UnitDescription", th.StringType),
         th.Property("Price", th.StringType),
         th.Property("Quantity", th.StringType),
         th.Property("StartDate", th.DateTimeType),
@@ -1255,9 +1268,9 @@ class SalesItemsPrices(DynamicStream):
     def select(self):
         if self.sync_endpoint:
             return (
-                f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp"
+                f"ID,Account,AccountName,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,Employee,Item,ItemCode,NumberOfItemsPerUnit,Unit,UnitDescription,Price,Quantity,StartDate,EndDate,Modified,Timestamp"
             )
-        return f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified"
+        return f"ID,Account,AccountName,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,Employee,Item,ItemCode,NumberOfItemsPerUnit,Unit,UnitDescription,Price,Quantity,StartDate,EndDate,Modified"
 
 
 class Deleted(ExactSyncStream):
