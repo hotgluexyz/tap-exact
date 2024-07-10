@@ -150,6 +150,8 @@ class ExactStream(RESTStream):
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
         params: dict = {}
+        if "bulk" not in self.path:
+            params["$top"] = int(self.config.get("page_size", 60))
         if self.select:
             params["$select"] = self.select
         start_date = self.get_starting_time(context)
