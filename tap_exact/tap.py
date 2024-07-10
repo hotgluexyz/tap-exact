@@ -139,7 +139,11 @@ class TapExact(Tap):
         self._reset_state_progress_markers()
         self._set_compatible_replication_methods()
         stream: "Stream"
-        for stream in self.streams.values():
+        # force supplierProducts to be synced before other streams to not lose data HGI-6163:
+        ordered_streams = {"supplierProducts": self.streams.pop("supplierProducts")}
+        ordered_streams.update(self.streams)
+
+        for stream in ordered_streams.values():
             if not stream.selected and not stream.has_selected_descendents:
                 self.logger.info(f"Skipping deselected stream '{stream.name}'.")
                 continue
