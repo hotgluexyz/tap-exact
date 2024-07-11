@@ -29,7 +29,6 @@ class ExactSyncStream(ExactStream):
     ) -> Dict[str, Any]:
         params: dict = {}
         timestamp = self.get_starting_time(context)
-        params["$top"] = int(self.config.get("page_size", 60))
         if self.select:
             params["$select"] = self.select
         if self.replication_key and timestamp:
