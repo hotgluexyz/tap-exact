@@ -6,7 +6,6 @@ import datetime
 import pendulum
 import copy
 import requests
-import re
 from singer_sdk.exceptions import InvalidStreamSortException
 from tap_exact.sync_endpoints_state_funct import finalize_state_progress_markers, increment_state
 
@@ -25,34 +24,6 @@ class ExactSyncStream(ExactStream):
         if "replication_key_value" in state.keys():
             rep_key = state["replication_key_value"]
         return rep_key or 1
-    
-    def get_next_page_token(
-        self, response: requests.Response, previous_token: Optional[Any]
-    ) -> Optional[Any]:
-        res_json = self.xml_to_dict(response)
-        
-        if self.uses_skip_pagination:
-            page_size = self.config.get("page_size", {}).get(self.name)
-            entries = res_json["feed"]["entry"]
-            if isinstance(entries, dict):
-                entries = [entries]
-            if len(entries) >= page_size:
-                last_item = entries[-1]
-                next_page_token = re.search(r'\((.*?)\)', last_item["id"])
-                if next_page_token:
-                    return next_page_token.group(1)
-        
-        elif "link" in res_json.get("feed", {}).keys():
-            link_dict = {}
-            links = res_json["feed"]["link"]
-            if type(links) == list:
-                for record in res_json["feed"]["link"]:
-                    link_dict[record["@rel"]] = record["@href"]
-                if "next" in link_dict.keys():
-                    next_link = link_dict["next"]
-                    next_page_token = next_link.split("&")[-1]
-                    next_page_token = next_page_token.split("=")[-1]
-                    return next_page_token
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
