@@ -134,7 +134,7 @@ class ExactStream(RESTStream):
 
         if self.uses_skip_pagination:
             page_size = self.config.get("page_size", {}).get(self.name)
-            entries = res_json["feed"]["entry"]
+            entries = res_json["feed"].get("entry") or []
             if isinstance(entries, dict):
                 entries = [entries]
             if len(entries) >= page_size:
