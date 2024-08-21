@@ -268,10 +268,10 @@ class ExactStream(RESTStream):
             or 500 <= response.status_code < 600
         ):
             msg = self.response_error_message(response)
-            raise RetriableAPIError(msg, response)
+            raise RetriableAPIError(f"{msg} with response {response.text}")
         elif response.status_code == 408:
             self.logger.info(f"Retrying after timeout")
             raise RetriableAPIError("Retrying after error")
         elif 400 <= response.status_code < 500:
             msg = self.response_error_message(response)
-            raise FatalAPIError(msg)
+            raise FatalAPIError(f"{msg} with response {response.text}")
