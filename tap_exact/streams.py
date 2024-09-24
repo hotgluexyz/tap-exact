@@ -1867,7 +1867,7 @@ class PurchaseEntiesStream(ExactStream):
         th.Property("EntryID", th.StringType),
         th.Property("AmountDC", th.StringType),
         th.Property("AmountFC", th.StringType),
-        th.Property("BatchNumber", th.IntegerType),
+        th.Property("BatchNumber", th.StringType),
         th.Property("Created", th.DateTimeType),
         th.Property("Creator", th.StringType),
         th.Property("CreatorFullName", th.StringType),
@@ -1993,17 +1993,11 @@ class PurchaseItemsPricesStream(DynamicStream):
 
     @property
     def path(self):
-        if self.sync_endpoint:
-            return f"/sync/Logistics/PurchaseItemPrices"
-        return f"/logistics/PurchaseItemPrices"
+        return f"/sync/Logistics/PurchaseItemPrices"
 
     @property
     def select(self):
-        if self.sync_endpoint:
-            return (
-                f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp,Account"
-            )
-        return f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Account"
+        return "ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp,Account"
 
 
 class PurchaseReturnLinesStream(ExactStream):
@@ -2023,7 +2017,7 @@ class PurchaseReturnLinesStream(ExactStream):
         th.Property("EntryID", th.StringType),
         th.Property("Expense", th.StringType),
         th.Property("ExpenseDescription", th.StringType),
-        th.Property("GoodsReceiptLineId", th.StringType),
+        th.Property("GoodsReceiptLineID", th.StringType),
         th.Property("Item", th.StringType),
         th.Property("Expense", th.StringType),
         th.Property("Division", th.StringType),
@@ -2051,12 +2045,12 @@ class PurchaseReturnLinesStream(ExactStream):
         th.Property("ReturnReasonCodeID", th.StringType),
         th.Property("SerialNumbers", th.StringType),
         th.Property("SupplierItemCode", th.BooleanType),
-        th.Property("UniCode", th.StringType),
+        th.Property("UnitCode", th.StringType),
     ).to_dict()
 
     @property
     def select(self):
-        return f"ID,BatchNumbers,CreateCredit,Created,Creator,CreatorFullName,Division,EntryID,Expense,ExpenseDescription,GoodsReceiptLineId,Item,ItemCode,ItemDescription,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderLineID,PurchaseOrderNumber,Rebill,ReceiptNumber,ReceivedQuantity,ReturnQuantity,ReturnReasonCodeDescription,ReturnReasonCodeID,SerialNumbers,SupplierItemCode,UniCode"
+        return f"ID,BatchNumbers,CreateCredit,Created,Creator,CreatorFullName,Division,EntryID,Expense,ExpenseDescription,GoodsReceiptLineID,Item,ItemCode,ItemDescription,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderLineID,PurchaseOrderNumber,Rebill,ReceiptNumber,ReceivedQuantity,ReturnQuantity,ReturnReasonCodeDescription,ReturnReasonCodeID,SerialNumbers,SupplierItemCode,UnitCode"
 
 
 class CostCentersStream(ExactStream):
