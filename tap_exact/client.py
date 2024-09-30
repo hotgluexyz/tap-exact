@@ -1,6 +1,7 @@
 import json
-from typing import Any, Dict, Iterable, List, Optional, Union
+from typing import Any, Dict, Iterable, List, Optional, Union, Callable
 
+import backoff
 import requests
 import xmltodict
 from memoization import cached
@@ -17,6 +18,8 @@ import re
 from lxml import etree
 from singer_sdk.plugin_base import PluginBase as TapBaseClass
 from singer.schema import Schema
+from http.client import RemoteDisconnected
+from requests.exceptions import ConnectionError
 
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"
@@ -269,3 +272,18 @@ class ExactStream(RESTStream):
         elif 400 <= response.status_code < 500:
             msg = self.response_error_message(response)
             raise FatalAPIError(msg)
+
+    def request_decorator(self, func: Callable) -> Callable:
+        decorator: Callable = backoff.on_exception(
+            self.backoff_wait_generator,
+            (
+                RetriableAPIError,
+                requests.exceptions.ReadTimeout,
+                ConnectionError,
+                RemoteDisconnected,
+
+            ),
+            max_tries=8,
+            on_backoff=self.backoff_handler,
+        )(func)
+        return decorator
