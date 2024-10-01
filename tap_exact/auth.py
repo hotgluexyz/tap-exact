@@ -6,6 +6,8 @@ import requests
 from singer_sdk.authenticators import APIAuthenticatorBase
 from singer_sdk.streams import Stream as RESTStreamBase
 import backoff
+from http.client import RemoteDisconnected
+from requests.exceptions import ConnectionError
 
 class EmptyResponseError(Exception):
     """Raised when the response is empty"""
@@ -54,7 +56,7 @@ class OAuth2Authenticator(APIAuthenticatorBase):
 
         return not ((expires_in - now) < 120)
 
-    @backoff.on_exception(backoff.expo,EmptyResponseError,max_tries=5,factor=2)
+    @backoff.on_exception(backoff.expo,(EmptyResponseError, RemoteDisconnected, ConnectionError),max_tries=5,factor=3)
     def update_access_token(self) -> None:
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         token_response = requests.post(
