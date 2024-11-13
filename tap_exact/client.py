@@ -211,6 +211,9 @@ class ExactStream(RESTStream):
         return row
 
     def get_records(self, context: Optional[dict]) -> Iterable[Dict[str, Any]]:
+        use_bill_of_materials_versions = (
+            self.config.get("use_bill_of_materials_versions",True)
+        )
         use_sales_orders = (
             self.config.get("use_sales_orders")
             if self.config.get("use_sales_orders") != None
@@ -252,6 +255,7 @@ class ExactStream(RESTStream):
                 and not use_bill_of_materials
             )
             or (self.name =="assembly_orders" and not use_assembly_orders)
+            or (self.name =="bill_of_materials_versions" and not use_bill_of_materials_versions)
         ):
             pass
         else:
