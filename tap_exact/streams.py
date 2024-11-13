@@ -1462,9 +1462,10 @@ class VatCodesStream(DynamicStream):
         return f"ID,Account,AccountCode,AccountName,CalculationBasis,Charged,Code,Country,Created,Creator,CreatorFullName,CustomField,Description,Division,EUSalesListing,ExcludeVATListing,GLDiscountPurchase,GLDiscountPurchaseCode,GLDiscountPurchaseDescription,GLDiscountSales,GLDiscountSalesCode,GLDiscountSalesDescription,GLToClaim,GLToClaimCode,GLToClaimDescription,GLToPay,GLToPayCode,GLToPayDescription,IntraStat,IntrastatType,IsBlocked,LegalText,Modified,Modifier,ModifierFullName,Percentage,TaxReturnType,Type,VatDocType,VatMargin,VATPartialRatio,VATPercentages,VATTransactionType"
 
 
-class BillOfMaterialsVersionsStream(DynamicStream):
+class BillOfMaterialsVersionsStream(ExactStream):
     name = "bill_of_materials_versions"
     primary_keys = ["ID"]
+    replication_key = "Modified"
 
     @property
     def path(self):
@@ -1473,35 +1474,85 @@ class BillOfMaterialsVersionsStream(DynamicStream):
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
-        th.Property("BatchQuantity", th.CustomType({"type": ["number", "string"]})),
+        th.Property("BatchQuantity", th.StringType),
         th.Property("CadDrawingUrl", th.StringType),
-        th.Property("CalculatedCostPrice", th.CustomType({"type": ["number", "string"]})),
+        th.Property("CalculatedCostPrice", th.StringType),
         th.Property("Created", th.DateTimeType),
         th.Property("Creator", th.StringType),
         th.Property("CreatorFullName", th.StringType),
         th.Property("Description", th.StringType),
-        th.Property("Division", th.CustomType({"type": ["number", "string"]})),
-        th.Property("IsDefault", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Division", th.StringType),
+        th.Property("IsDefault", th.StringType),
         th.Property("Item", th.StringType),
         th.Property("ItemDescription", th.StringType),
         th.Property("Modified", th.DateTimeType),
         th.Property("Modifier", th.StringType),
         th.Property("ModifierFullName", th.StringType),
         th.Property("Notes", th.StringType),
-        th.Property("OrderLeadDays", th.CustomType({"type": ["number", "string"]})),
-        th.Property("ProductionLeadDays", th.CustomType({"type": ["number", "string"]})),
-        th.Property("Status", th.CustomType({"type": ["number", "string"]})),
+        th.Property("OrderLeadDays", th.StringType),
+        th.Property("ProductionLeadDays", th.StringType),
+        th.Property("Status", th.StringType),
         th.Property("StatusDescription", th.StringType),
-        th.Property("Type", th.CustomType({"type": ["number", "string"]})),
+        th.Property("Type", th.StringType),
         th.Property("TypeDescription", th.StringType),
-        th.Property("VersionDate", th.DateTimeType),
-        th.Property("VersionNumber", th.StringType),
+        th.Property("VersionDate", th.StringType),
+        th.Property("VersionNumber", th.StringType)
     ).to_dict()
 
     @property
     def select(self):
         return "ID,BatchQuantity,CadDrawingUrl,CalculatedCostPrice,Created,Creator,CreatorFullName,Description,Division,IsDefault,Item,ItemDescription,Modified,Modifier,ModifierFullName,Notes,OrderLeadDays,ProductionLeadDays,Status,StatusDescription,Type,TypeDescription,VersionDate,VersionNumber"
+    
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "billofmaterials_id": record["ID"],
+        }
 
+class BillOfMaterialsStream(ExactStream):
+    name = "bill_of_materials"
+    primary_keys = ["ID"]
+    path = "/manufacturing/BillOfMaterialMaterials?$filter=ItemVersion eq guid'{billofmaterials_id}'"
+    select = None
+    parent_stream_type = BillOfMaterialsVersionsStream
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("AverageCost", th.StringType),
+        th.Property("Backflush", th.StringType),  # Byte type
+        th.Property("CalculatorType", th.StringType),
+        th.Property("CostBatch", th.StringType),
+        th.Property("CostCenter", th.StringType),
+        th.Property("CostCenterDescription", th.StringType),
+        th.Property("CostUnit", th.StringType),
+        th.Property("CostUnitDescription", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("DetailDrawing", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("ItemVersion", th.StringType),
+        th.Property("LineNumber", th.StringType),
+        th.Property("NetWeight", th.StringType),
+        th.Property("NetWeightUnit", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("PartItem", th.StringType),
+        th.Property("PartItemCode", th.StringType),
+        th.Property("PartItemCostPriceStandard", th.StringType),
+        th.Property("PartItemDescription", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("QuantityBatch", th.StringType),
+        th.Property("RoutingStepID", th.StringType),
+        th.Property("syscreated", th.StringType),
+        th.Property("syscreator", th.StringType),
+        th.Property("sysmodified", th.StringType),
+        th.Property("sysmodifier", th.StringType),
+        th.Property("Type", th.StringType),
+        th.Property("WastePercentage", th.StringType)
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,AverageCost,Backflush,CalculatorType,CostBatch,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CreatorFullName,Description,DetailDrawing,Division,ItemVersion,LineNumber,NetWeight,NetWeightUnit,Notes,PartItem,PartItemCode,PartItemCostPriceStandard,PartItemDescription,Quantity,QuantityBatch,RoutingStepID,syscreated,syscreator,sysmodified,sysmodifier,Type,WastePercentage"
 
 class ManufacturingShopOrdersStream(DynamicStream):
     name = "manufacturing_shop_orders"
