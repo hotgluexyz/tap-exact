@@ -1896,16 +1896,31 @@ class PurchaseItemsPricesStream(DynamicStream):
     replication_key = "Modified"
 
     schema = th.PropertiesList(
+        th.Property("Account", th.StringType),
+        th.Property("AccountName", th.StringType),
+        th.Property("Barcode", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("DefaultItemUnit", th.StringType),
+        th.Property("DefaultItemUnitDescription", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EndDate", th.DateTimeType),
         th.Property("ID", th.StringType),
         th.Property("Item", th.StringType),
         th.Property("ItemCode", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("NumberOfItemsPerUnit", th.StringType),
         th.Property("Price", th.StringType),
         th.Property("Quantity", th.StringType),
         th.Property("StartDate", th.DateTimeType),
-        th.Property("EndDate", th.DateTimeType),
-        th.Property("Modified", th.DateTimeType),
-        th.Property("Timestamp", th.StringType),
-        th.Property("Account", th.StringType),
+        th.Property("Unit", th.StringType),
+        th.Property("UnitDescription", th.StringType),
+        th.Property("Timestamp", th.StringType)
     ).to_dict()
 
     @property
@@ -1918,10 +1933,10 @@ class PurchaseItemsPricesStream(DynamicStream):
     def select(self):
         if self.sync_endpoint:
             return (
-                f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Timestamp,Account"
+                f"Account,AccountName,Barcode,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,EndDate,ID,Item,ItemCode,ItemDescription,Modified,Modifier,ModifierFullName,NumberOfItemsPerUnit,Price,Quantity,StartDate,Unit,UnitDescription,Timestamp"
             )
-        return f"ID,Item,ItemCode,Price,Quantity,StartDate,EndDate,Modified,Account"
-    
+        return f"Account,AccountName,Barcode,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,EndDate,ID,Item,ItemCode,ItemDescription,Modified,Modifier,ModifierFullName,NumberOfItemsPerUnit,Price,Quantity,StartDate,Unit,UnitDescription,Timestamp"
+
 
 class PurchaseReturnLinesStream(ExactStream):
     name = "purchase_returnlines"
