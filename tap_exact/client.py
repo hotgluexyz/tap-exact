@@ -240,12 +240,18 @@ class ExactStream(RESTStream):
             if self.config.get("use_assembly_orders") != None
             else True
         )
+        use_exchange_rates = (
+            self.config.get("use_exchange_rates")
+            if self.config.get("use_exchange_rates") != None
+            else True
+        )
 
         if (
             (self.name == "sales_order" and not use_sales_orders)
             or (self.name == "manufacturing_shop_orders" and not use_production_orders)
             or (self.name == "sales_invoices" and not use_sales_invoices)
             or (self.name == "warehouses" and use_stock_multiple_warehouses)
+            or (self.name == "exchange_rates" and not use_exchange_rates)
             or (
                 self.name == "logistics_stock_positions"
                 and not use_stock_multiple_warehouses

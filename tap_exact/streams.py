@@ -2052,3 +2052,29 @@ class AssemblyOrdersStream(ExactStream):
         params["$filter"] = f"{self.replication_key} gt datetime'{start_date}'"
         
         return params
+    
+class ExchangeRatesStream(ExactStream):
+    name = "exchange_rates"
+    primary_keys = ["ID"]
+    path = "/financial/ExchangeRates"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.DateTimeType),
+        th.Property("Division", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Rate", th.StringType),
+        th.Property("SourceCurrencyDescription", th.StringType),
+        th.Property("StartDate", th.StringType),
+        th.Property("TargetCurrency", th.StringType),
+        th.Property("TargetCurrencyDescription", th.StringType),
+
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,Creator,CreatorFullName,Division,Modified,Modifier,ModifierFullName,Rate,SourceCurrencyDescription,StartDate,TargetCurrency,TargetCurrencyDescription"
