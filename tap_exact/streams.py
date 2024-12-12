@@ -2078,3 +2078,68 @@ class ExchangeRatesStream(ExactStream):
     @property
     def select(self):
         return f"ID,Creator,CreatorFullName,Division,Modified,Modifier,ModifierFullName,Rate,SourceCurrencyDescription,StartDate,TargetCurrency,TargetCurrencyDescription"
+    
+class AssemblyBillOfMaterialHeaderStream(ExactStream):
+    name = "assembly_bill_of_material_header"
+    primary_keys = ["ID"]
+    path = "/inventory/AssemblyBillOfMaterialHeader"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("AssembledLeadDays", th.StringType),
+        th.Property(
+            "AssemblyBillOfMaterialMaterials",
+            th.StringType  # Changed from ArrayType to StringType
+        ),
+        th.Property("BatchQuantity", th.StringType),
+        th.Property("Code", th.StringType),
+        th.Property("CostPrice", th.StringType),
+        th.Property("Created", th.StringType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("UpdateCostPrice", th.StringType),
+        th.Property("UseExplosion", th.StringType),
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,AssembledLeadDays,AssemblyBillOfMaterialMaterials,BatchQuantity,Code,CostPrice,Created,Creator,CreatorFullName,Description,Division,Modified,Modifier,ModifierFullName,Notes,UpdateCostPrice,UseExplosion"
+
+class AssemblyBillOfMaterialMaterialsStream(ExactStream):
+    name = "assembly_bill_of_material_materials"
+    primary_keys = ["ID"]
+    path = "/inventory/AssemblyBillOfMaterialMaterials"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("AssembledItem", th.StringType),
+        th.Property("AssembledItemCode", th.StringType),
+        th.Property("AssembledItemDescription", th.StringType),
+        th.Property("AssembledLeadDays", th.StringType),
+        th.Property("BatchQuantity", th.StringType),
+        th.Property("Created", th.StringType),
+        th.Property("Creator", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("LineNumber", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("PartItem", th.StringType),
+        th.Property("PartItemCode", th.StringType),
+        th.Property("PartItemDescription", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("QuantityBatch", th.StringType),
+        th.Property("UpdateCostPrice", th.StringType),
+        th.Property("UseExplosion", th.StringType),
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,AssembledItem,AssembledItemCode,AssembledItemDescription,AssembledLeadDays,BatchQuantity,Created,Creator,Division,LineNumber,Modified,Modifier,PartItem,PartItemCode,PartItemDescription,Quantity,QuantityBatch,UpdateCostPrice,UseExplosion"
