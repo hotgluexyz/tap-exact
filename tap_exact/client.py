@@ -212,7 +212,7 @@ class ExactStream(RESTStream):
 
     def get_records(self, context: Optional[dict]) -> Iterable[Dict[str, Any]]:
         use_bill_of_materials_versions = (
-            self.config.get("use_bill_of_materials_versions",True)
+            self.config.get("use_bill_of_materials_versions", True)
         )
         use_sales_orders = (
             self.config.get("use_sales_orders")
@@ -233,7 +233,7 @@ class ExactStream(RESTStream):
             self.config.get("use_stock_multiple_warehouses") or False
         )
         use_bill_of_materials = (
-            self.config.get("use_bill_of_materials",True)
+            self.config.get("use_bill_of_materials", True)
         )
         use_assembly_orders = (
             self.config.get("use_assembly_orders")
@@ -244,6 +244,12 @@ class ExactStream(RESTStream):
             self.config.get("use_exchange_rates")
             if self.config.get("use_exchange_rates") != None
             else True
+        )
+        use_assembly_bill_of_material_header = (
+            self.config.get("use_assembly_bill_of_material_header", True)
+        )
+        use_assembly_bill_of_material_materials = (
+            self.config.get("use_assembly_bill_of_material_materials", True)
         )
 
         if (
@@ -257,11 +263,22 @@ class ExactStream(RESTStream):
                 and not use_stock_multiple_warehouses
             )
             or (
-                self.name =="bill_of_material_download"
+                self.name == "bill_of_material_download"
                 and not use_bill_of_materials
             )
-            or (self.name =="assembly_orders" and not use_assembly_orders)
-            or (self.name =="bill_of_materials_versions" and not use_bill_of_materials_versions)
+            or (self.name == "assembly_orders" and not use_assembly_orders)
+            or (
+                self.name == "bill_of_materials_versions"
+                and not use_bill_of_materials_versions
+            )
+            or (
+                self.name == "assembly_bill_of_material_header"
+                and not use_assembly_bill_of_material_header
+            )
+            or (
+                self.name == "assembly_bill_of_material_materials"
+                and not use_assembly_bill_of_material_materials
+            )
         ):
             pass
         else:
