@@ -18,6 +18,8 @@ from lxml import etree
 from singer_sdk.plugin_base import PluginBase as TapBaseClass
 from singer.schema import Schema
 
+import singer
+from singer import StateMessage
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"
 REPLICATION_LOG_BASED = "LOG_BASED"
@@ -302,3 +304,14 @@ class ExactStream(RESTStream):
         elif 400 <= response.status_code < 500:
             msg = self.response_error_message(response)
             raise FatalAPIError(f"{msg} with response {response.text}")
+
+    def _write_state_message(self) -> None:
+        """Write out a STATE message with the latest state."""
+        tap_state = self.tap_state
+
+        if tap_state and tap_state.get("bookmarks"):
+            for stream_name in tap_state.get("bookmarks").keys():
+                if tap_state["bookmarks"][stream_name].get("partitions"):
+                    tap_state["bookmarks"][stream_name] = {"partitions": []}
+
+        singer.write_message(StateMessage(value=tap_state))
