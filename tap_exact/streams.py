@@ -2061,7 +2061,7 @@ class ExchangeRatesStream(ExactStream):
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
-        th.Property("Created", th.DateTimeType)
+        th.Property("Created", th.DateTimeType),
         th.Property("Creator", th.StringType),
         th.Property("CreatorFullName", th.DateTimeType),
         th.Property("Division", th.StringType),
