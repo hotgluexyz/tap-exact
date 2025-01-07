@@ -2061,6 +2061,7 @@ class ExchangeRatesStream(ExactStream):
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
+        th.Property("Created", th.DateTimeType)
         th.Property("Creator", th.StringType),
         th.Property("CreatorFullName", th.DateTimeType),
         th.Property("Division", th.StringType),
@@ -2068,6 +2069,7 @@ class ExchangeRatesStream(ExactStream):
         th.Property("Modifier", th.StringType),
         th.Property("ModifierFullName", th.StringType),
         th.Property("Rate", th.StringType),
+        th.Property("SourceCurrency", th.StringType),
         th.Property("SourceCurrencyDescription", th.StringType),
         th.Property("StartDate", th.StringType),
         th.Property("TargetCurrency", th.StringType),
@@ -2077,7 +2079,7 @@ class ExchangeRatesStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,Creator,CreatorFullName,Division,Modified,Modifier,ModifierFullName,Rate,SourceCurrencyDescription,StartDate,TargetCurrency,TargetCurrencyDescription"
+        return f"ID,Created,Creator,CreatorFullName,Division,Modified,Modifier,ModifierFullName,Rate,SourceCurrency,SourceCurrencyDescription,StartDate,TargetCurrency,TargetCurrencyDescription"
     
 class AssemblyBillOfMaterialHeaderStream(ExactStream):
     name = "assembly_bill_of_material_header"
