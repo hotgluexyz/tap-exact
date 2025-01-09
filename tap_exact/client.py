@@ -43,7 +43,7 @@ class ExactStream(RESTStream):
     def url_base(self) -> str:
         url = self.config.get("auth_url", self.config.get("uri")) or "https://start.exactonline.nl/api/oauth2/token"
 
-        if "token" in url:
+        if "oauth2" in url:
             url = re.findall("(.*)/oauth2", url)[0]
         elif "api" not in url:
             url = f"{url}/api"
@@ -71,7 +71,7 @@ class ExactStream(RESTStream):
     @property
     def authenticator(self) -> OAuth2Authenticator:
         oauth_url = self.config.get("auth_url", self.config.get("uri")) or "https://start.exactonline.nl/api/oauth2/token"
-        if "token" not in oauth_url:
+        if "/api/oauth2" not in oauth_url:
             oauth_url = f"{oauth_url}/api/oauth2/token"
         if not oauth_url.endswith("/token"):
             oauth_url += "/token"
