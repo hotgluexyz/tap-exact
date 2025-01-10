@@ -2145,3 +2145,73 @@ class AssemblyBillOfMaterialMaterialsStream(ExactStream):
     @property
     def select(self):
         return f"ID,AssembledItem,AssembledItemCode,AssembledItemDescription,AssembledLeadDays,BatchQuantity,Created,Creator,Division,LineNumber,Modified,Modifier,PartItem,PartItemCode,PartItemDescription,Quantity,QuantityBatch,UpdateCostPrice,UseExplosion"
+    
+
+class PurchaseEntriesStream(ExactStream):
+    name = "purchase_entries"
+    primary_keys = ["EntryID"]
+    path = "/purchaseentry/PurchaseEntries"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("EntryID", th.StringType),
+        th.Property("AmountDC", th.NumberType),
+        th.Property("AmountFC", th.NumberType),
+        th.Property("BatchNumber", th.IntegerType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("CustomField", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.IntegerType),
+        th.Property("Document", th.StringType),
+        th.Property("DocumentNumber", th.IntegerType),
+        th.Property("DocumentSubject", th.StringType),
+        th.Property("DueDate", th.DateTimeType),
+        th.Property("EntryDate", th.DateTimeType),
+        th.Property("EntryNumber", th.IntegerType),
+        th.Property("ExternalLinkDescription", th.StringType),
+        th.Property("ExternalLinkReference", th.StringType),
+        th.Property("GAccountAmountFC", th.NumberType),
+        th.Property("InvoiceNumber", th.IntegerType),
+        th.Property("Journal", th.StringType),
+        th.Property("JournalDescription", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("OrderNumber", th.IntegerType),
+        th.Property("PaymentCondition", th.StringType),
+        th.Property("PaymentConditionDescription", th.StringType),
+        th.Property("PaymentConditionPaymentMethod", th.StringType),
+        th.Property("PaymentReference", th.StringType),
+        th.Property("ProcessNumber", th.IntegerType),
+        th.Property("PurchaseEntryLines", th.ArrayType(th.ObjectType())),
+        th.Property("Rate", th.NumberType),
+        th.Property("ReportingPeriod", th.IntegerType),
+        th.Property("ReportingYear", th.IntegerType),
+        th.Property("Reversal", th.BooleanType),
+        th.Property("Status", th.IntegerType),
+        th.Property("StatusDescription", th.StringType),
+        th.Property("Supplier", th.StringType),
+        th.Property("SupplierName", th.StringType),
+        th.Property("Type", th.IntegerType),
+        th.Property("TypeDescription", th.StringType),
+        th.Property("VATAmountDC", th.NumberType),
+        th.Property("VATAmountFC", th.NumberType),
+        th.Property("YourRef", th.StringType),
+    ).to_dict()
+
+    @property
+    def select(self):
+        return (
+            "EntryID,AmountDC,AmountFC,BatchNumber,Created,Creator,CreatorFullName,"
+            "Currency,CustomField,Description,Division,Document,DocumentNumber,"
+            "DocumentSubject,DueDate,EntryDate,EntryNumber,ExternalLinkDescription,"
+            "ExternalLinkReference,GAccountAmountFC,InvoiceNumber,Journal,JournalDescription,"
+            "Modified,Modifier,ModifierFullName,OrderNumber,PaymentCondition,"
+            "PaymentConditionDescription,PaymentConditionPaymentMethod,PaymentReference,"
+            "ProcessNumber,PurchaseEntryLines,Rate,ReportingPeriod,ReportingYear,Reversal,"
+            "Status,StatusDescription,Supplier,SupplierName,Type,TypeDescription,"
+            "VATAmountDC,VATAmountFC,YourRef"
+        )
