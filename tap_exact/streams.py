@@ -1784,7 +1784,7 @@ class PurchaseEntiesStream(ExactStream):
         th.Property("EntryID", th.StringType),
         th.Property("AmountDC", th.StringType),
         th.Property("AmountFC", th.StringType),
-        th.Property("BatchNumber", th.IntegerType),
+        th.Property("BatchNumber", th.StringType),
         th.Property("Created", th.DateTimeType),
         th.Property("Creator", th.StringType),
         th.Property("CreatorFullName", th.StringType),
