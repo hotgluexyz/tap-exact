@@ -1,7 +1,7 @@
 import json
 import requests
 from singer_sdk import typing as th
-from typing import Optional, Any, Dict
+from typing import Optional, Any, Dict, Iterable
 from tap_exact.client import ExactStream
 from tap_exact.client_sync import ExactSyncStream
 from datetime import timedelta
@@ -1508,13 +1508,24 @@ class BillOfMaterialsVersionsStream(ExactStream):
         return {
             "billofmaterials_id": record["ID"],
         }
+    
+    def _sync_records(self, context = None) -> None:
+        # always fetch children stream using its own rep key, even if parent stream has no data
+        super()._sync_children({"billofmaterials_id": None})
+        # normal behaviour syncing child streams using context
+        return super()._sync_records(context)
+
 
 class BillOfMaterialsStream(ExactStream):
     name = "bill_of_materials"
     primary_keys = ["ID"]
-    path = "/manufacturing/BillOfMaterialMaterials?$filter=ItemVersion eq guid'{billofmaterials_id}'"
+    path = "/manufacturing/BillOfMaterialMaterials"
     select = None
     parent_stream_type = BillOfMaterialsVersionsStream
+    fetch_from_parent_stream = False
+    replication_key = "sysmodified"
+    ids = set()
+    default_rep_key_field = "sysmodified"
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
@@ -1544,7 +1555,7 @@ class BillOfMaterialsStream(ExactStream):
         th.Property("RoutingStepID", th.StringType),
         th.Property("syscreated", th.StringType),
         th.Property("syscreator", th.StringType),
-        th.Property("sysmodified", th.StringType),
+        th.Property("sysmodified", th.DateTimeType),
         th.Property("sysmodifier", th.StringType),
         th.Property("Type", th.StringType),
         th.Property("WastePercentage", th.StringType)
@@ -1553,6 +1564,41 @@ class BillOfMaterialsStream(ExactStream):
     @property
     def select(self):
         return f"ID,AverageCost,Backflush,CalculatorType,CostBatch,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CreatorFullName,Description,DetailDrawing,Division,ItemVersion,LineNumber,NetWeight,NetWeightUnit,Notes,PartItem,PartItemCode,PartItemCostPriceStandard,PartItemDescription,Quantity,QuantityBatch,RoutingStepID,syscreated,syscreator,sysmodified,sysmodifier,Type,WastePercentage"
+
+    def request_records(self, context) -> Iterable[dict]:
+        # 1. Fetch all BOMMaterials using rep key
+        billofmaterials_id = None
+        if not self.fetch_from_parent_stream:
+            # BOMMaterials is a child stream but it also fetches data using its own rep key
+            # so we need to keep the rep_key_value at the header level
+            if "replication_key_value" in self.stream_state:
+                self.stream_state['starting_replication_value'] = self.stream_state['replication_key_value']
+            #---
+            billofmaterials_id = context.pop("billofmaterials_id", None)
+            yield from super().request_records(context)
+            self.fetch_from_parent_stream = True
+        # 2. Fetch BOMMaterials from parent stream
+        if self.fetch_from_parent_stream:
+            if billofmaterials_id:
+                context.update({"billofmaterials_id": billofmaterials_id})
+            yield from super().request_records(context)
+
+    def get_url_params(self, context, next_page_token) -> Dict[str, Any]:
+        # filter by bomversion if fetch_from_parent_stream is True
+        if self.fetch_from_parent_stream:
+            billofmaterials_id = context.get("billofmaterials_id")
+            if billofmaterials_id:
+                self.filter = f"ItemVersion eq guid'{billofmaterials_id}'"
+
+        return super().get_url_params(context, next_page_token)
+    
+    def post_process(self, row, context) -> dict:
+        row = super().post_process(row, context)
+        # avoid duplicates from normal rep key fetch and child stream fetch
+        if row["ID"] not in self.ids:
+            self.ids.add(row["ID"])
+            return row
+
 
 class ManufacturingShopOrdersStream(DynamicStream):
     name = "manufacturing_shop_orders"

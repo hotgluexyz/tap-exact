@@ -38,6 +38,7 @@ class ExactStream(RESTStream):
         self.default_warehouse_uuid
 
     dont_use_current_division = False
+    default_rep_key_field = "Modified"
 
     @property
     def url_base(self) -> str:
@@ -164,7 +165,7 @@ class ExactStream(RESTStream):
             and self.replication_key != "Timestamp"
             and start_date
         ):
-            date_filter = f"Modified gt datetime'{start_date}'"
+            date_filter = f"{self.default_rep_key_field} gt datetime'{start_date}'"
             params["$filter"] = date_filter
         if self.config.get("sync_endpoints") != None:
             if hasattr(self, "filter"):
@@ -312,6 +313,6 @@ class ExactStream(RESTStream):
         if tap_state and tap_state.get("bookmarks"):
             for stream_name in tap_state.get("bookmarks").keys():
                 if tap_state["bookmarks"][stream_name].get("partitions"):
-                    tap_state["bookmarks"][stream_name] = {"partitions": []}
+                    tap_state["bookmarks"][stream_name]["partitions"] = []
 
         singer.write_message(StateMessage(value=tap_state))
