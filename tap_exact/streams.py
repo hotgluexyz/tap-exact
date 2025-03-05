@@ -2191,3 +2191,222 @@ class AssemblyBillOfMaterialMaterialsStream(ExactStream):
     @property
     def select(self):
         return f"ID,AssembledItem,AssembledItemCode,AssembledItemDescription,AssembledLeadDays,BatchQuantity,Created,Creator,Division,LineNumber,Modified,Modifier,PartItem,PartItemCode,PartItemDescription,Quantity,QuantityBatch,UpdateCostPrice,UseExplosion"
+
+class TransactionLinesStream(DynamicStream):
+    name = "transaction_lines"
+    primary_keys = ["ID"]
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("Account", th.StringType),
+        th.Property("AccountCode", th.StringType),
+        th.Property("AccountName",th.StringType),
+        th.Property("AmountDC", th.StringType),
+        th.Property("AmountVATBaseFC", th.StringType),
+        th.Property("AmountVATFC", th.StringType),
+        th.Property("Asset", th.StringType),
+        th.Property("AssetCode", th.StringType),
+        th.Property("AssetDescription", th.StringType),
+        th.Property("CostCenter", th.StringType),
+        th.Property("CostCenterDescription", th.StringType),
+        th.Property("CostUnit", th.StringType),
+        th.Property("CostUnitDescription", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("CustomField", th.StringType),
+        th.Property("Date", th.DateTimeType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Document", th.StringType),
+        th.Property("DocumentNumber", th.StringType),
+        th.Property("DocumentSubject", th.StringType),
+        th.Property("DueDate", th.DateTimeType),
+        th.Property("EntryID", th.StringType),
+        th.Property("EntryNumber", th.StringType),
+        th.Property("ExchangeRate", th.StringType),
+        th.Property("ExternalLinkDescription", th.StringType),
+        th.Property("ExternalLinkReference", th.StringType),
+        th.Property("ExtraDutyAmountFC", th.StringType),
+        th.Property("ExtraDutyPercentage", th.StringType),
+        th.Property("FinancialPeriod", th.StringType),
+        th.Property("FinancialYear", th.StringType),
+        th.Property("GLAccount", th.StringType),
+        th.Property("GLAccountCode", th.StringType),
+        th.Property("GLAccountDescription", th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("InvoiceNumber", th.StringType),
+        th.Property("Item", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("JournalCode", th.StringType),
+        th.Property("JournalDescription", th.StringType),
+        th.Property("LineNumber", th.StringType),
+        th.Property("LineType", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("OffsetID", th.StringType),
+        th.Property("OrderNumber", th.StringType),
+        th.Property("PaymentDiscountAmount",th.StringType),
+        th.Property("PaymentReference", th.StringType),
+        th.Property("Project",th.StringType),
+        th.Property("ProjectCode",th.StringType),
+        th.Property("ProjectDescription",th.StringType),
+        th.Property("Quantity",th.StringType),
+        th.Property("SerialNumber",th.StringType),
+        th.Property("Status", th.StringType),
+        th.Property("Subscription", th.StringType),
+        th.Property("SubscriptionDescription", th.StringType),
+        th.Property("TrackingNumber", th.StringType),
+        th.Property("TrackingNumberDescription", th.StringType),
+        th.Property("Type", th.StringType),
+        th.Property("VATCode", th.StringType),
+        th.Property("VATCodeDescription", th.StringType),
+        th.Property("VATPercentage", th.StringType),
+        th.Property("VATType", th.StringType),
+        th.Property("YourRef", th.StringType),
+        th.Property("Timestamp", th.StringType),
+    ).to_dict()
+
+    @property
+    def path(self):
+        if self.sync_endpoint:
+            return f"/sync/Financial/TransactionLines"
+        return f"/financialtransaction/TransactionLines"
+
+    @property
+    def select(self):
+        if self.sync_endpoint:
+            return (
+                f"Account,AccountCode,AccountName,AmountDC,AmountVATBaseFC,AmountVATFC,Asset,AssetCode,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomField,Date,Description,Division,Document,DocumentNumber,DocumentSubject,DueDate,EntryID,EntryNumber,ExchangeRate,ExternalLinkDescription,ExternalLinkReference,ExtraDutyAmountFC,ExtraDutyPercentage,FinancialPeriod,FinancialYear,GLAccount,GLAccountCode,GLAccountDescription,ID,InvoiceNumber,Item,ItemCode,ItemDescription,JournalCode,JournalDescription,LineNumber,LineType,Modified,Modifier,ModifierFullName,Notes,OffsetID,OrderNumber,PaymentDiscountAmount,PaymentReference,Project,ProjectCode,ProjectDescription,Quantity,SerialNumber,Status,Subscription,SubscriptionDescription,TrackingNumber,TrackingNumberDescription,Type,VATCode,VATCodeDescription,VATPercentage,VATType,YourRef,Timestamp"
+            )
+        return f"Account,AccountCode,AccountName,AmountDC,AmountVATBaseFC,AmountVATFC,Asset,AssetCode,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomField,Date,Description,Division,Document,DocumentNumber,DocumentSubject,DueDate,EntryID,EntryNumber,ExchangeRate,ExternalLinkDescription,ExternalLinkReference,ExtraDutyAmountFC,ExtraDutyPercentage,FinancialPeriod,FinancialYear,GLAccount,GLAccountCode,GLAccountDescription,ID,InvoiceNumber,Item,ItemCode,ItemDescription,JournalCode,JournalDescription,LineNumber,LineType,Modified,Modifier,ModifierFullName,Notes,OffsetID,OrderNumber,PaymentDiscountAmount,PaymentReference,Project,ProjectCode,ProjectDescription,Quantity,SerialNumber,Status,Subscription,SubscriptionDescription,TrackingNumber,TrackingNumberDescription,Type,VATCode,VATCodeDescription,VATPercentage,VATType,YourRef"
+
+class SalesPriceListLinkedAccountsStream(ExactStream):
+    name = "sales_prices_linked_accounts"
+    primary_keys = ["ID"]
+    path = "/sales/SalesPriceListLinkedAccounts"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Code", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Name", th.StringType),
+        th.Property("PriceList", th.StringType)
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,Code,Created,Creator,CreatorFullName,Division,Modified,Modifier,ModifierFullName,Name,PriceList"
+
+class SalesPriceListsStream(ExactStream):
+    name = "sales_prices_lists"
+    primary_keys = ["ID"]
+    path = "/sales/SalesPriceLists"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Code", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Entity", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("Type", th.StringType)
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,Code,Created,Creator,CreatorFullName,Currency,Description,Division,Entity,Modified,Modifier,ModifierFullName,Notes,Type"
+    
+class SalesPriceListPeriodsStream(ExactStream):
+    name = "sales_prices_list_periods"
+    primary_keys = ["ID"]
+    path = "/sales/SalesPriceListPeriods"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EndDate", th.DateTimeType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("PriceList", th.StringType),
+        th.Property("StartDate", th.DateTimeType),
+        th.Property("Type", th.StringType)
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,Created,Creator,CreatorFullName,Currency,Division,EndDate,Modified,Modifier,ModifierFullName,PriceList,StartDate,Type"
+
+class SalesPriceListVolumeDiscountsStream(DynamicStream):
+    name = "sales_price_list_volume_discounts"
+    primary_keys = ["ID"]
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("BasePrice", th.StringType),
+        th.Property("BasePriceAmount", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Discount", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EntryMethod", th.StringType),
+        th.Property("Item", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("ItemGroup", th.StringType),
+        th.Property("ItemGroupCode", th.StringType),
+        th.Property("ItemGroupDescription", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("NewPrice", th.StringType),
+        th.Property("NumberOfItemsPerUnit", th.StringType),
+        th.Property("PriceListCode", th.StringType),
+        th.Property("PriceListDescription",th.StringType),
+        th.Property("PriceListPeriod", th.StringType),
+        th.Property("Quantity",th.StringType),
+        th.Property("Unit",th.StringType),
+        th.Property("UnitDescription",th.StringType),
+        th.Property("Timestamp", th.StringType)
+    ).to_dict()
+
+    @property
+    def path(self):
+        if self.sync_endpoint:
+            return f"/sync/Sales/SalesPriceListVolumeDiscounts"
+        return f"/sales/SalesPriceListVolumeDiscounts"
+
+    @property
+    def select(self):
+        if self.sync_endpoint:
+            return (
+                f"BasePrice,BasePriceAmount,Created,Creator,CreatorFullName,Discount,Division,EntryMethod,ID,Item,ItemCode,ItemDescription,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NewPrice,NumberOfItemsPerUnit,PriceListCode,PriceListDescription,PriceListPeriod,Quantity,Unit,UnitDescription,Timestamp"
+            )
+        return f"BasePrice,BasePriceAmount,Created,Creator,CreatorFullName,Discount,Division,EntryMethod,ID,Item,ItemCode,ItemDescription,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NewPrice,NumberOfItemsPerUnit,PriceListCode,PriceListDescription,PriceListPeriod,Quantity,Unit,UnitDescription"

@@ -36,7 +36,12 @@ from tap_exact.streams import (
     BillOfMaterialsStream,
     ExchangeRatesStream,
     AssemblyBillOfMaterialHeaderStream,
-    AssemblyBillOfMaterialMaterialsStream
+    AssemblyBillOfMaterialMaterialsStream,
+    TransactionLinesStream,
+    SalesPriceListLinkedAccountsStream,
+    SalesPriceListsStream,
+    SalesPriceListPeriodsStream,
+    SalesPriceListVolumeDiscountsStream
 )
 
 STREAM_TYPES = [
@@ -69,7 +74,12 @@ STREAM_TYPES = [
     BillOfMaterialsStream,
     ExchangeRatesStream,
     AssemblyBillOfMaterialHeaderStream,
-    AssemblyBillOfMaterialMaterialsStream
+    AssemblyBillOfMaterialMaterialsStream,
+    TransactionLinesStream,
+    SalesPriceListLinkedAccountsStream,
+    SalesPriceListsStream,
+    SalesPriceListPeriodsStream,
+    SalesPriceListVolumeDiscountsStream
 ]
 
 
