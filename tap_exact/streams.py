@@ -1935,6 +1935,11 @@ class PurchaseEntiesStream(ExactStream):
     def select(self):
         return f"*"
 
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "purchaseentry_id": record["EntryID"],
+        }
 
 class PurchaseItemsPricesStream(DynamicStream):
     name = "purchase_items_prices"
@@ -2410,3 +2415,67 @@ class SalesPriceListVolumeDiscountsStream(DynamicStream):
                 f"BasePrice,BasePriceAmount,Created,Creator,CreatorFullName,Discount,Division,EntryMethod,ID,Item,ItemCode,ItemDescription,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NewPrice,NumberOfItemsPerUnit,PriceListCode,PriceListDescription,PriceListPeriod,Quantity,Unit,UnitDescription,Timestamp"
             )
         return f"BasePrice,BasePriceAmount,Created,Creator,CreatorFullName,Discount,Division,EntryMethod,ID,Item,ItemCode,ItemDescription,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NewPrice,NumberOfItemsPerUnit,PriceListCode,PriceListDescription,PriceListPeriod,Quantity,Unit,UnitDescription"
+
+class PurchaseEntryLinesStream(ExactStream):
+    name = "purchase_entry_lines"
+    primary_keys = ["ID"]
+    path = "/purchaseentry/PurchaseEntryLines?$filter=EntryID eq guid'{purchaseentry_id}'"
+    select = None
+    parent_stream_type = PurchaseEntiesStream
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("AmountDC", th.StringType),
+        th.Property("AmountFC", th.StringType),
+        th.Property("Asset", th.StringType),
+        th.Property("AssetDescription", th.StringType),
+        th.Property("CostCenter", th.StringType),
+        th.Property("CostCenterDescription", th.StringType),
+        th.Property("CostUnit", th.StringType),
+        th.Property("CostUnitDescription", th.StringType),
+        th.Property("CustomField", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EntryID", th.StringType),
+        th.Property("From", th.StringType),
+        th.Property("GLAccount", th.StringType),
+        th.Property("GLAccountCode", th.StringType),
+        th.Property("GLAccountDescription", th.StringType),
+        th.Property("IntraStatArea", th.StringType),
+        th.Property("IntraStatCountry", th.StringType),
+        th.Property("IntraStatDeliveryTerm", th.StringType),
+        th.Property("IntraStatTransactionA", th.StringType),
+        th.Property("IntraStatTransactionB", th.StringType),
+        th.Property("IntraStatTransportMethod", th.StringType),
+        th.Property("LineNumber", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("PrivateUsePercentage", th.StringType),
+        th.Property("Project", th.StringType),
+        th.Property("ProjectDescription", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("SerialNumber", th.StringType),
+        th.Property("StatisticalNetWeight", th.StringType),
+        th.Property("StatisticalNumber", th.StringType),
+        th.Property("StatisticalQuantity", th.StringType),
+        th.Property("StatisticalValue", th.StringType),
+        th.Property("Subscription", th.StringType),
+        th.Property("SubscriptionDescription", th.StringType),
+        th.Property("To", th.DateTimeType),
+        th.Property("TrackingNumber", th.StringType),
+        th.Property("TrackingNumberDescription", th.StringType),
+        th.Property("Type", th.StringType),
+        th.Property("VATAmountDC", th.StringType),
+        th.Property("VATAmountFC", th.StringType),
+        th.Property("VATBaseAmountDC", th.StringType),
+        th.Property("VATBaseAmountFC", th.StringType),
+        th.Property("VATCode", th.StringType),
+        th.Property("VATCodeDescription", th.StringType),
+        th.Property("VATNonDeductiblePercentage", th.StringType),
+        th.Property("VATPercentage", th.StringType),
+        th.Property("WithholdingAmountDC", th.StringType),
+        th.Property("WithholdingTax", th.DateTimeType)
+    ).to_dict()
+
+    @property
+    def select(self):
+        return f"ID,AmountDC,AmountFC,Asset,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CustomField,Description,Division,EntryID,From,GLAccount,GLAccountCode,GLAccountDescription,IntraStatArea,IntraStatCountry,IntraStatDeliveryTerm,IntraStatTransactionA,IntraStatTransactionB,IntraStatTransportMethod,LineNumber,Notes,PrivateUsePercentage,Project,ProjectDescription,Quantity,SerialNumber,StatisticalNetWeight,StatisticalNumber,StatisticalQuantity,StatisticalValue,Subscription,SubscriptionDescription,To,TrackingNumber,TrackingNumberDescription,Type,VATAmountDC,VATAmountFC,VATBaseAmountDC,VATBaseAmountFC,VATCode,VATCodeDescription,VATNonDeductiblePercentage,VATPercentage,WithholdingAmountDC,WithholdingTax"

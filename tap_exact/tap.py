@@ -41,7 +41,8 @@ from tap_exact.streams import (
     SalesPriceListLinkedAccountsStream,
     SalesPriceListsStream,
     SalesPriceListPeriodsStream,
-    SalesPriceListVolumeDiscountsStream
+    SalesPriceListVolumeDiscountsStream,
+    PurchaseEntryLinesStream
 )
 
 STREAM_TYPES = [
@@ -79,7 +80,8 @@ STREAM_TYPES = [
     SalesPriceListLinkedAccountsStream,
     SalesPriceListsStream,
     SalesPriceListPeriodsStream,
-    SalesPriceListVolumeDiscountsStream
+    SalesPriceListVolumeDiscountsStream,
+    PurchaseEntryLinesStream
 ]
 
 
