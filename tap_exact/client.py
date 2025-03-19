@@ -254,6 +254,9 @@ class ExactStream(RESTStream):
         use_assembly_bill_of_material_materials = (
             self.config.get("use_assembly_bill_of_material_materials", True)
         )
+        use_price_lists = (
+            self.config.get("use_price_lists", True)
+        )
 
         if (
             (self.name == "sales_order" and not use_sales_orders)
@@ -261,6 +264,10 @@ class ExactStream(RESTStream):
             or (self.name == "sales_invoices" and not use_sales_invoices)
             or (self.name == "warehouses" and use_stock_multiple_warehouses)
             or (self.name == "exchange_rates" and not use_exchange_rates)
+            or (self.name == "sales_prices_linked_accounts" and not use_price_lists)
+            or (self.name == "sales_prices_lists" and not use_price_lists)
+            or (self.name == "sales_prices_list_periods" and not use_price_lists)
+            or (self.name == "sales_price_list_volume_discounts" and not use_price_lists)
             or (
                 self.name == "logistics_stock_positions"
                 and not use_stock_multiple_warehouses
@@ -282,6 +289,7 @@ class ExactStream(RESTStream):
                 self.name == "assembly_bill_of_material_materials"
                 and not use_assembly_bill_of_material_materials
             )
+            or (self.name == "bill_of_materials" and not use_bill_of_materials_versions)
         ):
             pass
         else:
