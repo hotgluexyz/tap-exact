@@ -336,7 +336,7 @@ class SalesOrderStream(DynamicStream):
         use_multiple_warehouses = self.config.get(
             "use_sales_orders_multiple_warehouses"
         )
-        if self.default_warehouse_id and not use_multiple_warehouses:
+        if self.default_warehouse_uuid and not use_multiple_warehouses:
             warehouse_uuid = self.default_warehouse_uuid
             return f"WarehouseID eq guid'{warehouse_uuid}'"
 
@@ -474,8 +474,8 @@ class PurchaseOrdersStream(DynamicStream):
     @property
     def filter(self):
         use_multiple_warehouses = self.config.get("use_buy_orders_multiple_warehouses")
-        if self.default_warehouse_id and not use_multiple_warehouses:
-            return f"(OrderStatus eq 20 or OrderStatus eq 10) and ( ReceiptStatus eq 10 or ReceiptStatus eq 20) and (WarehouseCode eq '{self.default_warehouse_id}')"
+        if self.default_warehouse_uuid and not use_multiple_warehouses:
+            return f"(OrderStatus eq 20 or OrderStatus eq 10) and ( ReceiptStatus eq 10 or ReceiptStatus eq 20) and (Warehouse eq guid'{self.default_warehouse_uuid}')"
         else:
             return f"(OrderStatus eq 20 or OrderStatus eq 10) and ( ReceiptStatus eq 10 or ReceiptStatus eq 20)"
 
@@ -577,7 +577,7 @@ class WarehouseStream(ExactStream):
     @property
     def filter(self):
         use_multiple_warehouses = self.config.get("use_stock_multiple_warehouses")
-        if self.default_warehouse_id and not use_multiple_warehouses:
+        if self.default_warehouse_uuid and not use_multiple_warehouses:
             warehouse_uuid = self.default_warehouse_uuid
             return f"Warehouse eq guid'{warehouse_uuid}'"
 
@@ -1199,7 +1199,7 @@ class SalesInvoicesStream(DynamicStream):
         use_multiple_warehouses = self.config.get(
             "use_sales_invoices_multiple_warehouses"
         )
-        if self.default_warehouse_id and not use_multiple_warehouses:
+        if self.default_warehouse_uuid and not use_multiple_warehouses:
             warehouse_uuid = self.default_warehouse_uuid
             return f"Warehouse eq guid'{warehouse_uuid}'"
 
