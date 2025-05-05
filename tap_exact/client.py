@@ -58,7 +58,13 @@ class ExactStream(RESTStream):
         current_division = self.config.get("current_division")
         url = f"{url}/v1/{current_division}"
         return url
-
+    
+    @property
+    def uses_skip_pagination(self):
+        if self.config.get("page_size", {}).get(self.name):
+            return True
+        return False
+    
     records_jsonpath = "$.feed.entry[*]"
     ignore_parent_stream = False
 
@@ -124,7 +130,19 @@ class ExactStream(RESTStream):
         self, response: requests.Response, previous_token: Optional[Any]
     ) -> Optional[Any]:
         res_json = self.xml_to_dict(response)
-        if "link" in res_json.get("feed", {}).keys():
+
+        if self.uses_skip_pagination:
+            page_size = self.config.get("page_size", {}).get(self.name)
+            entries = res_json["feed"].get("entry") or []
+            if isinstance(entries, dict):
+                entries = [entries]
+            if len(entries) >= page_size:
+                last_item = entries[-1]
+                next_page_token = re.search(r'\((.*?)\)', last_item["id"])
+                if next_page_token:
+                    return next_page_token.group(1)
+
+        elif "link" in res_json.get("feed", {}).keys():
             link_dict = {}
             links = res_json["feed"]["link"]
             if type(links) == list:
@@ -135,8 +153,6 @@ class ExactStream(RESTStream):
                     next_page_token = next_link.split("&")[-1]
                     next_page_token = next_page_token.split("=")[-1]
                     return next_page_token
-        else:
-            return None
 
     def get_starting_time(self, context):
         start_date = self.config.get("start_date")
@@ -149,6 +165,9 @@ class ExactStream(RESTStream):
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
         params: dict = {}
+        # if stream has a page_size add it to the params
+        if self.config.get("page_size", {}).get(self.name) and "bulk" not in self.path:
+            params["$top"] = int(self.config.get("page_size", {}).get(self.name))
         if self.select:
             params["$select"] = self.select
         start_date = self.get_starting_time(context)

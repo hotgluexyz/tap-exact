@@ -5,6 +5,7 @@ from singer_sdk.helpers._state import log_sort_error
 import datetime
 import pendulum
 import copy
+import requests
 from singer_sdk.exceptions import InvalidStreamSortException
 from tap_exact.sync_endpoints_state_funct import finalize_state_progress_markers, increment_state
 
@@ -29,6 +30,8 @@ class ExactSyncStream(ExactStream):
     ) -> Dict[str, Any]:
         params: dict = {}
         timestamp = self.get_starting_time(context)
+        if self.config.get("page_size", {}).get(self.name):
+            params["$top"] = int(self.config.get("page_size", {}).get(self.name))
         if self.select:
             params["$select"] = self.select
         if self.replication_key and timestamp:
