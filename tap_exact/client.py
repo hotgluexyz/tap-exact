@@ -35,7 +35,10 @@ class ExactStream(RESTStream):
         path: Optional[str] = None,
     ) -> None:
         super().__init__(tap, name=name, schema=schema, path=path)
-        self.default_warehouse_uuid
+        if not self.config.get("warehouse_uuid"):
+            self.default_warehouse_uuid
+        else:
+            self._tap.warehouse_uuid = self.config.get("warehouse_uuid")
 
     dont_use_current_division = False
     default_rep_key_field = "Modified"
@@ -59,15 +62,6 @@ class ExactStream(RESTStream):
     records_jsonpath = "$.feed.entry[*]"
     ignore_parent_stream = False
 
-    @property
-    def default_warehouse_id(self):
-        use_stock_multiple_warehouses = self.config.get("use_stock_multiple_warehouses")
-        if not use_stock_multiple_warehouses and not self.config.get(
-            "default_warehouse_id"
-        ):
-            raise Exception("There is no default_warehouse_code")
-        else:
-            return self.config.get("default_warehouse_id")
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
@@ -117,6 +111,8 @@ class ExactStream(RESTStream):
             with open(self._tap.config_file, "w") as outfile:
                 json.dump(self._tap._config, outfile, indent=4)
             self._tap.warehouse_uuid = warehouse_uuid
+        elif not self.config.get("use_stock_multiple_warehouses", False):
+            raise Exception("There is no default_warehouse_code")
         
     @property
     def sync_endpoint(self):
