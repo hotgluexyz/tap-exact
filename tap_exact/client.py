@@ -170,6 +170,9 @@ class ExactStream(RESTStream):
         if not self.config.get("sync_endpoints"):
             if hasattr(self, "filter"):
                 filter = self.filter
+                # replace values in filter with context values
+                if context is not None:
+                    filter = filter.format(**context)
             if filter and date_filter:
                 params["$filter"] = f"{filter} and {date_filter}"
             elif filter or date_filter:

@@ -37,7 +37,8 @@ from tap_exact.streams import (
     PaymentConditionsStream,
     PaymentsStream,
     BankAccountsStream,
-    PurchaseReturnLinesStream
+    PurchaseReturnLinesStream,
+    BankEntryLinesStream
 )
 
 STREAM_TYPES = [
@@ -71,7 +72,8 @@ STREAM_TYPES = [
     PaymentConditionsStream,
     PaymentsStream,
     BankAccountsStream,
-    PurchaseReturnLinesStream
+    PurchaseReturnLinesStream,
+    BankEntryLinesStream
 ]
 
 
