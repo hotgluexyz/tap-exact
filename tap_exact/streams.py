@@ -1971,6 +1971,11 @@ class PurchaseEntiesStream(ExactStream):
     @property
     def select(self):
         return f"*"
+    
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        return {
+            "entry_number": record.get("EntryNumber")
+        }
 
 
 class PurchaseItemsPricesStream(DynamicStream):
@@ -2315,3 +2320,66 @@ class BankAccountsStream(ExactStream):
         th.Property("TypeDescription", th.StringType),
     ).to_dict()
 
+
+class BankEntryLinesStream(ExactStream):
+    
+    #BankEntryLines is a stream that contains the lines of a bank entry. Child stream of purchase entries
+    #used for payments import: HGI-8325.
+    
+    name = "bank_entry_lines"
+    primary_keys = ["ID"]
+    path = "/financialtransaction/BankEntryLines"
+    select = "*"
+    replication_key = "Modified"
+    parent_stream_type = PurchaseEntiesStream
+    filter = "OurRef eq {entry_number}"
+
+    schema = th.PropertiesList(
+        th.Property("Account", th.StringType),
+        th.Property("AccountCode", th.StringType),
+        th.Property("AccountName", th.StringType),
+        th.Property("AmountDC", th.StringType),
+        th.Property("AmountFC", th.StringType),
+        th.Property("AmountVATFC", th.StringType),
+        th.Property("Asset", th.StringType),
+        th.Property("AssetCode", th.StringType),
+        th.Property("AssetDescription", th.StringType),
+        th.Property("CostCenter", th.StringType),
+        th.Property("CostCenterDescription", th.StringType),
+        th.Property("CostUnit", th.StringType),
+        th.Property("CostUnitDescription", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Document", th.StringType),
+        th.Property("DocumentNumber", th.StringType),
+        th.Property("DocumentSubject", th.StringType),
+        th.Property("EntryID", th.StringType),
+        th.Property("EntryNumber", th.StringType),
+        th.Property("ExchangeRate", th.StringType),
+        th.Property("GLAccount", th.StringType),
+        th.Property("GLAccountCode", th.StringType),
+        th.Property("GLAccountDescription", th.StringType),
+        th.Property("ID", th.StringType),
+        th.Property("LineNumber", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Notes", th.StringType),
+        th.Property("OffsetID", th.StringType),
+        th.Property("OurRef", th.StringType),
+        th.Property("Project", th.StringType),
+        th.Property("ProjectCode", th.StringType),
+        th.Property("ProjectDescription", th.StringType),
+        th.Property("ProjectWBS", th.StringType),
+        th.Property("ProjectWBSDescription", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("VATCode", th.StringType),
+        th.Property("VATCodeDescription", th.StringType),
+        th.Property("VATPercentage", th.StringType),
+        th.Property("VATType", th.StringType),
+        th.Property("Date", th.DateTimeType),
+        th.Property("CustomField", th.StringType),
+    ).to_dict()
