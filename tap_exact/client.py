@@ -306,6 +306,13 @@ class ExactStream(RESTStream):
         elif response.status_code == 408:
             self.logger.info(f"Retrying after timeout")
             raise RetriableAPIError("Retrying after error")
+        elif response.status_code == 429:
+            rate_limit_reset = int(response.headers.get("X-RateLimit-Reset")) / 1000
+            # if limit per day is exceeded raise error
+            if response.headers.get("X-RateLimit-Remaining") == 0:
+                raise FatalAPIError(f"Rate limit exceeded per day, please wait until {datetime.datetime.fromtimestamp(int(rate_limit_reset))} to try again")
+            msg = self.response_error_message(response)
+            raise RetriableAPIError(f"{msg} with response {response.text}")
         elif 400 <= response.status_code < 500:
             msg = self.response_error_message(response)
             raise FatalAPIError(f"{msg} with response {response.text}")
