@@ -1,11 +1,11 @@
 from typing import Any, Dict, Optional, List, Union
 
 from tap_exact.client import ExactStream
-from singer_sdk.helpers._state import log_sort_error
+from hotglue_singer_sdk.helpers._state import log_sort_error
 import datetime
 import pendulum
 import copy
-from singer_sdk.exceptions import InvalidStreamSortException
+from hotglue_singer_sdk.exceptions import InvalidStreamSortException
 from tap_exact.sync_endpoints_state_funct import finalize_state_progress_markers, increment_state
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"

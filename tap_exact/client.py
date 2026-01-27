@@ -4,18 +4,18 @@ from typing import Any, Dict, Iterable, List, Optional, Union
 import requests
 import xmltodict
 from memoization import cached
-from singer_sdk.helpers.jsonpath import extract_jsonpath
-from singer_sdk.streams import RESTStream
+from hotglue_singer_sdk.helpers.jsonpath import extract_jsonpath
+from hotglue_singer_sdk.streams import RESTStream
 from pendulum import parse
 
 from tap_exact.auth import OAuth2Authenticator
-from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
+from hotglue_singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from time import sleep
-from singer_sdk.helpers._state import increment_state
+from hotglue_singer_sdk.helpers._state import increment_state
 import datetime
 import re
 from lxml import etree
-from singer_sdk.plugin_base import PluginBase as TapBaseClass
+from hotglue_singer_sdk.plugin_base import PluginBase as TapBaseClass
 from singer.schema import Schema
 
 import singer

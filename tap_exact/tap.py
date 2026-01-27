@@ -1,9 +1,10 @@
 from typing import List, Type, Dict
 
-from singer_sdk import Stream, Tap
-from singer_sdk import typing as th
-from singer_sdk.helpers._compat import final
-from singer_sdk.streams import Stream
+from hotglue_singer_sdk import Stream, Tap
+from hotglue_singer_sdk import typing as th
+from hotglue_singer_sdk.helpers._compat import final
+from hotglue_singer_sdk.streams import Stream
+from hotglue_singer_sdk.authenticators import OAuthAuthenticator
 
 from tap_exact.streams import (
     ExactStream,
@@ -90,6 +91,7 @@ class TapExact(Tap):
 
     name = "tap-exact"
     warehouse_uuid = None
+    authenticator = OAuthAuthenticator
 
     def __init__(
         self,
