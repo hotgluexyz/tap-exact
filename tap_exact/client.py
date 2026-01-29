@@ -65,12 +65,8 @@ class ExactStream(RESTStream):
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
-        oauth_url = self.config.get("auth_url", self.config.get("uri")) or "https://start.exactonline.nl/api/oauth2/token"
-        if "/api/oauth2" not in oauth_url:
-            oauth_url = f"{oauth_url}/api/oauth2/token"
-        if not oauth_url.endswith("/token"):
-            oauth_url += "/token"
-        return OAuth2Authenticator(self, self.config, auth_endpoint=oauth_url)
+        authenticator, auth_endpoint = self._tap.access_token_support(self._tap)
+        return authenticator(self, self.config, auth_endpoint=auth_endpoint)
 
     @property
     def http_headers(self) -> dict:
