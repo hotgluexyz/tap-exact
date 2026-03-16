@@ -6,7 +6,6 @@ from singer_sdk.helpers._compat import final
 from singer_sdk.streams import Stream
 
 from tap_exact.streams import (
-    ExactStream,
     ItemsStream,
     PurchaseOrdersStream,
     SalesOrderLinesStream,

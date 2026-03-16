@@ -1,9 +1,8 @@
 import json
-from typing import Any, Dict, Iterable, List, Optional, Union
+from typing import Any, Dict, Iterable, Optional, Union
 
 import requests
 import xmltodict
-from memoization import cached
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.streams import RESTStream
 from pendulum import parse
@@ -11,7 +10,6 @@ from pendulum import parse
 from tap_exact.auth import OAuth2Authenticator
 from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from time import sleep
-from singer_sdk.helpers._state import increment_state
 import datetime
 import re
 from lxml import etree
@@ -304,7 +302,7 @@ class ExactStream(RESTStream):
             msg = self.response_error_message(response)
             raise RetriableAPIError(f"{msg} with response {response.text}")
         elif response.status_code == 408:
-            self.logger.info(f"Retrying after timeout")
+            self.logger.info("Retrying after timeout")
             raise RetriableAPIError("Retrying after error")
         elif response.status_code == 429:
             rate_limit_reset = int(response.headers.get("X-RateLimit-Reset")) / 1000

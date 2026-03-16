@@ -320,16 +320,16 @@ class SalesOrderStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/SalesOrder/SalesOrderHeaders"
+            return "/sync/SalesOrder/SalesOrderHeaders"
         else:
-            return f"/bulk/SalesOrder/SalesOrders"
+            return "/bulk/SalesOrder/SalesOrders"
 
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"OrderID,AmountDC,ID,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,WarehouseCode,WarehouseDescription,WarehouseID,YourRef,Timestamp,Modified"
+            return "OrderID,AmountDC,ID,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,WarehouseCode,WarehouseDescription,WarehouseID,YourRef,Timestamp,Modified"
         else:
-            return f"OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef,Modified"
+            return "OrderID,AmountDC,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryAddress,DeliveryDate,DeliveryStatus,DeliveryStatusDescription,Description,OrderDate,OrderedBy,OrderedByName,OrderNumber,Salesperson,Status,StatusDescription,TaxSchedule,WarehouseCode,WarehouseDescription,WarehouseID,YourRef,Modified"
 
     @property
     def filter(self):
@@ -460,16 +460,16 @@ class PurchaseOrdersStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/PurchaseOrder/PurchaseOrders"
+            return "/sync/PurchaseOrder/PurchaseOrders"
         else:
-            return f"/purchaseorder/PurchaseOrders"
+            return "/purchaseorder/PurchaseOrders"
 
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"Timestamp,AmountDC,AmountFC,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,CostCenter,CostCenterCode,CostCenterDescription,CostUnit,CostUnitCode,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomField,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Discount,Division,Document,DocumentNumber,DocumentSubject,DropShipment,ExchangeRate,Expense,ExpenseDescription,ID,IncotermAddress,IncotermCode,IncotermVersion,InvoicedQuantity,InvoiceStatus,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,Project,ProjectCode,ProjectDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceiptStatus,ReceivedQuantity,Remarks,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,SendingMethod,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierItemCode,SupplierItemCopyRemarks,SupplierName,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage,Warehouse,WarehouseCode,WarehouseDescription,YourRef"
+            return "Timestamp,AmountDC,AmountFC,ApprovalStatus,ApprovalStatusDescription,Approved,Approver,ApproverFullName,CostCenter,CostCenterCode,CostCenterDescription,CostUnit,CostUnitCode,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomField,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Discount,Division,Document,DocumentNumber,DocumentSubject,DropShipment,ExchangeRate,Expense,ExpenseDescription,ID,IncotermAddress,IncotermCode,IncotermVersion,InvoicedQuantity,InvoiceStatus,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,Project,ProjectCode,ProjectDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceiptStatus,ReceivedQuantity,Remarks,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,SendingMethod,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierItemCode,SupplierItemCopyRemarks,SupplierName,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage,Warehouse,WarehouseCode,WarehouseDescription,YourRef"
         else:
-            return f"PurchaseOrderID,AmountDC,AmountFC,Created,Creator,CreatorFullName,Currency,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Division,Document,DocumentSubject,DropShipment,ExchangeRate,IncotermAddress,IncotermCode,IncotermVersion,InvoiceStatus,Modified,Modifier,ModifierFullName,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderLineCount,PurchaseOrderLines,ReceiptDate,ReceiptStatus,Remarks,SalesOrder,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierName,VATAmount,Warehouse,WarehouseCode,WarehouseDescription,YourRef"
+            return "PurchaseOrderID,AmountDC,AmountFC,Created,Creator,CreatorFullName,Currency,DeliveryAccount,DeliveryAccountCode,DeliveryAccountName,DeliveryAddress,DeliveryContact,DeliveryContactPersonFullName,Description,Division,Document,DocumentSubject,DropShipment,ExchangeRate,IncotermAddress,IncotermCode,IncotermVersion,InvoiceStatus,Modified,Modifier,ModifierFullName,OrderDate,OrderNumber,OrderStatus,PaymentCondition,PaymentConditionDescription,PurchaseAgent,PurchaseAgentFullName,PurchaseOrderLineCount,PurchaseOrderLines,ReceiptDate,ReceiptStatus,Remarks,SalesOrder,SalesOrderNumber,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,Source,Supplier,SupplierCode,SupplierContact,SupplierContactPersonFullName,SupplierName,VATAmount,Warehouse,WarehouseCode,WarehouseDescription,YourRef"
 
     @property
     def filter(self):
@@ -477,7 +477,7 @@ class PurchaseOrdersStream(DynamicStream):
         if self.default_warehouse_uuid and not use_multiple_warehouses:
             return f"(OrderStatus eq 20 or OrderStatus eq 10) and ( ReceiptStatus eq 10 or ReceiptStatus eq 20) and (Warehouse eq guid'{self.default_warehouse_uuid}')"
         else:
-            return f"(OrderStatus eq 20 or OrderStatus eq 10) and ( ReceiptStatus eq 10 or ReceiptStatus eq 20)"
+            return "(OrderStatus eq 20 or OrderStatus eq 10) and ( ReceiptStatus eq 10 or ReceiptStatus eq 20)"
 
     @property
     def expand(self):
@@ -572,7 +572,7 @@ class WarehouseStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,Created,Creator,CreatorFullName,CurrentStock,DefaultStorageLocation,DefaultStorageLocationCode,DefaultStorageLocationDescription,Division,Item,ItemCode,ItemDescription,ItemEndDate,ItemIsFractionAllowedItem,ItemIsStockItem,ItemStartDate,ItemUnit,ItemUnitDescription,MaximumStock,Modified,Modifier,ModifierFullName,OrderPolicy,Period,PlannedStockIn,PlannedStockOut,PlanningDetailsUrl,ProjectedStock,ReorderPoint,ReorderQuantity,ReplenishmentType,ReservedStock,SafetyStock,StorageLocationUrl,Warehouse,WarehouseCode,WarehouseDescription"
+        return "ID,Created,Creator,CreatorFullName,CurrentStock,DefaultStorageLocation,DefaultStorageLocationCode,DefaultStorageLocationDescription,Division,Item,ItemCode,ItemDescription,ItemEndDate,ItemIsFractionAllowedItem,ItemIsStockItem,ItemStartDate,ItemUnit,ItemUnitDescription,MaximumStock,Modified,Modifier,ModifierFullName,OrderPolicy,Period,PlannedStockIn,PlannedStockOut,PlanningDetailsUrl,ProjectedStock,ReorderPoint,ReorderQuantity,ReplenishmentType,ReservedStock,SafetyStock,StorageLocationUrl,Warehouse,WarehouseCode,WarehouseDescription"
 
     @property
     def filter(self):
@@ -616,7 +616,7 @@ class StockPositionsStream(ExactSyncStream):
 
     @property
     def select(self):
-        return f"Timestamp,CurrentStock,Division,FreeStock,ID,ItemCode,ItemDescription,ItemId,PlanningIn,PlanningOut,ProjectedStock,ReorderPoint,ReservedStock,UnitCode,UnitDescription,Warehouse,WarehouseDescription"
+        return "Timestamp,CurrentStock,Division,FreeStock,ID,ItemCode,ItemDescription,ItemId,PlanningIn,PlanningOut,ProjectedStock,ReorderPoint,ReservedStock,UnitCode,UnitDescription,Warehouse,WarehouseDescription"
 
 
 class LogisticsStockPositionsStream(ExactStream):
@@ -749,8 +749,8 @@ class SupplierProductsStream(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"ID,CopyRemarks,CountryOfOrigin,CountryOfOriginDescription,Created,Creator,CreatorFullName,Currency,CurrencyDescription,Division,DropShipment,EndDate,Item,ItemCode,ItemDescription,MainSupplier,MinimumQuantity,Modified,Modifier,ModifierFullName,Notes,PurchaseLeadTime,PurchasePrice,PurchaseUnit,PurchaseUnitDescription,PurchaseUnitFactor,PurchaseLotSize,PurchaseVATCode,PurchaseVATCodeDescription,StartDate,Supplier,SupplierCode,SupplierDescription,SupplierItemCode,Timestamp"
-        return f"ID,CopyRemarks,CountryOfOrigin,CountryOfOriginDescription,Created,Creator,CreatorFullName,Currency,CurrencyDescription,Division,DropShipment,EndDate,Item,ItemCode,ItemDescription,MainSupplier,MinimumQuantity,Modified,Modifier,ModifierFullName,Notes,PurchaseLeadTime,PurchasePrice,PurchaseUnit,PurchaseUnitDescription,PurchaseUnitFactor,PurchaseLotSize,PurchaseVATCode,PurchaseVATCodeDescription,StartDate,Supplier,SupplierCode,SupplierDescription,SupplierItemCode"
+            return "ID,CopyRemarks,CountryOfOrigin,CountryOfOriginDescription,Created,Creator,CreatorFullName,Currency,CurrencyDescription,Division,DropShipment,EndDate,Item,ItemCode,ItemDescription,MainSupplier,MinimumQuantity,Modified,Modifier,ModifierFullName,Notes,PurchaseLeadTime,PurchasePrice,PurchaseUnit,PurchaseUnitDescription,PurchaseUnitFactor,PurchaseLotSize,PurchaseVATCode,PurchaseVATCodeDescription,StartDate,Supplier,SupplierCode,SupplierDescription,SupplierItemCode,Timestamp"
+        return "ID,CopyRemarks,CountryOfOrigin,CountryOfOriginDescription,Created,Creator,CreatorFullName,Currency,CurrencyDescription,Division,DropShipment,EndDate,Item,ItemCode,ItemDescription,MainSupplier,MinimumQuantity,Modified,Modifier,ModifierFullName,Notes,PurchaseLeadTime,PurchasePrice,PurchaseUnit,PurchaseUnitDescription,PurchaseUnitFactor,PurchaseLotSize,PurchaseVATCode,PurchaseVATCodeDescription,StartDate,Supplier,SupplierCode,SupplierDescription,SupplierItemCode"
 
 
 class SalesOrderLinesStream(DynamicStream):
@@ -914,14 +914,14 @@ class SalesOrderLinesStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/SalesOrder/SalesOrderLines"
-        return f"/bulk/SalesOrder/SalesOrderLines"
+            return "/sync/SalesOrder/SalesOrderLines"
+        return "/bulk/SalesOrder/SalesOrderLines"
 
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostPriceFC,CostUnit,CostUnitDescription,CustomerItemCode,DeliveryDate,Description,Discount,Division,Item,ItemCode,ItemDescription,ItemVersion,ItemVersionDescription,LineNumber,NetPrice,Notes,OrderID,OrderNumber,Pricelist,PricelistDescription,Project,ProjectDescription,PurchaseOrder,PurchaseOrderLine,PurchaseOrderLineNumber,PurchaseOrderNumber,Quantity,ShopOrder,UnitCode,UnitDescription,UnitPrice,UseDropShipment,VATAmount,VATCode,VATCodeDescription,VATPercentage,Timestamp"
-        return f"ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostPriceFC,CostUnit,CostUnitDescription,CustomerItemCode,DeliveryDate,Description,Discount,Division,Item,ItemCode,ItemDescription,ItemVersion,ItemVersionDescription,LineNumber,NetPrice,Notes,OrderID,OrderNumber,Pricelist,PricelistDescription,Project,ProjectDescription,PurchaseOrder,PurchaseOrderLine,PurchaseOrderLineNumber,PurchaseOrderNumber,Quantity,ShopOrder,UnitCode,UnitDescription,UnitPrice,UseDropShipment,VATAmount,VATCode,VATCodeDescription,VATPercentage"
+            return "ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostPriceFC,CostUnit,CostUnitDescription,CustomerItemCode,DeliveryDate,Description,Discount,Division,Item,ItemCode,ItemDescription,ItemVersion,ItemVersionDescription,LineNumber,NetPrice,Notes,OrderID,OrderNumber,Pricelist,PricelistDescription,Project,ProjectDescription,PurchaseOrder,PurchaseOrderLine,PurchaseOrderLineNumber,PurchaseOrderNumber,Quantity,ShopOrder,UnitCode,UnitDescription,UnitPrice,UseDropShipment,VATAmount,VATCode,VATCodeDescription,VATPercentage,Timestamp"
+        return "ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostPriceFC,CostUnit,CostUnitDescription,CustomerItemCode,DeliveryDate,Description,Discount,Division,Item,ItemCode,ItemDescription,ItemVersion,ItemVersionDescription,LineNumber,NetPrice,Notes,OrderID,OrderNumber,Pricelist,PricelistDescription,Project,ProjectDescription,PurchaseOrder,PurchaseOrderLine,PurchaseOrderLineNumber,PurchaseOrderNumber,Quantity,ShopOrder,UnitCode,UnitDescription,UnitPrice,UseDropShipment,VATAmount,VATCode,VATCodeDescription,VATPercentage"
 
     @property
     def filter(self):
@@ -996,7 +996,7 @@ class PurchaseOrderLinesStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Description,Discount,Division,Expense,ExpenseDescription,InStock,InvoicedQuantity,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,Project,ProjectCode,ProjectDescription,ProjectedStock,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceivedQuantity,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SupplierItemCode,SupplierItemCopyRemarks,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage"
+        return "ID,AmountDC,AmountFC,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Description,Discount,Division,Expense,ExpenseDescription,InStock,InvoicedQuantity,IsBatchNumberItem,IsSerialNumberItem,Item,ItemBarcode,ItemCode,ItemDescription,ItemDivisable,LineNumber,Modified,Modifier,ModifierFullName,NetPrice,Notes,Project,ProjectCode,ProjectDescription,ProjectedStock,PurchaseOrderID,Quantity,QuantityInPurchaseUnits,Rebill,ReceiptDate,ReceivedQuantity,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,SupplierItemCode,SupplierItemCopyRemarks,Unit,UnitDescription,UnitPrice,VATAmount,VATCode,VATDescription,VATPercentage"
 
 
 
@@ -1020,14 +1020,14 @@ class AccountsStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/CRM/Accounts"
-        return f"/crm/Accounts"
+            return "/sync/CRM/Accounts"
+        return "/crm/Accounts"
 
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier,Code,EndDate"
-        return f"ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier,Code,EndDate"
+            return "ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier,Code,EndDate"
+        return "ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier,Code,EndDate"
 
 
 class SupplierStream(AccountsStream):
@@ -1181,18 +1181,18 @@ class SalesInvoicesStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/SalesInvoice/SalesInvoices"
+            return "/sync/SalesInvoice/SalesInvoices"
         else:
-            return f"/salesinvoice/SalesInvoices"
+            return "/salesinvoice/SalesInvoices"
 
     @property
     def select(self):
         if self.sync_endpoint:
             return (
-                f"InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,Timestamp,Warehouse,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomerItemCode,CustomField,DeliverTo,DeliverToAddress,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryDate,Description,Discount,DiscountType,Division,Document,DocumentNumber,DocumentSubject,DueDate,Employee,EmployeeFullName,EndTime,ExtraDutyAmountFC,ExtraDutyPercentage,GAccountAmountFC,GLAccount,GLAccountDescription,ID,IncotermAddress,IncotermCode,IncotermVersion,InvoiceNumber,InvoiceTo,InvoiceToContactPerson,InvoiceToContactPersonFullName,InvoiceToName,IsExtraDuty,Item,ItemCode,ItemDescription,Journal,JournalDescription,LineNumber,Modifier,ModifierFullName,NetPrice,Notes,OrderDate,OrderedBy,OrderedByContactPerson,OrderedByContactPersonFullName,OrderedByName,OrderNumber,PaymentCondition,PaymentConditionDescription,PaymentReference,Pricelist,PricelistDescription,Project,ProjectDescription,ProjectWBS,ProjectWBSDescription,Quantity,Remarks,SalesChannel,SalesChannelCode,SalesChannelDescription,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,Salesperson,SalespersonFullName,StarterSalesInvoiceStatus,StarterSalesInvoiceStatusDescription,StartTime,Status,StatusDescription,Subscription,SubscriptionDescription,TaxSchedule,TaxScheduleCode,TaxScheduleDescription,Type,TypeDescription,UnitCode,UnitDescription,UnitPrice,VATAmountDC,VATAmountFC,VATCode,VATCodeDescription,VATPercentage,WithholdingTaxAmountFC,WithholdingTaxBaseAmount,WithholdingTaxPercentage,YourRef"
+                "InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,Timestamp,Warehouse,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomerItemCode,CustomField,DeliverTo,DeliverToAddress,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,DeliveryDate,Description,Discount,DiscountType,Division,Document,DocumentNumber,DocumentSubject,DueDate,Employee,EmployeeFullName,EndTime,ExtraDutyAmountFC,ExtraDutyPercentage,GAccountAmountFC,GLAccount,GLAccountDescription,ID,IncotermAddress,IncotermCode,IncotermVersion,InvoiceNumber,InvoiceTo,InvoiceToContactPerson,InvoiceToContactPersonFullName,InvoiceToName,IsExtraDuty,Item,ItemCode,ItemDescription,Journal,JournalDescription,LineNumber,Modifier,ModifierFullName,NetPrice,Notes,OrderDate,OrderedBy,OrderedByContactPerson,OrderedByContactPersonFullName,OrderedByName,OrderNumber,PaymentCondition,PaymentConditionDescription,PaymentReference,Pricelist,PricelistDescription,Project,ProjectDescription,ProjectWBS,ProjectWBSDescription,Quantity,Remarks,SalesChannel,SalesChannelCode,SalesChannelDescription,SalesOrder,SalesOrderLine,SalesOrderLineNumber,SalesOrderNumber,Salesperson,SalespersonFullName,StarterSalesInvoiceStatus,StarterSalesInvoiceStatusDescription,StartTime,Status,StatusDescription,Subscription,SubscriptionDescription,TaxSchedule,TaxScheduleCode,TaxScheduleDescription,Type,TypeDescription,UnitCode,UnitDescription,UnitPrice,VATAmountDC,VATAmountFC,VATCode,VATCodeDescription,VATPercentage,WithholdingTaxAmountFC,WithholdingTaxBaseAmount,WithholdingTaxPercentage,YourRef"
             )
         else:
-            return f"InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToAddress,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,Description,Discount,DiscountType,Division,Document,DocumentNumber,DocumentSubject,DueDate,ExtraDutyAmountFC,GAccountAmountFC,IncotermAddress,IncotermCode,IncotermVersion,InvoiceNumber,InvoiceTo,InvoiceToContactPerson,InvoiceToContactPersonFullName,InvoiceToName,IsExtraDuty,Journal,JournalDescription,Modifier,ModifierFullName,OrderDate,OrderedBy,OrderedByContactPerson,OrderedByContactPersonFullName,OrderedByName,OrderNumber,PaymentCondition,PaymentConditionDescription,PaymentReference,Remarks,SalesChannel,SalesChannelCode,SalesChannelDescription,SalesInvoiceLines,SalesInvoiceOrderChargeLines,Salesperson,SalespersonFullName,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,StarterSalesInvoiceStatus,StarterSalesInvoiceStatusDescription,Status,StatusDescription,TaxSchedule,TaxScheduleCode,TaxScheduleDescription,Type,TypeDescription,VATAmountDC,VATAmountFC,WithholdingTaxAmountFC,WithholdingTaxBaseAmount,WithholdingTaxPercentage,YourRef"
+            return "InvoiceID,AmountDC,InvoiceDate,Warehouse,Modified,AmountDiscount,AmountDiscountExclVat,AmountFC,AmountFCExclVat,Created,Creator,CreatorFullName,Currency,DeliverTo,DeliverToAddress,DeliverToContactPerson,DeliverToContactPersonFullName,DeliverToName,Description,Discount,DiscountType,Division,Document,DocumentNumber,DocumentSubject,DueDate,ExtraDutyAmountFC,GAccountAmountFC,IncotermAddress,IncotermCode,IncotermVersion,InvoiceNumber,InvoiceTo,InvoiceToContactPerson,InvoiceToContactPersonFullName,InvoiceToName,IsExtraDuty,Journal,JournalDescription,Modifier,ModifierFullName,OrderDate,OrderedBy,OrderedByContactPerson,OrderedByContactPersonFullName,OrderedByName,OrderNumber,PaymentCondition,PaymentConditionDescription,PaymentReference,Remarks,SalesChannel,SalesChannelCode,SalesChannelDescription,SalesInvoiceLines,SalesInvoiceOrderChargeLines,Salesperson,SalespersonFullName,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShippingMethod,ShippingMethodCode,ShippingMethodDescription,StarterSalesInvoiceStatus,StarterSalesInvoiceStatusDescription,Status,StatusDescription,TaxSchedule,TaxScheduleCode,TaxScheduleDescription,Type,TypeDescription,VATAmountDC,VATAmountFC,WithholdingTaxAmountFC,WithholdingTaxBaseAmount,WithholdingTaxPercentage,YourRef"
 
     @property
     def filter(self):
@@ -1261,16 +1261,16 @@ class SalesItemsPrices(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/Logistics/SalesItemPrices"
-        return f"/logistics/SalesItemPrices"
+            return "/sync/Logistics/SalesItemPrices"
+        return "/logistics/SalesItemPrices"
 
     @property
     def select(self):
         if self.sync_endpoint:
             return (
-                f"ID,Account,AccountName,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,Employee,Item,ItemCode,NumberOfItemsPerUnit,Unit,UnitDescription,Price,Quantity,StartDate,EndDate,Modified,Timestamp"
+                "ID,Account,AccountName,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,Employee,Item,ItemCode,NumberOfItemsPerUnit,Unit,UnitDescription,Price,Quantity,StartDate,EndDate,Modified,Timestamp"
             )
-        return f"ID,Account,AccountName,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,Employee,Item,ItemCode,NumberOfItemsPerUnit,Unit,UnitDescription,Price,Quantity,StartDate,EndDate,Modified"
+        return "ID,Account,AccountName,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,Employee,Item,ItemCode,NumberOfItemsPerUnit,Unit,UnitDescription,Price,Quantity,StartDate,EndDate,Modified"
 
 
 class Deleted(ExactSyncStream):
@@ -1291,7 +1291,7 @@ class Deleted(ExactSyncStream):
 
     @property
     def select(self):
-        return f"DeletedBy,ID,EntityType,EntityKey,Timestamp"
+        return "DeletedBy,ID,EntityType,EntityKey,Timestamp"
 
 
 class GLAccountsStream(DynamicStream):
@@ -1337,14 +1337,14 @@ class GLAccountsStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/financial/GLAccounts"
-        return f"/financial/GLAccounts"
+            return "/sync/financial/GLAccounts"
+        return "/financial/GLAccounts"
 
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"ID,AllowCostsInSales,AssimilatedVATBox,BalanceSide,BalanceType,BelcotaxType,Code,Compress,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,CustomField,DeductibilityPercentages,Description,Division,ExcludeVATListing,ExpenseNonDeductiblePercentage,IsBlocked,Matching,Modified,Modifier,ModifierFullName,PrivateGLAccount,PrivatePercentage,ReportingCode,RevalueCurrency,SearchCode,Type,Timestamp"
-        return f"ID,AllowCostsInSales,AssimilatedVATBox,BalanceSide,BalanceType,BelcotaxType,Code,Compress,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,CustomField,DeductibilityPercentages,Description,Division,ExcludeVATListing,ExpenseNonDeductiblePercentage,IsBlocked,Matching,Modified,Modifier,ModifierFullName,PrivateGLAccount,PrivatePercentage,ReportingCode,RevalueCurrency,SearchCode,Type"
+            return "ID,AllowCostsInSales,AssimilatedVATBox,BalanceSide,BalanceType,BelcotaxType,Code,Compress,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,CustomField,DeductibilityPercentages,Description,Division,ExcludeVATListing,ExpenseNonDeductiblePercentage,IsBlocked,Matching,Modified,Modifier,ModifierFullName,PrivateGLAccount,PrivatePercentage,ReportingCode,RevalueCurrency,SearchCode,Type,Timestamp"
+        return "ID,AllowCostsInSales,AssimilatedVATBox,BalanceSide,BalanceType,BelcotaxType,Code,Compress,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,CustomField,DeductibilityPercentages,Description,Division,ExcludeVATListing,ExpenseNonDeductiblePercentage,IsBlocked,Matching,Modified,Modifier,ModifierFullName,PrivateGLAccount,PrivatePercentage,ReportingCode,RevalueCurrency,SearchCode,Type"
 
 
 class PurchaseInvoicesStream(DynamicStream):
@@ -1387,14 +1387,14 @@ class PurchaseInvoicesStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/purchase/PurchaseInvoices"
-        return f"/purchase/PurchaseInvoices"
+            return "/sync/purchase/PurchaseInvoices"
+        return "/purchase/PurchaseInvoices"
 
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"ID,Amount,ContactPerson,Currency,Description,Document,DueDate,EntryNumber,ExchangeRate,FinancialPeriod,FinancialYear,InvoiceDate,Journal,Modified,PaymentCondition,PaymentReference,PurchaseInvoiceLines,Remarks,Source,Status,Supplier,Type,VATAmount,Warehouse,YourRef,Timestamp"
-        return f"ID,Amount,ContactPerson,Currency,Description,Document,DueDate,EntryNumber,ExchangeRate,FinancialPeriod,FinancialYear,InvoiceDate,Journal,Modified,PaymentCondition,PaymentReference,PurchaseInvoiceLines,Remarks,Source,Status,Supplier,Type,VATAmount,Warehouse,YourRef"
+            return "ID,Amount,ContactPerson,Currency,Description,Document,DueDate,EntryNumber,ExchangeRate,FinancialPeriod,FinancialYear,InvoiceDate,Journal,Modified,PaymentCondition,PaymentReference,PurchaseInvoiceLines,Remarks,Source,Status,Supplier,Type,VATAmount,Warehouse,YourRef,Timestamp"
+        return "ID,Amount,ContactPerson,Currency,Description,Document,DueDate,EntryNumber,ExchangeRate,FinancialPeriod,FinancialYear,InvoiceDate,Journal,Modified,PaymentCondition,PaymentReference,PurchaseInvoiceLines,Remarks,Source,Status,Supplier,Type,VATAmount,Warehouse,YourRef"
 
 
 class VatCodesStream(DynamicStream):
@@ -1452,14 +1452,14 @@ class VatCodesStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/vat/VATCodes"
-        return f"/vat/VATCodes"
+            return "/sync/vat/VATCodes"
+        return "/vat/VATCodes"
 
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"ID,Account,AccountCode,AccountName,CalculationBasis,Charged,Code,Country,Created,Creator,CreatorFullName,CustomField,Description,Division,EUSalesListing,ExcludeVATListing,GLDiscountPurchase,GLDiscountPurchaseCode,GLDiscountPurchaseDescription,GLDiscountSales,GLDiscountSalesCode,GLDiscountSalesDescription,GLToClaim,GLToClaimCode,GLToClaimDescription,GLToPay,GLToPayCode,GLToPayDescription,IntraStat,IntrastatType,IsBlocked,LegalText,Modified,Modifier,ModifierFullName,Percentage,TaxReturnType,Type,VatDocType,VatMargin,VATPartialRatio,VATPercentages,VATTransactionType,Timestamp"
-        return f"ID,Account,AccountCode,AccountName,CalculationBasis,Charged,Code,Country,Created,Creator,CreatorFullName,CustomField,Description,Division,EUSalesListing,ExcludeVATListing,GLDiscountPurchase,GLDiscountPurchaseCode,GLDiscountPurchaseDescription,GLDiscountSales,GLDiscountSalesCode,GLDiscountSalesDescription,GLToClaim,GLToClaimCode,GLToClaimDescription,GLToPay,GLToPayCode,GLToPayDescription,IntraStat,IntrastatType,IsBlocked,LegalText,Modified,Modifier,ModifierFullName,Percentage,TaxReturnType,Type,VatDocType,VatMargin,VATPartialRatio,VATPercentages,VATTransactionType"
+            return "ID,Account,AccountCode,AccountName,CalculationBasis,Charged,Code,Country,Created,Creator,CreatorFullName,CustomField,Description,Division,EUSalesListing,ExcludeVATListing,GLDiscountPurchase,GLDiscountPurchaseCode,GLDiscountPurchaseDescription,GLDiscountSales,GLDiscountSalesCode,GLDiscountSalesDescription,GLToClaim,GLToClaimCode,GLToClaimDescription,GLToPay,GLToPayCode,GLToPayDescription,IntraStat,IntrastatType,IsBlocked,LegalText,Modified,Modifier,ModifierFullName,Percentage,TaxReturnType,Type,VatDocType,VatMargin,VATPartialRatio,VATPercentages,VATTransactionType,Timestamp"
+        return "ID,Account,AccountCode,AccountName,CalculationBasis,Charged,Code,Country,Created,Creator,CreatorFullName,CustomField,Description,Division,EUSalesListing,ExcludeVATListing,GLDiscountPurchase,GLDiscountPurchaseCode,GLDiscountPurchaseDescription,GLDiscountSales,GLDiscountSalesCode,GLDiscountSalesDescription,GLToClaim,GLToClaimCode,GLToClaimDescription,GLToPay,GLToPayCode,GLToPayDescription,IntraStat,IntrastatType,IsBlocked,LegalText,Modified,Modifier,ModifierFullName,Percentage,TaxReturnType,Type,VatDocType,VatMargin,VATPartialRatio,VATPercentages,VATTransactionType"
 
 
 class BillOfMaterialsVersionsStream(ExactStream):
@@ -1470,7 +1470,7 @@ class BillOfMaterialsVersionsStream(ExactStream):
     @property
     def path(self):
         # Bill of materials versions doesnt have a sync endpoint
-        return f"/manufacturing/BillOfMaterialVersions"
+        return "/manufacturing/BillOfMaterialVersions"
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
@@ -1563,7 +1563,7 @@ class BillOfMaterialsStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,AverageCost,Backflush,CalculatorType,CostBatch,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CreatorFullName,Description,DetailDrawing,Division,ItemVersion,LineNumber,NetWeight,NetWeightUnit,Notes,PartItem,PartItemCode,PartItemCostPriceStandard,PartItemDescription,Quantity,QuantityBatch,RoutingStepID,syscreated,syscreator,sysmodified,sysmodifier,Type,WastePercentage"
+        return "ID,AverageCost,Backflush,CalculatorType,CostBatch,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CreatorFullName,Description,DetailDrawing,Division,ItemVersion,LineNumber,NetWeight,NetWeightUnit,Notes,PartItem,PartItemCode,PartItemCostPriceStandard,PartItemDescription,Quantity,QuantityBatch,RoutingStepID,syscreated,syscreator,sysmodified,sysmodifier,Type,WastePercentage"
 
     def request_records(self, context) -> Iterable[dict]:
         # 1. Fetch all BOMMaterials using rep key
@@ -1608,8 +1608,8 @@ class ManufacturingShopOrdersStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/manufacturing/ShopOrders"
-        return f"/manufacturing/ShopOrders"
+            return "/sync/manufacturing/ShopOrders"
+        return "/manufacturing/ShopOrders"
 
     schema = th.PropertiesList(
         th.Property("CADDrawingURL", th.StringType),
@@ -1676,8 +1676,8 @@ class ManufacturingShopOrdersStream(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return f"ID,CADDrawingURL,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,Description,Division,EntryDate,IsBatch,IsFractionAllowedItem,IsInPlanning,IsOnHold,IsReleased,IsSerial,Item,ItemCode,ItemDescription,ItemPictureUrl,ItemVersion,ItemVersionDescription,Modified,Modifier,ModifierFullName,Notes,PlannedDate,PlannedQuantity,PlannedStartDate,ProducedQuantity,ProductionLeadDays,Project,ProjectDescription,ReadyToShipQuantity,SalesOrderLineCount,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShopOrderByProductPlanBackflushCount,ShopOrderByProductPlanCount,ShopOrderMain,ShopOrderMainNumber,ShopOrderMaterialPlanBackflushCount,ShopOrderMaterialPlanCount,ShopOrderNumber,ShopOrderNumberString,ShopOrderParent,ShopOrderParentNumber,ShopOrderRoutingStepPlanCount,Status,SubShopOrderCount,Type,Unit,UnitDescription,Warehouse,YourRef,Timestamp"
-        return f"ID,CADDrawingURL,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,Description,Division,EntryDate,IsBatch,IsFractionAllowedItem,IsInPlanning,IsOnHold,IsReleased,IsSerial,Item,ItemCode,ItemDescription,ItemPictureUrl,ItemVersion,ItemVersionDescription,Modified,Modifier,ModifierFullName,Notes,PlannedDate,PlannedQuantity,PlannedStartDate,ProducedQuantity,ProductionLeadDays,Project,ProjectDescription,ReadyToShipQuantity,SalesOrderLineCount,SalesOrderLines,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShopOrderByProductPlanBackflushCount,ShopOrderByProductPlanCount,ShopOrderMain,ShopOrderMainNumber,ShopOrderMaterialPlanBackflushCount,ShopOrderMaterialPlanCount,ShopOrderMaterialPlans,ShopOrderNumber,ShopOrderNumberString,ShopOrderParent,ShopOrderParentNumber,ShopOrderRoutingStepPlanCount,ShopOrderRoutingStepPlans,Status,SubShopOrderCount,Type,Unit,UnitDescription,Warehouse,YourRef"
+            return "ID,CADDrawingURL,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,Description,Division,EntryDate,IsBatch,IsFractionAllowedItem,IsInPlanning,IsOnHold,IsReleased,IsSerial,Item,ItemCode,ItemDescription,ItemPictureUrl,ItemVersion,ItemVersionDescription,Modified,Modifier,ModifierFullName,Notes,PlannedDate,PlannedQuantity,PlannedStartDate,ProducedQuantity,ProductionLeadDays,Project,ProjectDescription,ReadyToShipQuantity,SalesOrderLineCount,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShopOrderByProductPlanBackflushCount,ShopOrderByProductPlanCount,ShopOrderMain,ShopOrderMainNumber,ShopOrderMaterialPlanBackflushCount,ShopOrderMaterialPlanCount,ShopOrderNumber,ShopOrderNumberString,ShopOrderParent,ShopOrderParentNumber,ShopOrderRoutingStepPlanCount,Status,SubShopOrderCount,Type,Unit,UnitDescription,Warehouse,YourRef,Timestamp"
+        return "ID,CADDrawingURL,Costcenter,CostcenterDescription,Costunit,CostunitDescription,Created,Creator,CreatorFullName,Description,Division,EntryDate,IsBatch,IsFractionAllowedItem,IsInPlanning,IsOnHold,IsReleased,IsSerial,Item,ItemCode,ItemDescription,ItemPictureUrl,ItemVersion,ItemVersionDescription,Modified,Modifier,ModifierFullName,Notes,PlannedDate,PlannedQuantity,PlannedStartDate,ProducedQuantity,ProductionLeadDays,Project,ProjectDescription,ReadyToShipQuantity,SalesOrderLineCount,SalesOrderLines,SelectionCode,SelectionCodeCode,SelectionCodeDescription,ShopOrderByProductPlanBackflushCount,ShopOrderByProductPlanCount,ShopOrderMain,ShopOrderMainNumber,ShopOrderMaterialPlanBackflushCount,ShopOrderMaterialPlanCount,ShopOrderMaterialPlans,ShopOrderNumber,ShopOrderNumberString,ShopOrderParent,ShopOrderParentNumber,ShopOrderRoutingStepPlanCount,ShopOrderRoutingStepPlans,Status,SubShopOrderCount,Type,Unit,UnitDescription,Warehouse,YourRef"
 
 
 class BillOfMaterialDownloadStream(ExactStream):
@@ -1717,7 +1717,7 @@ class BillOfMaterialDownloadStream(ExactStream):
 
     @property
     def path(self):
-        return f"/docs/XMLDownload.aspx"
+        return "/docs/XMLDownload.aspx"
 
     def get_url_params(self, context, next_page_token):
         return {
@@ -1776,7 +1776,7 @@ class GoodsReceiptLinesStream(ExactStream):
 
     @property
     def path(self):
-        return f"/purchaseorder/GoodsReceiptLines"
+        return "/purchaseorder/GoodsReceiptLines"
 
     schema = th.PropertiesList(
         th.Property("ID", th.StringType),
@@ -1816,7 +1816,7 @@ class GoodsReceiptLinesStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,BatchNumbers,Created,Creator,CreatorFullName,Description,Division,Expense,ExpenseDescription,GoodsReceiptID,Item,ItemCode,ItemDescription,ItemUnitCode,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderID,PurchaseOrderLineID,PurchaseOrderNumber,QuantityOrdered,QuantityReceived,Rebill,SerialNumbers,SupplierItemCode"
+        return "ID,BatchNumbers,Created,Creator,CreatorFullName,Description,Division,Expense,ExpenseDescription,GoodsReceiptID,Item,ItemCode,ItemDescription,ItemUnitCode,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderID,PurchaseOrderLineID,PurchaseOrderNumber,QuantityOrdered,QuantityReceived,Rebill,SerialNumbers,SupplierItemCode"
 
     def post_process(self, row: dict, context: Optional[dict]) -> dict:
         return super().post_process(row, context)
@@ -1929,11 +1929,11 @@ class PurchaseEntiesStream(ExactStream):
 
     @property
     def path(self):
-        return f"/purchaseentry/PurchaseEntries"
+        return "/purchaseentry/PurchaseEntries"
 
     @property
     def select(self):
-        return f"*"
+        return "*"
 
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
         """Return a context dictionary for child streams."""
@@ -1977,16 +1977,16 @@ class PurchaseItemsPricesStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/Logistics/PurchaseItemPrices"
-        return f"/logistics/PurchaseItemPrices"
+            return "/sync/Logistics/PurchaseItemPrices"
+        return "/logistics/PurchaseItemPrices"
 
     @property
     def select(self):
         if self.sync_endpoint:
             return (
-                f"Account,AccountName,Barcode,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,EndDate,ID,Item,ItemCode,ItemDescription,Modified,Modifier,ModifierFullName,NumberOfItemsPerUnit,Price,Quantity,StartDate,Unit,UnitDescription,Timestamp"
+                "Account,AccountName,Barcode,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,EndDate,ID,Item,ItemCode,ItemDescription,Modified,Modifier,ModifierFullName,NumberOfItemsPerUnit,Price,Quantity,StartDate,Unit,UnitDescription,Timestamp"
             )
-        return f"Account,AccountName,Barcode,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,EndDate,ID,Item,ItemCode,ItemDescription,Modified,Modifier,ModifierFullName,NumberOfItemsPerUnit,Price,Quantity,StartDate,Unit,UnitDescription,Timestamp"
+        return "Account,AccountName,Barcode,Created,Creator,CreatorFullName,Currency,DefaultItemUnit,DefaultItemUnitDescription,Division,EndDate,ID,Item,ItemCode,ItemDescription,Modified,Modifier,ModifierFullName,NumberOfItemsPerUnit,Price,Quantity,StartDate,Unit,UnitDescription,Timestamp"
 
 
 class PurchaseReturnLinesStream(ExactStream):
@@ -2039,7 +2039,7 @@ class PurchaseReturnLinesStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,BatchNumbers,CreateCredit,Created,Creator,CreatorFullName,Division,EntryID,Expense,ExpenseDescription,GoodsReceiptLineID,Item,ItemCode,ItemDescription,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderLineID,PurchaseOrderNumber,Rebill,ReceiptNumber,ReceivedQuantity,ReturnQuantity,ReturnReasonCodeDescription,ReturnReasonCodeID,SerialNumbers,SupplierItemCode,UnitCode"
+        return "ID,BatchNumbers,CreateCredit,Created,Creator,CreatorFullName,Division,EntryID,Expense,ExpenseDescription,GoodsReceiptLineID,Item,ItemCode,ItemDescription,LineNumber,Location,LocationCode,LocationDescription,Modified,Modifier,ModifierFullName,Notes,Project,ProjectCode,ProjectDescription,PurchaseOrderLineID,PurchaseOrderNumber,Rebill,ReceiptNumber,ReceivedQuantity,ReturnQuantity,ReturnReasonCodeDescription,ReturnReasonCodeID,SerialNumbers,SupplierItemCode,UnitCode"
 
 
 class AssemblyOrdersStream(ExactStream):
@@ -2080,7 +2080,7 @@ class AssemblyOrdersStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,AssemblyDate,Description,Division,FinishedAssemblyDate,FinishedQuantity,Item,ItemCode,ItemDescription,Notes,OrderDate,OrderNumber,OrderStatus,PartItems,PlannedQuantity,StorageLocation,StorageLocationCode,StorageLocationDescription,StorageLocationSequenceNumber,Type,Unit,UnitCode,UnitDescription,Warehouse,WarehouseCode,WarehouseDescription"
+        return "ID,AssemblyDate,Description,Division,FinishedAssemblyDate,FinishedQuantity,Item,ItemCode,ItemDescription,Notes,OrderDate,OrderNumber,OrderStatus,PartItems,PlannedQuantity,StorageLocation,StorageLocationCode,StorageLocationDescription,StorageLocationSequenceNumber,Type,Unit,UnitCode,UnitDescription,Warehouse,WarehouseCode,WarehouseDescription"
 
 
     def get_url_params(
@@ -2130,7 +2130,7 @@ class ExchangeRatesStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,Created,Creator,CreatorFullName,Division,Modified,Modifier,ModifierFullName,Rate,SourceCurrency,SourceCurrencyDescription,StartDate,TargetCurrency,TargetCurrencyDescription"
+        return "ID,Created,Creator,CreatorFullName,Division,Modified,Modifier,ModifierFullName,Rate,SourceCurrency,SourceCurrencyDescription,StartDate,TargetCurrency,TargetCurrencyDescription"
     
 class AssemblyBillOfMaterialHeaderStream(ExactStream):
     name = "assembly_bill_of_material_header"
@@ -2163,7 +2163,7 @@ class AssemblyBillOfMaterialHeaderStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,AssembledLeadDays,AssemblyBillOfMaterialMaterials,BatchQuantity,Code,CostPrice,Created,Creator,CreatorFullName,Description,Division,Modified,Modifier,ModifierFullName,Notes,UpdateCostPrice,UseExplosion"
+        return "ID,AssembledLeadDays,AssemblyBillOfMaterialMaterials,BatchQuantity,Code,CostPrice,Created,Creator,CreatorFullName,Description,Division,Modified,Modifier,ModifierFullName,Notes,UpdateCostPrice,UseExplosion"
 
 class AssemblyBillOfMaterialMaterialsStream(ExactStream):
     name = "assembly_bill_of_material_materials"
@@ -2195,7 +2195,7 @@ class AssemblyBillOfMaterialMaterialsStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,AssembledItem,AssembledItemCode,AssembledItemDescription,AssembledLeadDays,BatchQuantity,Created,Creator,Division,LineNumber,Modified,Modifier,PartItem,PartItemCode,PartItemDescription,Quantity,QuantityBatch,UpdateCostPrice,UseExplosion"
+        return "ID,AssembledItem,AssembledItemCode,AssembledItemDescription,AssembledLeadDays,BatchQuantity,Created,Creator,Division,LineNumber,Modified,Modifier,PartItem,PartItemCode,PartItemDescription,Quantity,QuantityBatch,UpdateCostPrice,UseExplosion"
 
 class TransactionLinesStream(DynamicStream):
     name = "transaction_lines"
@@ -2279,16 +2279,16 @@ class TransactionLinesStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/Financial/TransactionLines"
-        return f"/financialtransaction/TransactionLines"
+            return "/sync/Financial/TransactionLines"
+        return "/financialtransaction/TransactionLines"
 
     @property
     def select(self):
         if self.sync_endpoint:
             return (
-                f"Account,AccountCode,AccountName,AmountDC,AmountVATBaseFC,AmountVATFC,Asset,AssetCode,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomField,Date,Description,Division,Document,DocumentNumber,DocumentSubject,DueDate,EntryID,EntryNumber,ExchangeRate,ExternalLinkDescription,ExternalLinkReference,ExtraDutyAmountFC,ExtraDutyPercentage,FinancialPeriod,FinancialYear,GLAccount,GLAccountCode,GLAccountDescription,ID,InvoiceNumber,Item,ItemCode,ItemDescription,JournalCode,JournalDescription,LineNumber,LineType,Modified,Modifier,ModifierFullName,Notes,OffsetID,OrderNumber,PaymentDiscountAmount,PaymentReference,Project,ProjectCode,ProjectDescription,Quantity,SerialNumber,Status,Subscription,SubscriptionDescription,TrackingNumber,TrackingNumberDescription,Type,VATCode,VATCodeDescription,VATPercentage,VATType,YourRef,Timestamp"
+                "Account,AccountCode,AccountName,AmountDC,AmountVATBaseFC,AmountVATFC,Asset,AssetCode,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomField,Date,Description,Division,Document,DocumentNumber,DocumentSubject,DueDate,EntryID,EntryNumber,ExchangeRate,ExternalLinkDescription,ExternalLinkReference,ExtraDutyAmountFC,ExtraDutyPercentage,FinancialPeriod,FinancialYear,GLAccount,GLAccountCode,GLAccountDescription,ID,InvoiceNumber,Item,ItemCode,ItemDescription,JournalCode,JournalDescription,LineNumber,LineType,Modified,Modifier,ModifierFullName,Notes,OffsetID,OrderNumber,PaymentDiscountAmount,PaymentReference,Project,ProjectCode,ProjectDescription,Quantity,SerialNumber,Status,Subscription,SubscriptionDescription,TrackingNumber,TrackingNumberDescription,Type,VATCode,VATCodeDescription,VATPercentage,VATType,YourRef,Timestamp"
             )
-        return f"Account,AccountCode,AccountName,AmountDC,AmountVATBaseFC,AmountVATFC,Asset,AssetCode,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomField,Date,Description,Division,Document,DocumentNumber,DocumentSubject,DueDate,EntryID,EntryNumber,ExchangeRate,ExternalLinkDescription,ExternalLinkReference,ExtraDutyAmountFC,ExtraDutyPercentage,FinancialPeriod,FinancialYear,GLAccount,GLAccountCode,GLAccountDescription,ID,InvoiceNumber,Item,ItemCode,ItemDescription,JournalCode,JournalDescription,LineNumber,LineType,Modified,Modifier,ModifierFullName,Notes,OffsetID,OrderNumber,PaymentDiscountAmount,PaymentReference,Project,ProjectCode,ProjectDescription,Quantity,SerialNumber,Status,Subscription,SubscriptionDescription,TrackingNumber,TrackingNumberDescription,Type,VATCode,VATCodeDescription,VATPercentage,VATType,YourRef"
+        return "Account,AccountCode,AccountName,AmountDC,AmountVATBaseFC,AmountVATFC,Asset,AssetCode,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,Created,Creator,CreatorFullName,Currency,CustomField,Date,Description,Division,Document,DocumentNumber,DocumentSubject,DueDate,EntryID,EntryNumber,ExchangeRate,ExternalLinkDescription,ExternalLinkReference,ExtraDutyAmountFC,ExtraDutyPercentage,FinancialPeriod,FinancialYear,GLAccount,GLAccountCode,GLAccountDescription,ID,InvoiceNumber,Item,ItemCode,ItemDescription,JournalCode,JournalDescription,LineNumber,LineType,Modified,Modifier,ModifierFullName,Notes,OffsetID,OrderNumber,PaymentDiscountAmount,PaymentReference,Project,ProjectCode,ProjectDescription,Quantity,SerialNumber,Status,Subscription,SubscriptionDescription,TrackingNumber,TrackingNumberDescription,Type,VATCode,VATCodeDescription,VATPercentage,VATType,YourRef"
 
 class SalesPriceListLinkedAccountsStream(ExactStream):
     name = "sales_prices_linked_accounts"
@@ -2312,7 +2312,7 @@ class SalesPriceListLinkedAccountsStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,Code,Created,Creator,CreatorFullName,Division,Modified,Modifier,ModifierFullName,Name,PriceList"
+        return "ID,Code,Created,Creator,CreatorFullName,Division,Modified,Modifier,ModifierFullName,Name,PriceList"
 
 class SalesPriceListsStream(ExactStream):
     name = "sales_prices_lists"
@@ -2339,7 +2339,7 @@ class SalesPriceListsStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,Code,Created,Creator,CreatorFullName,Currency,Description,Division,Entity,Modified,Modifier,ModifierFullName,Notes,Type"
+        return "ID,Code,Created,Creator,CreatorFullName,Currency,Description,Division,Entity,Modified,Modifier,ModifierFullName,Notes,Type"
     
 class SalesPriceListPeriodsStream(ExactStream):
     name = "sales_prices_list_periods"
@@ -2365,7 +2365,7 @@ class SalesPriceListPeriodsStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,Created,Creator,CreatorFullName,Currency,Division,EndDate,Modified,Modifier,ModifierFullName,PriceList,StartDate,Type"
+        return "ID,Created,Creator,CreatorFullName,Currency,Division,EndDate,Modified,Modifier,ModifierFullName,PriceList,StartDate,Type"
 
 class SalesPriceListVolumeDiscountsStream(DynamicStream):
     name = "sales_price_list_volume_discounts"
@@ -2405,16 +2405,16 @@ class SalesPriceListVolumeDiscountsStream(DynamicStream):
     @property
     def path(self):
         if self.sync_endpoint:
-            return f"/sync/Sales/SalesPriceListVolumeDiscounts"
-        return f"/sales/SalesPriceListVolumeDiscounts"
+            return "/sync/Sales/SalesPriceListVolumeDiscounts"
+        return "/sales/SalesPriceListVolumeDiscounts"
 
     @property
     def select(self):
         if self.sync_endpoint:
             return (
-                f"BasePrice,BasePriceAmount,Created,Creator,CreatorFullName,Discount,Division,EntryMethod,ID,Item,ItemCode,ItemDescription,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NewPrice,NumberOfItemsPerUnit,PriceListCode,PriceListDescription,PriceListPeriod,Quantity,Unit,UnitDescription,Timestamp"
+                "BasePrice,BasePriceAmount,Created,Creator,CreatorFullName,Discount,Division,EntryMethod,ID,Item,ItemCode,ItemDescription,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NewPrice,NumberOfItemsPerUnit,PriceListCode,PriceListDescription,PriceListPeriod,Quantity,Unit,UnitDescription,Timestamp"
             )
-        return f"BasePrice,BasePriceAmount,Created,Creator,CreatorFullName,Discount,Division,EntryMethod,ID,Item,ItemCode,ItemDescription,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NewPrice,NumberOfItemsPerUnit,PriceListCode,PriceListDescription,PriceListPeriod,Quantity,Unit,UnitDescription"
+        return "BasePrice,BasePriceAmount,Created,Creator,CreatorFullName,Discount,Division,EntryMethod,ID,Item,ItemCode,ItemDescription,ItemGroup,ItemGroupCode,ItemGroupDescription,Modified,Modifier,ModifierFullName,NewPrice,NumberOfItemsPerUnit,PriceListCode,PriceListDescription,PriceListPeriod,Quantity,Unit,UnitDescription"
 
 class PurchaseEntryLinesStream(ExactStream):
     name = "purchase_entry_lines"
@@ -2478,4 +2478,4 @@ class PurchaseEntryLinesStream(ExactStream):
 
     @property
     def select(self):
-        return f"ID,AmountDC,AmountFC,Asset,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CustomField,Description,Division,EntryID,From,GLAccount,GLAccountCode,GLAccountDescription,IntraStatArea,IntraStatCountry,IntraStatDeliveryTerm,IntraStatTransactionA,IntraStatTransactionB,IntraStatTransportMethod,LineNumber,Notes,PrivateUsePercentage,Project,ProjectDescription,Quantity,SerialNumber,StatisticalNetWeight,StatisticalNumber,StatisticalQuantity,StatisticalValue,Subscription,SubscriptionDescription,To,TrackingNumber,TrackingNumberDescription,Type,VATAmountDC,VATAmountFC,VATBaseAmountDC,VATBaseAmountFC,VATCode,VATCodeDescription,VATNonDeductiblePercentage,VATPercentage,WithholdingAmountDC,WithholdingTax"
+        return "ID,AmountDC,AmountFC,Asset,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CustomField,Description,Division,EntryID,From,GLAccount,GLAccountCode,GLAccountDescription,IntraStatArea,IntraStatCountry,IntraStatDeliveryTerm,IntraStatTransactionA,IntraStatTransactionB,IntraStatTransportMethod,LineNumber,Notes,PrivateUsePercentage,Project,ProjectDescription,Quantity,SerialNumber,StatisticalNetWeight,StatisticalNumber,StatisticalQuantity,StatisticalValue,Subscription,SubscriptionDescription,To,TrackingNumber,TrackingNumberDescription,Type,VATAmountDC,VATAmountFC,VATBaseAmountDC,VATBaseAmountFC,VATCode,VATCodeDescription,VATNonDeductiblePercentage,VATPercentage,WithholdingAmountDC,WithholdingTax"
