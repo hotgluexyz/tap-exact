@@ -649,7 +649,7 @@ class LogisticsStockPositionsStream(ExactStream):
         content = row
         new_content = {}
         for key in content:
-            if type(content[key]) == type(""):
+            if isinstance(content[key], str):
                 new_content[key] = content[key]
             elif "Edm.Boolean" == content[key].get("@p2:type"):
                 if content[key].get("#text") == "true":
@@ -1562,7 +1562,7 @@ class BillOfMaterialsStream(ExactStream):
     ).to_dict()
 
     @property
-    def select(self):
+    def select(self):  # noqa: F811
         return "ID,AverageCost,Backflush,CalculatorType,CostBatch,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CreatorFullName,Description,DetailDrawing,Division,ItemVersion,LineNumber,NetWeight,NetWeightUnit,Notes,PartItem,PartItemCode,PartItemCostPriceStandard,PartItemDescription,Quantity,QuantityBatch,RoutingStepID,syscreated,syscreator,sysmodified,sysmodifier,Type,WastePercentage"
 
     def request_records(self, context) -> Iterable[dict]:
@@ -2477,5 +2477,5 @@ class PurchaseEntryLinesStream(ExactStream):
     ).to_dict()
 
     @property
-    def select(self):
+    def select(self):  # noqa: F811
         return "ID,AmountDC,AmountFC,Asset,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CustomField,Description,Division,EntryID,From,GLAccount,GLAccountCode,GLAccountDescription,IntraStatArea,IntraStatCountry,IntraStatDeliveryTerm,IntraStatTransactionA,IntraStatTransactionB,IntraStatTransportMethod,LineNumber,Notes,PrivateUsePercentage,Project,ProjectDescription,Quantity,SerialNumber,StatisticalNetWeight,StatisticalNumber,StatisticalQuantity,StatisticalValue,Subscription,SubscriptionDescription,To,TrackingNumber,TrackingNumberDescription,Type,VATAmountDC,VATAmountFC,VATBaseAmountDC,VATBaseAmountFC,VATCode,VATCodeDescription,VATNonDeductiblePercentage,VATPercentage,WithholdingAmountDC,WithholdingTax"

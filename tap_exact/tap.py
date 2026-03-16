@@ -1,6 +1,6 @@
 from typing import List, Type, Dict
 
-from singer_sdk import Stream, Tap
+from singer_sdk import Tap
 from singer_sdk import typing as th
 from singer_sdk.helpers._compat import final
 from singer_sdk.streams import Stream
