@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Optional
 
 import requests
 from singer_sdk.authenticators import APIAuthenticatorBase
@@ -66,8 +66,8 @@ class OAuth2Authenticator(APIAuthenticatorBase):
                 == "Rate limit exceeded: access_token not expired"
             ):
                 return None
-        except Exception as e:
-            raise EmptyResponseError(f"Failed converting response to a json, because response is empty")
+        except Exception:
+            raise EmptyResponseError("Failed converting response to a json, because response is empty")
 
         try:
             token_response.raise_for_status()
