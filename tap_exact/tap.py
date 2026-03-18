@@ -3,7 +3,6 @@ from typing import List, Type, Dict
 from hotglue_singer_sdk import Stream, Tap
 from hotglue_singer_sdk import typing as th
 from hotglue_singer_sdk.helpers._compat import final
-from hotglue_singer_sdk.streams import Stream
 from tap_exact.auth import OAuth2Authenticator
 
 from tap_exact.streams import (

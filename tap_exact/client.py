@@ -3,7 +3,6 @@ from typing import Any, Dict, Iterable, Optional, Union
 
 import requests
 import xmltodict
-from memoization import cached
 from hotglue_singer_sdk.helpers.jsonpath import extract_jsonpath
 from hotglue_singer_sdk.streams import RESTStream
 from pendulum import parse
@@ -11,7 +10,6 @@ from pendulum import parse
 from tap_exact.auth import OAuth2Authenticator
 from hotglue_singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from time import sleep
-from hotglue_singer_sdk.helpers._state import increment_state
 import datetime
 import re
 from lxml import etree
