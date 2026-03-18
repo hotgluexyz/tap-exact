@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 import requests
@@ -21,7 +21,11 @@ class OAuth2Authenticator(OAuthAuthenticator):
         self._auth_endpoint = auth_endpoint
         self._config_file = config_file
         self._tap = stream._tap
-
+        # sdk uses this to check if token is valid, it's always None at init
+        # adding a value to avoid requesting a new token everytime if it's not expired
+        # because exact will return an error if we request a new token when it's not expired, or if we call the endpoint too many times
+        self.last_refreshed = datetime.now(timezone.utc) 
+    
     @property
     def oauth_request_body(self) -> dict:
         """Define the OAuth request body for the hubspot API."""
