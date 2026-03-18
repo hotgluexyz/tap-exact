@@ -66,7 +66,7 @@ class OAuth2Authenticator(OAuthAuthenticator):
 
         self._tap._config["access_token"] = token_json["access_token"]
         self._tap._config["refresh_token"] = token_json["refresh_token"]
-        now = round(datetime.utcnow().timestamp())
+        now = round(datetime.now(timezone.utc).timestamp())
         self._tap._config["expires_in"] = int(token_json["expires_in"]) + now
 
         with open(self._tap.config_file, "w") as outfile:
