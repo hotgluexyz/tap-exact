@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, List, Union
+from typing import Any, Dict, Optional, List
 
 from tap_exact.client import ExactStream
 from hotglue_singer_sdk.helpers._state import log_sort_error

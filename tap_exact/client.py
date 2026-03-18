@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, Iterable, List, Optional, Union
+from typing import Any, Dict, Iterable, Optional, Union
 
 import requests
 import xmltodict
@@ -112,7 +112,7 @@ class ExactStream(RESTStream):
         
     @property
     def sync_endpoint(self):
-        if self.config.get("sync_endpoints") != None:
+        if self.config.get("sync_endpoints") is not None:
             return self.config.get("sync_endpoints")
         return False
 
@@ -123,7 +123,7 @@ class ExactStream(RESTStream):
         if "link" in res_json.get("feed", {}).keys():
             link_dict = {}
             links = res_json["feed"]["link"]
-            if type(links) == list:
+            if isinstance(links, list):
                 for record in res_json["feed"]["link"]:
                     link_dict[record["@rel"]] = record["@href"]
                 if "next" in link_dict.keys():
@@ -159,7 +159,7 @@ class ExactStream(RESTStream):
         ):
             date_filter = f"{self.default_rep_key_field} gt datetime'{start_date}'"
             params["$filter"] = date_filter
-        if self.config.get("sync_endpoints") != None:
+        if self.config.get("sync_endpoints") is not None:
             if hasattr(self, "filter"):
                 filter = self.filter
             if filter and date_filter:
@@ -180,7 +180,7 @@ class ExactStream(RESTStream):
             cleaned_xml_string = etree.tostring(xml)
             #parse xml to dict
             data = json.loads(json.dumps(xmltodict.parse(cleaned_xml_string)))
-        except:
+        except Exception:
             data = json.loads(json.dumps(xmltodict.parse(response.content.decode("utf-8-sig").encode("utf-8"))))
         return data
 
@@ -191,7 +191,7 @@ class ExactStream(RESTStream):
         content = row["content"]["m:properties"]
         new_content = {}
         for key in content:
-            if type(content[key]) == type(""):
+            if isinstance(content[key], str):
                 new_content[key[2:]] = content[key]
             elif "Edm.Boolean" == (content.get(key) or {}).get("@m:type"):
                 if content[key].get("#text") == "true":
@@ -211,17 +211,17 @@ class ExactStream(RESTStream):
         )
         use_sales_orders = (
             self.config.get("use_sales_orders")
-            if self.config.get("use_sales_orders") != None
+            if self.config.get("use_sales_orders") is not None
             else True
         )
         use_production_orders = (
             self.config.get("use_production_orders")
-            if self.config.get("use_production_orders") != None
+            if self.config.get("use_production_orders") is not None
             else True
         )
         use_sales_invoices = (
             self.config.get("use_sales_invoices")
-            if self.config.get("use_sales_invoices") != None
+            if self.config.get("use_sales_invoices") is not None
             else False
         )
         use_stock_multiple_warehouses = (
@@ -232,12 +232,12 @@ class ExactStream(RESTStream):
         )
         use_assembly_orders = (
             self.config.get("use_assembly_orders")
-            if self.config.get("use_assembly_orders") != None
+            if self.config.get("use_assembly_orders") is not None
             else True
         )
         use_exchange_rates = (
             self.config.get("use_exchange_rates")
-            if self.config.get("use_exchange_rates") != None
+            if self.config.get("use_exchange_rates") is not None
             else True
         )
         use_assembly_bill_of_material_header = (
@@ -300,7 +300,7 @@ class ExactStream(RESTStream):
             msg = self.response_error_message(response)
             raise RetriableAPIError(f"{msg} with response {response.text}")
         elif response.status_code == 408:
-            self.logger.info(f"Retrying after timeout")
+            self.logger.info("Retrying after timeout")
             raise RetriableAPIError("Retrying after error")
         elif response.status_code == 429:
             rate_limit_reset = int(response.headers.get("X-RateLimit-Reset")) / 1000

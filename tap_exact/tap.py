@@ -7,7 +7,6 @@ from hotglue_singer_sdk.streams import Stream
 from tap_exact.auth import OAuth2Authenticator
 
 from tap_exact.streams import (
-    ExactStream,
     ItemsStream,
     PurchaseOrdersStream,
     SalesOrderLinesStream,
