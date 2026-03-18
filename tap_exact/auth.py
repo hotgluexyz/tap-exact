@@ -24,7 +24,8 @@ class OAuth2Authenticator(OAuthAuthenticator):
         # sdk uses this to check if token is valid, it's always None at init
         # adding a value to avoid requesting a new token everytime if it's not expired
         # because exact will return an error if we request a new token when it's not expired, or if we call the endpoint too many times
-        self.last_refreshed = datetime.now(timezone.utc) 
+        self.last_refreshed = datetime.now(timezone.utc)
+        self.access_token = self._tap._config.get("access_token")
     
     @property
     def oauth_request_body(self) -> dict:
