@@ -1,6 +1,6 @@
 import json
 import requests
-from hotglue_singer_sdk import typing as th
+from singer_sdk import typing as th
 from typing import Optional, Any, Dict, Iterable
 from tap_exact.client import ExactStream
 from tap_exact.client_sync import ExactSyncStream

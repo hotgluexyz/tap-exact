@@ -1,7 +1,7 @@
 from typing import Optional
-from hotglue_singer_sdk.helpers._state import reset_state_progress_markers
-from hotglue_singer_sdk.helpers._typing import to_json_compatible
-from hotglue_singer_sdk.exceptions import InvalidStreamSortException
+from singer_sdk.helpers._state import reset_state_progress_markers
+from singer_sdk.helpers._typing import to_json_compatible
+from singer_sdk.exceptions import InvalidStreamSortException
 
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"

@@ -1,16 +1,16 @@
 import json
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Optional
 
 import requests
-from hotglue_singer_sdk.authenticators import OAuthAuthenticator
-from hotglue_singer_sdk.streams import Stream as RESTStreamBase
+from singer_sdk.authenticators import APIAuthenticatorBase
+from singer_sdk.streams import Stream as RESTStreamBase
 import backoff
 
 class EmptyResponseError(Exception):
     """Raised when the response is empty"""
 
-class OAuth2Authenticator(OAuthAuthenticator):
+class OAuth2Authenticator(APIAuthenticatorBase):
     def __init__(
         self,
         stream: RESTStreamBase,
@@ -21,12 +21,15 @@ class OAuth2Authenticator(OAuthAuthenticator):
         self._auth_endpoint = auth_endpoint
         self._config_file = config_file
         self._tap = stream._tap
-        # sdk uses this to check if token is valid, it's always None at init
-        # adding a value to avoid requesting a new token everytime if it's not expired
-        # because exact will return an error if we request a new token when it's not expired, or if we call the endpoint too many times
-        self.last_refreshed = datetime.now(timezone.utc)
-        self.access_token = self._tap._config.get("access_token")
-    
+
+    @property
+    def auth_headers(self) -> dict:
+        if not self.is_token_valid():
+            self.update_access_token()
+        result = super().auth_headers
+        result["Authorization"] = f"Bearer {self._tap._config.get('access_token')}"
+        return result
+
     @property
     def oauth_request_body(self) -> dict:
         """Define the OAuth request body for the hubspot API."""
@@ -37,8 +40,22 @@ class OAuth2Authenticator(OAuthAuthenticator):
             "client_secret": self._tap._config["client_secret"],
         }
 
+    def is_token_valid(self) -> bool:
+        access_token = self._tap._config.get("access_token")
+        now = round(datetime.utcnow().timestamp())
+        expires_in = self._tap.config.get("expires_in")
+        if expires_in is not None:
+            expires_in = int(expires_in)
+        if not access_token:
+            return False
+
+        if not expires_in:
+            return False
+
+        return not ((expires_in - now) < 120)
+
     @backoff.on_exception(backoff.expo,EmptyResponseError,max_tries=5,factor=2)
-    def update_access_token_locally(self) -> None:
+    def update_access_token(self) -> None:
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         token_response = requests.post(
             self._auth_endpoint, data=self.oauth_request_body, headers=headers
@@ -67,7 +84,7 @@ class OAuth2Authenticator(OAuthAuthenticator):
 
         self._tap._config["access_token"] = token_json["access_token"]
         self._tap._config["refresh_token"] = token_json["refresh_token"]
-        now = round(datetime.now(timezone.utc).timestamp())
+        now = round(datetime.utcnow().timestamp())
         self._tap._config["expires_in"] = int(token_json["expires_in"]) + now
 
         with open(self._tap.config_file, "w") as outfile:

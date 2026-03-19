@@ -3,17 +3,17 @@ from typing import Any, Dict, Iterable, Optional, Union
 
 import requests
 import xmltodict
-from hotglue_singer_sdk.helpers.jsonpath import extract_jsonpath
-from hotglue_singer_sdk.streams import RESTStream
+from singer_sdk.helpers.jsonpath import extract_jsonpath
+from singer_sdk.streams import RESTStream
 from pendulum import parse
 
 from tap_exact.auth import OAuth2Authenticator
-from hotglue_singer_sdk.exceptions import FatalAPIError, RetriableAPIError
+from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from time import sleep
 import datetime
 import re
 from lxml import etree
-from hotglue_singer_sdk.plugin_base import PluginBase as TapBaseClass
+from singer_sdk.plugin_base import PluginBase as TapBaseClass
 from singer.schema import Schema
 
 import singer
@@ -63,8 +63,12 @@ class ExactStream(RESTStream):
 
     @property
     def authenticator(self) -> OAuth2Authenticator:
-        authenticator, auth_endpoint = self._tap.access_token_support(self._tap)
-        return authenticator(self, self.config, auth_endpoint=auth_endpoint)
+        oauth_url = self.config.get("auth_url", self.config.get("uri")) or "https://start.exactonline.nl/api/oauth2/token"
+        if "/api/oauth2" not in oauth_url:
+            oauth_url = f"{oauth_url}/api/oauth2/token"
+        if not oauth_url.endswith("/token"):
+            oauth_url += "/token"
+        return OAuth2Authenticator(self, self.config, auth_endpoint=oauth_url)
 
     @property
     def http_headers(self) -> dict:
