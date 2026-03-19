@@ -18,9 +18,11 @@ from singer.schema import Schema
 
 import singer
 from singer import StateMessage
+from hotglue_singer_sdk.helpers._state import write_starting_replication_value
 
 REPLICATION_INCREMENTAL = "INCREMENTAL"
 REPLICATION_LOG_BASED = "LOG_BASED"
+CHILD_REPLICATION_KEY_VALUE = "child_replication_key_value"
 
 
 class ExactStream(RESTStream):
@@ -321,3 +323,32 @@ class ExactStream(RESTStream):
                     tap_state["bookmarks"][stream_name]["partitions"] = []
 
         singer.write_message(StateMessage(value=tap_state))
+    
+    def _write_starting_replication_value(self, context: Optional[dict]) -> None:
+        """Write the starting replication value, if available.
+
+        Args:
+            context: Stream partition or context dictionary.
+        """
+        value = None
+        state = self.get_context_state(context)
+
+        if self.replication_key:
+            if self.selected:
+                replication_key_value = state.get("replication_key_value")
+            else:
+                replication_key_value = state.get(CHILD_REPLICATION_KEY_VALUE)
+            if replication_key_value and self.replication_key == state.get(
+                "replication_key"
+            ):
+                value = replication_key_value
+
+            # Use start_date if it is more recent than the replication_key state
+            start_date_value: Optional[str] = self.config.get("start_date")
+            if start_date_value and (self.replication_key != "Timestamp"):
+                if not value:
+                    value = start_date_value
+                else:
+                    value = self.compare_start_date(value, start_date_value)
+
+        write_starting_replication_value(state, value)
