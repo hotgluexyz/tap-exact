@@ -1038,8 +1038,8 @@ class AccountsStream(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return "ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier,Code,EndDate"
-        return "ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier,Code,EndDate"
+            return "ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier,Code,EndDate,Created,Country,CountryName,Currency,BusinessType,CanDropShip,DiscountPurchase,Phone,PhoneExtension,PurchaseCurrency,Remarks"
+        return "ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier,Code,EndDate,Created,Country,CountryName,Currency,BusinessType,CanDropShip,DiscountPurchase,Phone,PhoneExtension,PurchaseCurrency,Remarks"
 
 
 class SupplierStream(AccountsStream):
