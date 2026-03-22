@@ -1021,7 +1021,7 @@ class AccountsStream(DynamicStream):
         th.Property("CountryName", th.StringType),
         th.Property("Currency", th.StringType),
         th.Property("BusinessType", th.StringType),
-        th.Property("CanDropShip", th.StringType),
+        th.Property("CanDropShip", th.BooleanType),
         th.Property("DiscountPurchase", th.StringType),
         th.Property("Phone", th.StringType),
         th.Property("PhoneExtension", th.StringType),
