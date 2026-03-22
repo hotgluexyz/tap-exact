@@ -1014,7 +1014,19 @@ class AccountsStream(DynamicStream):
         th.Property("Modified", th.DateTimeType),
         th.Property("IsSupplier", th.BooleanType),
         th.Property("Code", th.BooleanType),
+        th.Property("StartDate", th.BooleanType),
         th.Property("EndDate", th.DateTimeType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Country", th.StringType),
+        th.Property("CountryName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("BusinessType", th.StringType),
+        th.Property("CanDropShip", th.StringType),
+        th.Property("DiscountPurchase", th.StringType),
+        th.Property("Phone", th.StringType),
+        th.Property("PhoneExtension", th.StringType),
+        th.Property("PurchaseCurrency", th.StringType),
+        th.Property("Remarks", th.StringType),
     ).to_dict()
 
     @property
