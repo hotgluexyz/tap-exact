@@ -1,9 +1,9 @@
 from typing import List, Type, Dict
 
-from singer_sdk import Tap
-from singer_sdk import typing as th
-from singer_sdk.helpers._compat import final
-from singer_sdk.streams import Stream
+from hotglue_singer_sdk import Stream, Tap
+from hotglue_singer_sdk import typing as th
+from hotglue_singer_sdk.helpers._compat import final
+from tap_exact.auth import OAuth2Authenticator
 
 from tap_exact.streams import (
     ItemsStream,
@@ -101,6 +101,23 @@ class TapExact(Tap):
         self.config_file = config[0]
         super().__init__(config, catalog, state, parse_env_config, validate_config)
 
+    @classmethod
+    def access_token_support(cls, connector=None):
+        """Return (authenticator_class, auth_endpoint). Use connector.config when connector (tap instance) is provided."""
+        authenticator = OAuth2Authenticator
+        default_url = "https://start.exactonline.nl/api/oauth2/token"
+
+        if connector is not None and getattr(connector, "config", None) is not None:
+            oauth_url = connector.config.get("auth_url") or connector.config.get("uri") or default_url
+        else:
+            oauth_url = default_url
+
+        if oauth_url and "/api/oauth2" not in oauth_url:
+            oauth_url = f"{oauth_url}/api/oauth2/token"
+        if oauth_url and not oauth_url.endswith("/token"):
+            oauth_url += "/token"
+
+        return authenticator, oauth_url
 
     config_jsonschema = th.PropertiesList(
         th.Property("access_token", th.StringType, required=False),
