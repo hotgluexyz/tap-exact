@@ -1013,8 +1013,20 @@ class AccountsStream(DynamicStream):
         th.Property("PurchaseLeadDays", th.StringType),
         th.Property("Modified", th.DateTimeType),
         th.Property("IsSupplier", th.BooleanType),
-        th.Property("Code", th.BooleanType),
+        th.Property("Code", th.StringType),
+        th.Property("StartDate", th.DateTimeType),
         th.Property("EndDate", th.DateTimeType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Country", th.StringType),
+        th.Property("CountryName", th.StringType),
+        th.Property("Currency", th.StringType),
+        th.Property("BusinessType", th.StringType),
+        th.Property("CanDropShip", th.BooleanType),
+        th.Property("DiscountPurchase", th.StringType),
+        th.Property("Phone", th.StringType),
+        th.Property("PhoneExtension", th.StringType),
+        th.Property("PurchaseCurrency", th.StringType),
+        th.Property("Remarks", th.StringType),
     ).to_dict()
 
     @property
@@ -1026,8 +1038,8 @@ class AccountsStream(DynamicStream):
     @property
     def select(self):
         if self.sync_endpoint:
-            return "ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier,Code,EndDate"
-        return "ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier,Code,EndDate"
+            return "ID,Name,Email,PurchaseLeadDays,Timestamp,Modified,IsSupplier,Code,EndDate,Created,Country,CountryName,Currency,BusinessType,CanDropShip,DiscountPurchase,Phone,PhoneExtension,PurchaseCurrency,Remarks"
+        return "ID,Name,Email,PurchaseLeadDays,Modified,IsSupplier,Code,EndDate,Created,Country,CountryName,Currency,BusinessType,CanDropShip,DiscountPurchase,Phone,PhoneExtension,PurchaseCurrency,Remarks"
 
 
 class SupplierStream(AccountsStream):
