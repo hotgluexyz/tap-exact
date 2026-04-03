@@ -6,8 +6,11 @@ from tap_exact.client import ExactStream
 from tap_exact.client_sync import ExactSyncStream
 from datetime import timedelta
 
-with open("config.json", "r") as jsonfile:
-    data = json.load(jsonfile)
+try:
+    with open("config.json", "r") as jsonfile:
+        data = json.load(jsonfile)
+except FileNotFoundError:
+    data = {}
 
 if "sync_endpoints" in data.keys():
     use_sync_endpoint = data["sync_endpoints"]
