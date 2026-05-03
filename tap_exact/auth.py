@@ -5,6 +5,8 @@ from typing import Optional
 import requests
 from hotglue_singer_sdk.authenticators import OAuthAuthenticator
 from hotglue_singer_sdk.streams import Stream as RESTStreamBase
+from http.client import RemoteDisconnected
+from requests.exceptions import ConnectionError
 import backoff
 
 class EmptyResponseError(Exception):
@@ -37,7 +39,7 @@ class OAuth2Authenticator(OAuthAuthenticator):
             "client_secret": self._tap._config["client_secret"],
         }
 
-    @backoff.on_exception(backoff.expo,EmptyResponseError,max_tries=5,factor=2)
+    @backoff.on_exception(backoff.expo, (EmptyResponseError, RemoteDisconnected, ConnectionError), max_tries=5, factor=2)
     def update_access_token_locally(self) -> None:
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         token_response = requests.post(
