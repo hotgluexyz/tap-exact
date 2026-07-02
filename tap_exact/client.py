@@ -249,6 +249,9 @@ class ExactStream(RESTStream):
         use_price_lists = (
             self.config.get("use_price_lists", True)
         )
+        use_warehouse_transfers = (
+            self.config.get("use_warehouse_transfers", True)
+        )
 
         if (
             (self.name == "sales_order" and not use_sales_orders)
@@ -260,28 +263,15 @@ class ExactStream(RESTStream):
             or (self.name == "sales_prices_lists" and not use_price_lists)
             or (self.name == "sales_prices_list_periods" and not use_price_lists)
             or (self.name == "sales_price_list_volume_discounts" and not use_price_lists)
-            or (
-                self.name == "logistics_stock_positions"
-                and not use_stock_multiple_warehouses
-            )
-            or (
-                self.name == "bill_of_material_download"
-                and not use_bill_of_materials
-            )
+            or (self.name == "logistics_stock_positions" and not use_stock_multiple_warehouses)
+            or (self.name == "bill_of_material_download" and not use_bill_of_materials)
             or (self.name == "assembly_orders" and not use_assembly_orders)
-            or (
-                self.name == "bill_of_materials_versions"
-                and not use_bill_of_materials_versions
-            )
-            or (
-                self.name == "assembly_bill_of_material_header"
-                and not use_assembly_bill_of_material_header
-            )
-            or (
-                self.name == "assembly_bill_of_material_materials"
-                and not use_assembly_bill_of_material_materials
-            )
+            or (self.name == "bill_of_materials_versions" and not use_bill_of_materials_versions)
+            or (self.name == "assembly_bill_of_material_header" and not use_assembly_bill_of_material_header)
+            or (self.name == "assembly_bill_of_material_materials" and not use_assembly_bill_of_material_materials)
             or (self.name == "bill_of_materials" and not use_bill_of_materials_versions)
+            or (self.name == "warehouse_transfers" and not use_warehouse_transfers)
+            or (self.name == "warehouse_transfer_lines" and not use_warehouse_transfers)
         ):
             pass
         else:

@@ -2496,7 +2496,6 @@ class PurchaseEntryLinesStream(ExactStream):
         return "ID,AmountDC,AmountFC,Asset,AssetDescription,CostCenter,CostCenterDescription,CostUnit,CostUnitDescription,CustomField,Description,Division,EntryID,From,GLAccount,GLAccountCode,GLAccountDescription,IntraStatArea,IntraStatCountry,IntraStatDeliveryTerm,IntraStatTransactionA,IntraStatTransactionB,IntraStatTransportMethod,LineNumber,Notes,PrivateUsePercentage,Project,ProjectDescription,Quantity,SerialNumber,StatisticalNetWeight,StatisticalNumber,StatisticalQuantity,StatisticalValue,Subscription,SubscriptionDescription,To,TrackingNumber,TrackingNumberDescription,Type,VATAmountDC,VATAmountFC,VATBaseAmountDC,VATBaseAmountFC,VATCode,VATCodeDescription,VATNonDeductiblePercentage,VATPercentage,WithholdingAmountDC,WithholdingTax"
 
 
-
 class CostCentersStream(ExactStream):
     name = "cost_centers"
     primary_keys = ["ID"]
@@ -2761,10 +2760,8 @@ class BankAccountsStream(ExactStream):
 
 
 class BankEntryLinesStream(ExactStream):
-    
     #BankEntryLines is a stream that contains the lines of a bank entry. Child stream of purchase entries
     #used for payments import: HGI-8325.
-    
     name = "bank_entry_lines"
     primary_keys = ["ID"]
     path = "/financialtransaction/BankEntryLines"
@@ -2822,3 +2819,84 @@ class BankEntryLinesStream(ExactStream):
         th.Property("Date", th.DateTimeType),
         th.Property("CustomField", th.StringType),
     ).to_dict()
+
+
+class WarehouseTransfersStream(ExactStream):
+    name = "warehouse_transfers"
+    primary_keys = ["TransferID"]
+    path = "/inventory/WarehouseTransfers"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("TransferID", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("EntryDate", th.DateTimeType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("PlannedDeliveryDate", th.DateTimeType),
+        th.Property("PlannedReceiptDate", th.DateTimeType),
+        th.Property("Remarks", th.StringType),
+        th.Property("Source", th.StringType),
+        th.Property("Status", th.StringType),
+        th.Property("TransferDate", th.DateTimeType),
+        th.Property("TransferNumber", th.StringType),
+        th.Property("WarehouseFrom", th.StringType),
+        th.Property("WarehouseFromCode", th.StringType),
+        th.Property("WarehouseFromDescription", th.StringType),
+        th.Property("WarehouseTo", th.StringType),
+        th.Property("WarehouseToCode", th.StringType),
+        th.Property("WarehouseToDescription", th.StringType),
+        th.Property("WarehouseTransferLines", th.StringType),
+    ).to_dict()
+
+    @property
+    def select(self):
+        return "TransferID,Created,Creator,CreatorFullName,Description,Division,EntryDate,Modified,Modifier,ModifierFullName,PlannedDeliveryDate,PlannedReceiptDate,Remarks,Source,Status,TransferDate,TransferNumber,WarehouseFrom,WarehouseFromCode,WarehouseFromDescription,WarehouseTo,WarehouseToCode,WarehouseToDescription,WarehouseTransferLines"
+
+    @property
+    def expand(self):
+        return "WarehouseTransferLines"
+
+
+class WarehouseTransferLinesStream(ExactStream):
+    name = "warehouse_transfer_lines"
+    primary_keys = ["ID"]
+    path = "/inventory/WarehouseTransferLines"
+    replication_key = "Modified"
+
+    schema = th.PropertiesList(
+        th.Property("ID", th.StringType),
+        th.Property("Created", th.DateTimeType),
+        th.Property("Creator", th.StringType),
+        th.Property("CreatorFullName", th.StringType),
+        th.Property("Description", th.StringType),
+        th.Property("Division", th.StringType),
+        th.Property("Item", th.StringType),
+        th.Property("ItemCode", th.StringType),
+        th.Property("ItemDescription", th.StringType),
+        th.Property("LineNumber", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Modifier", th.StringType),
+        th.Property("ModifierFullName", th.StringType),
+        th.Property("Quantity", th.StringType),
+        th.Property("StorageLocationFrom", th.StringType),
+        th.Property("StorageLocationFromCode", th.StringType),
+        th.Property("StorageLocationFromDescription", th.StringType),
+        th.Property("StorageLocationFromLocationSequence", th.StringType),
+        th.Property("StorageLocationTo", th.StringType),
+        th.Property("StorageLocationToCode", th.StringType),
+        th.Property("StorageLocationToDescription", th.StringType),
+        th.Property("StorageLocationToLocationSequence", th.StringType),
+        th.Property("TransferID", th.StringType),
+        th.Property("UnitCode", th.StringType),
+        th.Property("UnitDescription", th.StringType),
+    ).to_dict()
+
+    @property
+    def select(self):
+        return "ID,Created,Creator,CreatorFullName,Description,Division,Item,ItemCode,ItemDescription,LineNumber,Modified,Modifier,ModifierFullName,Quantity,StorageLocationFrom,StorageLocationFromCode,StorageLocationFromDescription,StorageLocationFromLocationSequence,StorageLocationTo,StorageLocationToCode,StorageLocationToDescription,StorageLocationToLocationSequence,TransferID,UnitCode,UnitDescription"
