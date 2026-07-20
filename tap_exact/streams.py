@@ -667,6 +667,51 @@ class LogisticsStockPositionsStream(ExactStream):
         return row
 
 
+class ItemExtraFieldsStream(ExactStream):
+    name = "item_extra_fields"
+    primary_keys = ["ItemID", "Number"]
+    replication_key = "Modified"
+    parent_stream_type = ItemsStream
+    records_jsonpath = "$.ItemExtraField.element[*]"
+    path = "/read/logistics/ItemExtraField"
+    select = None
+
+    schema = th.PropertiesList(
+        th.Property("Description", th.StringType),
+        th.Property("ItemID", th.StringType),
+        th.Property("Modified", th.DateTimeType),
+        th.Property("Number", th.IntegerType),
+        th.Property("Value", th.StringType),
+    ).to_dict()
+
+    def get_url_params(
+        self, context: Optional[dict], next_page_token: Optional[Any]
+    ) -> Dict[str, Any]:
+        return {
+            "itemId": f"guid'{context['item_id']}'",
+            "modified": "datetime'1900-01-01T00:00:00'",
+        }
+
+    def get_next_page_token(
+        self, response: requests.Response, previous_token: Optional[Any]
+    ) -> Optional[Any]:
+        return None
+
+    def _element_value(self, value: Any) -> Any:
+        if isinstance(value, dict):
+            return value.get("#text")
+        return value
+
+    def post_process(self, row: dict, context: Optional[dict]) -> dict:
+        processed = {
+            key: self._element_value(row.get(key))
+            for key in ["Description", "ItemID", "Modified", "Number", "Value"]
+        }
+        if processed.get("Number") not in (None, ""):
+            processed["Number"] = int(processed["Number"])
+        return processed
+
+
 class SupplierProductsStream(DynamicStream):
     name = "supplierProducts"
     primary_keys = ["ID"]
