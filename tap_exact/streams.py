@@ -670,10 +670,9 @@ class LogisticsStockPositionsStream(ExactStream):
 class ItemExtraFieldsStream(ExactStream):
     name = "item_extra_fields"
     primary_keys = ["ItemID", "Number"]
-    replication_key = "Modified"
     parent_stream_type = ItemsStream
     records_jsonpath = "$.ItemExtraField.element[*]"
-    path = "/read/logistics/ItemExtraField"
+    path = "/read/logistics/ItemExtraField?itemId=guid'{item_id}'"
     select = None
 
     schema = th.PropertiesList(
@@ -683,14 +682,6 @@ class ItemExtraFieldsStream(ExactStream):
         th.Property("Number", th.IntegerType),
         th.Property("Value", th.StringType),
     ).to_dict()
-
-    def get_url_params(
-        self, context: Optional[dict], next_page_token: Optional[Any]
-    ) -> Dict[str, Any]:
-        return {
-            "itemId": f"guid'{context['item_id']}'",
-            "modified": "datetime'1900-01-01T00:00:00'",
-        }
 
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
