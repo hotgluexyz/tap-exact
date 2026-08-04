@@ -2124,7 +2124,7 @@ class ProjectsStream(ExactStream):
         th.Property("BudgetedAmount", th.StringType),
         th.Property("BudgetedCosts", th.StringType),
         th.Property("BudgetedRevenue", th.StringType),
-        th.Property("BudgetType", th.IntegerType),
+        th.Property("BudgetType", th.StringType),
         th.Property("BudgetTypeDescription", th.StringType),
         th.Property("BlockPurchasing", th.BooleanType),
         th.Property("BlockRebilling", th.BooleanType),
@@ -2168,7 +2168,7 @@ class ProjectsStream(ExactStream):
         th.Property("PrepaidType", th.StringType),
         th.Property("PrepaidTypeDescription", th.StringType),
         th.Property("UseBillingMilestones", th.BooleanType),
-        th.Property("BudgetOverrunHours", th.IntegerType),
+        th.Property("BudgetOverrunHours", th.StringType),
         th.Property("CustomField", th.StringType),
         th.Property("AllowMemberEntryOnly", th.BooleanType),
     ).to_dict()
