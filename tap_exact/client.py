@@ -141,6 +141,20 @@ class ExactStream(RESTStream):
         rep_key = self.get_starting_timestamp(context)
         return rep_key or start_date
 
+    def _to_utc(self, value: Optional[str]) -> Optional[str]:
+        """Exact datetimes are CET; emit UTC for Singer bookmarks/signposts."""
+        if not value:
+            return value
+        return parse(str(value), tz="Europe/Amsterdam").in_timezone("UTC").isoformat()
+
+    def _to_exact_local(self, value: Any) -> str:
+        """Format a bookmark for Exact $filter (CET, naive)."""
+        text = str(value)
+        # Legacy naive bookmarks are already Exact-local (CET)
+        if isinstance(value, str) and "Z" not in text and "+" not in text:
+            return text[:19]
+        return parse(text).in_timezone("Europe/Amsterdam").strftime("%Y-%m-%dT%H:%M:%S")
+
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
@@ -149,7 +163,7 @@ class ExactStream(RESTStream):
             params["$select"] = self.select
         start_date = self.get_starting_time(context)
         start_date = start_date + datetime.timedelta(seconds=1)
-        start_date = start_date.strftime("%Y-%m-%dT%H:%M:%S")
+        start_date = self._to_exact_local(start_date)
         filter = None
         date_filter = None 
         if (
@@ -200,10 +214,13 @@ class ExactStream(RESTStream):
                     new_content[key[2:]] = False
                 else:
                     new_content[key[2:]] = None
+            elif "Edm.DateTime" == (content.get(key) or {}).get("@m:type"):
+                new_content[key[2:]] = self._to_utc(
+                    (content.get(key) or {}).get("#text")
+                )
             else:
                 new_content[key[2:]] = (content.get(key) or {}).get("#text", None)
-        row = new_content
-        return row
+        return new_content
 
     def get_records(self, context: Optional[dict]) -> Iterable[Dict[str, Any]]:
         use_bill_of_materials_versions = (

@@ -2150,7 +2150,7 @@ class AssemblyOrdersStream(ExactStream):
         if self.stream_state.get("replication_key_value"):
             start_date = start_date - timedelta(days=120)
             
-        start_date = start_date.strftime("%Y-%m-%dT%H:%M:%S")
+        start_date = self._to_exact_local(start_date)
         params["$filter"] = f"{self.replication_key} gt datetime'{start_date}'"
         
         return params
