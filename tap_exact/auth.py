@@ -39,11 +39,11 @@ class OAuth2Authenticator(OAuthAuthenticator):
             "client_secret": self._tap._config["client_secret"],
         }
 
-    @backoff.on_exception(backoff.expo, (EmptyResponseError, RemoteDisconnected, ConnectionError), max_tries=5, factor=2)
+    @backoff.on_exception(backoff.expo, (EmptyResponseError, RemoteDisconnected, ConnectionError, requests.exceptions.ReadTimeout), max_tries=5, factor=2, jitter=None)
     def update_access_token_locally(self) -> None:
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         token_response = requests.post(
-            self._auth_endpoint, data=self.oauth_request_body, headers=headers
+            self._auth_endpoint, data=self.oauth_request_body, headers=headers, timeout=50
         )
         try:
             if (
