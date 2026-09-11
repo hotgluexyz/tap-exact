@@ -7,7 +7,7 @@ from hotglue_singer_sdk.authenticators import OAuthAuthenticator
 from hotglue_singer_sdk.streams import Stream as RESTStreamBase
 from http.client import RemoteDisconnected
 from requests.exceptions import ConnectionError
-import time
+import backoff
 
 class EmptyResponseError(Exception):
     """Raised when the response is empty"""
@@ -39,40 +39,11 @@ class OAuth2Authenticator(OAuthAuthenticator):
             "client_secret": self._tap._config["client_secret"],
         }
 
+    @backoff.on_exception(backoff.expo, (EmptyResponseError, RemoteDisconnected, ConnectionError, requests.exceptions.ReadTimeout), max_tries=5, factor=2, jitter=None)
     def update_access_token_locally(self) -> None:
-        deadline = time.monotonic() + 250
-        factor = 2
-        error = None
-
-        for attempt in range(5):
-            remaining = deadline - time.monotonic()
-
-            if remaining <= 0:
-                raise TimeoutError(
-                    "OAuth token update exceeded the 250-second time limit."
-                )
-
-            if attempt > 0:
-                self.logger.info(f"Refresh access token attempt {attempt} failed, retrying... Error: {error}")
-                time.sleep(factor ** attempt)
-
-            try:
-                self.refresh_access_token_locally()
-                return
-
-            except (
-                EmptyResponseError,
-                RemoteDisconnected,
-                ConnectionError,
-            ) as ex:
-                error = str(ex)
-                if attempt == 4:
-                    raise
-
-    def refresh_access_token_locally(self) -> None:
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         token_response = requests.post(
-            self._auth_endpoint, data=self.oauth_request_body, headers=headers
+            self._auth_endpoint, data=self.oauth_request_body, headers=headers, timeout=50
         )
         try:
             if (
