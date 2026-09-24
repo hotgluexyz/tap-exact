@@ -110,6 +110,8 @@ class TapExact(Tap):
     """Exact tap class."""
 
     name = "tap-exact"
+    dynamic_catalog = True
+    static_stream_names = [stream.name for stream in STREAM_TYPES]
     warehouse_uuid = None
 
     def __init__(
