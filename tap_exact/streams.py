@@ -2383,3 +2383,20 @@ class BankEntryLinesStream(ExactStream):
         th.Property("Date", th.DateTimeType),
         th.Property("CustomField", th.StringType),
     ).to_dict()
+
+class JournalStatusStream(ExactStream):
+    name = "journal_status"
+    primary_keys = ["Journal", "Year", "Period"]
+    path = "/read/financial/JournalStatusList"
+    select = "Journal,Period,Year,JournalDescription,JournalType,JournalTypeDescription,Status,StatusDescription"
+
+    schema = th.PropertiesList(
+        th.Property("Journal", th.StringType),
+        th.Property("Period", th.StringType),
+        th.Property("Year", th.StringType),
+        th.Property("JournalDescription", th.StringType),
+        th.Property("JournalType", th.StringType),
+        th.Property("JournalTypeDescription", th.StringType),
+        th.Property("Status", th.StringType),
+        th.Property("StatusDescription", th.StringType),
+    ).to_dict()
