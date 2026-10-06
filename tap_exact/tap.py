@@ -105,10 +105,7 @@ STREAM_TYPES = [
     JournalStatusStream,
 ]
 
-# DISPLAY list for the connector landing page, not a support contract.
-# Sourced from the stream names in tap_exact/streams.py, registered in STREAM_TYPES above.
-# Runtime discovery remains authoritative; this list is not validated against it.
-COMMON_EXACT_OBJECTS = [
+DISPLAY_ONLY_STREAM_NAMES = [
     "accounts",
     "bank_accounts",
     "gl_accounts",
@@ -131,7 +128,7 @@ class TapExact(Tap):
     """Exact tap class."""
 
     name = "tap-exact"
-    static_stream_names = COMMON_EXACT_OBJECTS
+    static_stream_names = DISPLAY_ONLY_STREAM_NAMES
     warehouse_uuid = None
 
     def __init__(
