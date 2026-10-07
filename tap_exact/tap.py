@@ -105,11 +105,30 @@ STREAM_TYPES = [
     JournalStatusStream,
 ]
 
+DISPLAY_ONLY_STREAM_NAMES = [
+    "accounts",
+    "bank_accounts",
+    "gl_accounts",
+    "items",
+    "payment_conditions",
+    "payments",
+    "projects",
+    "purchase_invoices",
+    "purchase_orders",
+    "sales_invoices",
+    "sales_order",
+    "stock_positions",
+    "suppliers",
+    "vat_codes",
+    "warehouses",
+]
+
 
 class TapExact(Tap):
     """Exact tap class."""
 
     name = "tap-exact"
+    static_stream_names = DISPLAY_ONLY_STREAM_NAMES
     warehouse_uuid = None
 
     def __init__(
