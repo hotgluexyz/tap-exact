@@ -1,9 +1,15 @@
 from typing import List, Type, Dict
 
+from hotglue_etl_exceptions import InvalidCredentialsError
 from hotglue_singer_sdk import Stream, Tap
 from hotglue_singer_sdk import typing as th
 from hotglue_singer_sdk.helpers._compat import final
+from hotglue_singer_sdk.helpers.capabilities import AlertingLevel
 from tap_exact.auth import OAuth2Authenticator
+from tap_exact.exceptions import (
+    TapExactDailyRateLimitExceededError,
+    TapExactInsufficientPermissionsError,
+)
 
 from tap_exact.streams import (
     ItemsStream,
@@ -130,6 +136,13 @@ class TapExact(Tap):
     name = "tap-exact"
     static_stream_names = DISPLAY_ONLY_STREAM_NAMES
     warehouse_uuid = None
+
+    alerting_level = AlertingLevel.ERROR
+    exception_alerting_level_map = {
+        InvalidCredentialsError: AlertingLevel.NONE,
+        TapExactDailyRateLimitExceededError: AlertingLevel.NONE,
+        TapExactInsufficientPermissionsError: AlertingLevel.NONE,
+    }
 
     def __init__(
         self,

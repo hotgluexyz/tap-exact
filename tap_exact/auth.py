@@ -3,11 +3,31 @@ from datetime import datetime, timezone
 from typing import Optional
 
 import requests
+from hotglue_etl_exceptions import InvalidCredentialsError
 from hotglue_singer_sdk.authenticators import OAuthAuthenticator
 from hotglue_singer_sdk.streams import Stream as RESTStreamBase
 from http.client import RemoteDisconnected
 from requests.exceptions import ConnectionError
 import backoff
+
+INVALID_CREDENTIALS_OAUTH_ERRORS = {"invalid_grant", "invalid_client", "unauthorized_client"}
+MALFORMED_REFRESH_TOKEN_DESCRIPTION = "Handle could not be extracted"
+
+
+def is_invalid_credentials_response(response: requests.Response) -> bool:
+    """Whether a failed token response means the connection's credentials are bad."""
+    try:
+        body = response.json()
+    except ValueError:
+        body = None
+    error = body.get("error") if isinstance(body, dict) else None
+    if not error:
+        return response.status_code == 401
+    description = body.get("error_description") or ""
+    return error in INVALID_CREDENTIALS_OAUTH_ERRORS or (
+        error == "invalid_request" and MALFORMED_REFRESH_TOKEN_DESCRIPTION in description
+    )
+
 
 class EmptyResponseError(Exception):
     """Raised when the response is empty"""
@@ -47,20 +67,26 @@ class OAuth2Authenticator(OAuthAuthenticator):
         )
         try:
             if (
-                token_response.json().get("error_description") 
+                token_response.json().get("error_description")
                 == "Rate limit exceeded: access_token not expired"
             ):
                 return None
-        except Exception:
-            raise EmptyResponseError("Failed converting response to a json, because response is empty")
+        except (ValueError, AttributeError) as ex:
+            if is_invalid_credentials_response(token_response):
+                raise InvalidCredentialsError(
+                    f"Failed OAuth login, response was {token_response.status_code} "
+                    f"'{token_response.text}'"
+                ) from ex
+            raise EmptyResponseError("Failed converting response to a json, because response is empty") from ex
 
         try:
             token_response.raise_for_status()
             self.logger.info("OAuth authorization attempt was successful.")
         except Exception as ex:
-            raise RuntimeError(
-                f"Failed OAuth login, response was '{token_response.json()}'. {ex}"
-            )
+            message = f"Failed OAuth login, response was '{token_response.text}'. {ex}"
+            if is_invalid_credentials_response(token_response):
+                raise InvalidCredentialsError(message) from ex
+            raise RuntimeError(message) from ex
         token_json = token_response.json()
         #Log the refresh_token
         self.logger.info(f"Latest refresh token: {token_json['refresh_token']}")
