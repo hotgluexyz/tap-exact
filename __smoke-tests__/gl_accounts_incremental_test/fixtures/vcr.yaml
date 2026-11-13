@@ -1,0 +1,135 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://start.exactonline.nl/api/v1/3527190/financial/GLAccounts?%24select=ID%2CAllowCostsInSales%2CAssimilatedVATBox%2CBalanceSide%2CBalanceType%2CBelcotaxType%2CCode%2CCompress%2CCostcenter%2CCostcenterDescription%2CCostunit%2CCostunitDescription%2CCreated%2CCreator%2CCreatorFullName%2CCustomField%2CDeductibilityPercentages%2CDescription%2CDivision%2CExcludeVATListing%2CExpenseNonDeductiblePercentage%2CIsBlocked%2CMatching%2CModified%2CModifier%2CModifierFullName%2CPrivateGLAccount%2CPrivatePercentage%2CReportingCode%2CRevalueCurrency%2CSearchCode%2CType&%24filter=Modified+gt+datetime%272023-06-13T00%3A00%3A01%27
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="utf-8"?>
+
+        <feed xml:base="https://start.exactonline.nl/api/v1/3527190/financial/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+        xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom"><title
+        type="-Fallback-scrubbed-gTVR">-Fallback-scrubbed-EIpXbNUuxn</title><id>-Fallback-scrubbed-dnxImrQZeDlJTFyZNedIiNwQkfqDsQsWvJmoqAeHhMZqodiSegOJgXEcsTgTKBBG</id><updated>1975-09-17T23:49:12Z</updated><link
+        rel="self" title="-Fallback-scrubbed-EIpXbNUuxn" href="GLAccounts"></link><entry><id>-Fallback-scrubbed-VglfXCFodTglxvQYkFpSgZyDmVokrBYiryPjWvTsZAojDbOaXraGwitUipkAEjkRDuABAUMKoERCcFwlVpUGAfcdbCMMBJfMleHdRKejajBr</id><title
+        type="-Fallback-scrubbed-gTVR"></title><updated>1975-09-17T23:49:12Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-FyOzHTPAF" href="GLAccounts(guid''fc03b3b6-4638-4a75-8831-27adc795ca41'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/DeductibilityPercentages"
+        type="-Fallback-scrubbed-AIvLaRbkIxvxzHnLWVjZdJEDOWSFeg" title="-Fallback-scrubbed-UelWWVkuMzfyPfourZrnepYE"
+        href="GLAccounts(guid''fc03b3b6-4638-4a75-8831-27adc795ca41'')/DeductibilityPercentages"></link><category
+        term="-Fallback-scrubbed-bJbAqoVpniwhJIsnbEqdzIuOsgpDAp" scheme="-Fallback-scrubbed-uvXBvSUdCrVhfaNJAmlVhPiwcVdnceGQlACKKVFaEijNmGYLMRJGjBVeeZzh"></category><content
+        type="-Fallback-scrubbed-mryGkFinbOQduDe"><m:properties><d:ID m:type="Edm.Guid">fc03b3b6-4638-4a75-8831-27adc795ca41</d:ID><d:AssimilatedVATBox
+        m:type="Edm.Int16" m:null="true"></d:AssimilatedVATBox><d:BalanceSide>-Fallback-scrubbed-c</d:BalanceSide><d:BalanceType>-Fallback-scrubbed-D</d:BalanceType><d:BelcotaxType
+        m:type="Edm.Int32" m:null="true"></d:BelcotaxType><d:Code>784</d:Code><d:Compress
+        m:type="Edm.Boolean">false</d:Compress><d:Costcenter m:null="true"></d:Costcenter><d:CostcenterDescription
+        m:null="true"></d:CostcenterDescription><d:Costunit m:null="true"></d:Costunit><d:CostunitDescription
+        m:null="true"></d:CostunitDescription><d:Created m:type="Edm.DateTime">1993-10-11T20:06:58.37</d:Created><d:Creator
+        m:type="Edm.Guid">-Fallback-scrubbed-GUzMTHbCwYmvcAYPcDgMFNEeBpUzifcpkyEn</d:Creator><d:CreatorFullName>-Fallback-scrubbed-IaZsaCJnkIPvs</d:CreatorFullName><d:Description>-Fallback-scrubbed-kQIeVNlztXy</d:Description><d:Division
+        m:type="Edm.Int32">2412</d:Division><d:ExcludeVATListing m:type="Edm.Byte">1938</d:ExcludeVATListing><d:ExpenseNonDeductiblePercentage
+        m:type="Edm.Double">1938</d:ExpenseNonDeductiblePercentage><d:IsBlocked m:type="Edm.Boolean">false</d:IsBlocked><d:Matching
+        m:type="Edm.Boolean">false</d:Matching><d:Modified m:type="Edm.DateTime">2023-12-01T20:44:31.207</d:Modified><d:Modifier
+        m:type="Edm.Guid">-Fallback-scrubbed-GUzMTHbCwYmvcAYPcDgMFNEeBpUzifcpkyEn</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-IaZsaCJnkIPvs</d:ModifierFullName><d:PrivateGLAccount
+        m:type="Edm.Guid" m:null="true"></d:PrivateGLAccount><d:PrivatePercentage
+        m:type="Edm.Double">1938</d:PrivatePercentage><d:ReportingCode m:null="true"></d:ReportingCode><d:RevalueCurrency
+        m:type="Edm.Boolean">false</d:RevalueCurrency><d:SearchCode m:null="true"></d:SearchCode><d:Type
+        m:type="Edm.Int32">8644</d:Type><d:AllowCostsInSales m:type="Edm.Byte">1938</d:AllowCostsInSales><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-QZJWciEJIylrmGYEimafcOwoSclkhyTVDGKFJTpnChgQzFOPvYZslzlxhvekzrrwfwJlBjvXUBbuxOezNwZvlQToWMbfDmPRBEAJdRJEqaLf</id><title
+        type="-Fallback-scrubbed-gTVR"></title><updated>1975-09-17T23:49:12Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-FyOzHTPAF" href="GLAccounts(guid''9d8ce18e-83f7-4317-9c01-ad4c15a81244'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/DeductibilityPercentages"
+        type="-Fallback-scrubbed-AIvLaRbkIxvxzHnLWVjZdJEDOWSFeg" title="-Fallback-scrubbed-UelWWVkuMzfyPfourZrnepYE"
+        href="GLAccounts(guid''9d8ce18e-83f7-4317-9c01-ad4c15a81244'')/DeductibilityPercentages"></link><category
+        term="-Fallback-scrubbed-bJbAqoVpniwhJIsnbEqdzIuOsgpDAp" scheme="-Fallback-scrubbed-uvXBvSUdCrVhfaNJAmlVhPiwcVdnceGQlACKKVFaEijNmGYLMRJGjBVeeZzh"></category><content
+        type="-Fallback-scrubbed-mryGkFinbOQduDe"><m:properties><d:ID m:type="Edm.Guid">9d8ce18e-83f7-4317-9c01-ad4c15a81244</d:ID><d:AssimilatedVATBox
+        m:type="Edm.Int16" m:null="true"></d:AssimilatedVATBox><d:BalanceSide>-Fallback-scrubbed-c</d:BalanceSide><d:BalanceType>-Fallback-scrubbed-D</d:BalanceType><d:BelcotaxType
+        m:type="Edm.Int32" m:null="true"></d:BelcotaxType><d:Code>7628</d:Code><d:Compress
+        m:type="Edm.Boolean">false</d:Compress><d:Costcenter m:null="true"></d:Costcenter><d:CostcenterDescription
+        m:null="true"></d:CostcenterDescription><d:Costunit m:null="true"></d:Costunit><d:CostunitDescription
+        m:null="true"></d:CostunitDescription><d:Created m:type="Edm.DateTime">1986-11-17T03:35:27.743</d:Created><d:Creator
+        m:type="Edm.Guid">-Fallback-scrubbed-GUzMTHbCwYmvcAYPcDgMFNEeBpUzifcpkyEn</d:Creator><d:CreatorFullName>-Fallback-scrubbed-IaZsaCJnkIPvs</d:CreatorFullName><d:Description>-Fallback-scrubbed-xURmaDvWj</d:Description><d:Division
+        m:type="Edm.Int32">2412</d:Division><d:ExcludeVATListing m:type="Edm.Byte">1938</d:ExcludeVATListing><d:ExpenseNonDeductiblePercentage
+        m:type="Edm.Double">1938</d:ExpenseNonDeductiblePercentage><d:IsBlocked m:type="Edm.Boolean">false</d:IsBlocked><d:Matching
+        m:type="Edm.Boolean">false</d:Matching><d:Modified m:type="Edm.DateTime">2024-08-21T20:42:41.743</d:Modified><d:Modifier
+        m:type="Edm.Guid">-Fallback-scrubbed-GUzMTHbCwYmvcAYPcDgMFNEeBpUzifcpkyEn</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-IaZsaCJnkIPvs</d:ModifierFullName><d:PrivateGLAccount
+        m:type="Edm.Guid" m:null="true"></d:PrivateGLAccount><d:PrivatePercentage
+        m:type="Edm.Double">1938</d:PrivatePercentage><d:ReportingCode m:null="true"></d:ReportingCode><d:RevalueCurrency
+        m:type="Edm.Boolean">false</d:RevalueCurrency><d:SearchCode m:null="true"></d:SearchCode><d:Type
+        m:type="Edm.Int32">8644</d:Type><d:AllowCostsInSales m:type="Edm.Byte">1938</d:AllowCostsInSales><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-azRneuaDSUigfhPbHKFVNsbIQiuFSIgMOMhafAwOTLdcYTyDOfgpCrYYrKMAiNPVTySZwnFvNyNRZLFScccvoqsHONJCPaMqlxtwVwJZoFSu</id><title
+        type="-Fallback-scrubbed-gTVR"></title><updated>1975-09-17T23:49:12Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-FyOzHTPAF" href="GLAccounts(guid''d64beb02-524b-4feb-a683-c0b5cccce32b'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/DeductibilityPercentages"
+        type="-Fallback-scrubbed-AIvLaRbkIxvxzHnLWVjZdJEDOWSFeg" title="-Fallback-scrubbed-UelWWVkuMzfyPfourZrnepYE"
+        href="GLAccounts(guid''d64beb02-524b-4feb-a683-c0b5cccce32b'')/DeductibilityPercentages"></link><category
+        term="-Fallback-scrubbed-bJbAqoVpniwhJIsnbEqdzIuOsgpDAp" scheme="-Fallback-scrubbed-uvXBvSUdCrVhfaNJAmlVhPiwcVdnceGQlACKKVFaEijNmGYLMRJGjBVeeZzh"></category><content
+        type="-Fallback-scrubbed-mryGkFinbOQduDe"><m:properties><d:ID m:type="Edm.Guid">d64beb02-524b-4feb-a683-c0b5cccce32b</d:ID><d:AssimilatedVATBox
+        m:type="Edm.Int16" m:null="true"></d:AssimilatedVATBox><d:BalanceSide>-Fallback-scrubbed-Y</d:BalanceSide><d:BalanceType>-Fallback-scrubbed-D</d:BalanceType><d:BelcotaxType
+        m:type="Edm.Int32" m:null="true"></d:BelcotaxType><d:Code>4087</d:Code><d:Compress
+        m:type="Edm.Boolean">false</d:Compress><d:Costcenter m:null="true"></d:Costcenter><d:CostcenterDescription
+        m:null="true"></d:CostcenterDescription><d:Costunit m:null="true"></d:Costunit><d:CostunitDescription
+        m:null="true"></d:CostunitDescription><d:Created m:type="Edm.DateTime">2011-08-18T18:37:39.21</d:Created><d:Creator
+        m:type="Edm.Guid">-Fallback-scrubbed-GUzMTHbCwYmvcAYPcDgMFNEeBpUzifcpkyEn</d:Creator><d:CreatorFullName>-Fallback-scrubbed-IaZsaCJnkIPvs</d:CreatorFullName><d:Description>-Fallback-scrubbed-YkrAduVlWYEJFmwsFiyZjFyW</d:Description><d:Division
+        m:type="Edm.Int32">2412</d:Division><d:ExcludeVATListing m:type="Edm.Byte">1938</d:ExcludeVATListing><d:ExpenseNonDeductiblePercentage
+        m:type="Edm.Double">1938</d:ExpenseNonDeductiblePercentage><d:IsBlocked m:type="Edm.Boolean">false</d:IsBlocked><d:Matching
+        m:type="Edm.Boolean">false</d:Matching><d:Modified m:type="Edm.DateTime">2023-06-13T00:40:18.927</d:Modified><d:Modifier
+        m:type="Edm.Guid">-Fallback-scrubbed-GUzMTHbCwYmvcAYPcDgMFNEeBpUzifcpkyEn</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-IaZsaCJnkIPvs</d:ModifierFullName><d:PrivateGLAccount
+        m:type="Edm.Guid" m:null="true"></d:PrivateGLAccount><d:PrivatePercentage
+        m:type="Edm.Double">1938</d:PrivatePercentage><d:ReportingCode m:null="true"></d:ReportingCode><d:RevalueCurrency
+        m:type="Edm.Boolean">false</d:RevalueCurrency><d:SearchCode xml:space="-Fallback-scrubbed-eiIxcRqG">-Fallback-scrubbed-JpWaCvsj</d:SearchCode><d:Type
+        m:type="Edm.Int32">775</d:Type><d:AllowCostsInSales m:type="Edm.Byte">1938</d:AllowCostsInSales><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry></feed>'
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '9136'
+      Content-Security-Policy:
+      - frame-ancestors 'self'; object-src 'self'; report-uri https://exactonline.report-uri.com/r/t/csp/enforce
+      Content-Type:
+      - application/atom+xml;charset=utf-8
+      DataServiceVersion:
+      - 2.0;
+      Date:
+      - Mon, 09 Nov 2026 15:29:44 GMT
+      Expires:
+      - '-1'
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Strict-Transport-Security:
+      - max-age=31536000 ; includeSubDomains ; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Exact-Correlation-Id:
+      - aeb936d6-fdbe-4d07-8d16-5f668c120ae6
+      X-RateLimit-Limit:
+      - '5000'
+      X-RateLimit-Minutely-Limit:
+      - '60'
+      X-RateLimit-Minutely-Remaining:
+      - '55'
+      X-RateLimit-Minutely-Reset:
+      - '1794238200000'
+      X-RateLimit-Remaining:
+      - '4978'
+      X-RateLimit-Reset:
+      - '1794268800000'
+      X-RequestHandledBy-EOLDotNetApp:
+      - '0'
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

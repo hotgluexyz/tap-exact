@@ -1,0 +1,10 @@
+{
+    "client_id": "db1***",
+    "client_secret": "S5t***",
+    "refresh_token": "sta***",
+    "access_token": "sta***",
+    "current_division": "3527190",
+    "uri": "https://start.exactonline.nl",
+    "start_date": "2000-01-01T00:00:00Z",
+    "use_stock_multiple_warehouses": true
+}

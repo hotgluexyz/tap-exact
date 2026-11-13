@@ -1,0 +1,723 @@
+{
+  "streams": [
+    {
+      "tap_stream_id": "vat_codes",
+      "replication_key": "Modified",
+      "replication_method": "INCREMENTAL",
+      "key_properties": [
+        "ID"
+      ],
+      "schema": {
+        "properties": {
+          "ID": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Account": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "AccountCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "AccountName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "CalculationBasis": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Charged": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "Code": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Country": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Created": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Creator": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "CreatorFullName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "CustomField": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Division": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "EUSalesListing": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ExcludeVATListing": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLDiscountPurchase": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLDiscountPurchaseCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLDiscountPurchaseDescription": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLDiscountSales": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLDiscountSalesCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLDiscountSalesDescription": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLToClaim": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLToClaimCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLToClaimDescription": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLToPay": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLToPayCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "GLToPayDescription": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "IntraStat": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "IntrastatType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "IsBlocked": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "LegalText": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Modified": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Modifier": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ModifierFullName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Percentage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "TaxReturnType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "VatDocType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "VatMargin": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "VATPartialRatio": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "VATPercentages": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "VATTransactionType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "stream": "vat_codes",
+      "metadata": [
+        {
+          "breadcrumb": [
+            "properties",
+            "ID"
+          ],
+          "metadata": {
+            "inclusion": "automatic",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Account"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "AccountCode"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "AccountName"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "CalculationBasis"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Charged"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Code"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Country"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Created"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Creator"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "CreatorFullName"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "CustomField"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Description"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Division"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "EUSalesListing"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "ExcludeVATListing"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLDiscountPurchase"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLDiscountPurchaseCode"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLDiscountPurchaseDescription"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLDiscountSales"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLDiscountSalesCode"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLDiscountSalesDescription"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLToClaim"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLToClaimCode"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLToClaimDescription"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLToPay"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLToPayCode"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "GLToPayDescription"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "IntraStat"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "IntrastatType"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "IsBlocked"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "LegalText"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Modified"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Modifier"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "ModifierFullName"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Percentage"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "TaxReturnType"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Type"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "VatDocType"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "VatMargin"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "VATPartialRatio"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "VATPercentages"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "VATTransactionType"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true,
+            "table-key-properties": [
+              "ID"
+            ],
+            "valid-replication-keys": [
+              "Modified"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
