@@ -1,0 +1,458 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://start.exactonline.nl/api/v1/3527190/vat/VATCodes?%24select=ID%2CAccount%2CAccountCode%2CAccountName%2CCalculationBasis%2CCharged%2CCode%2CCountry%2CCreated%2CCreator%2CCreatorFullName%2CCustomField%2CDescription%2CDivision%2CEUSalesListing%2CExcludeVATListing%2CGLDiscountPurchase%2CGLDiscountPurchaseCode%2CGLDiscountPurchaseDescription%2CGLDiscountSales%2CGLDiscountSalesCode%2CGLDiscountSalesDescription%2CGLToClaim%2CGLToClaimCode%2CGLToClaimDescription%2CGLToPay%2CGLToPayCode%2CGLToPayDescription%2CIntraStat%2CIntrastatType%2CIsBlocked%2CLegalText%2CModified%2CModifier%2CModifierFullName%2CPercentage%2CTaxReturnType%2CType%2CVatDocType%2CVatMargin%2CVATPartialRatio%2CVATPercentages%2CVATTransactionType&%24filter=Modified+gt+datetime%272000-01-01T00%3A00%3A01%27
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="utf-8"?>
+
+        <feed xml:base="https://start.exactonline.nl/api/v1/3527190/vat/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+        xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom"><title
+        type="-Fallback-scrubbed-bRmZ">-Fallback-scrubbed-ofUoxrDQ</title><id>-Fallback-scrubbed-ZVpRGocYhKFNbGhqrQEPnRqXqvhPIHZnxdVBvkFwPWoojqbKCwzyIlUk</id><updated>1977-03-17T07:58:18Z</updated><link
+        rel="self" title="-Fallback-scrubbed-ofUoxrDQ" href="VATCodes"></link><entry><id>-Fallback-scrubbed-VtxeHlQoLrGQkqXuouRDuLymtczPQUufAAugHszJiJwrekCfKcSBPxjffEwUEvJAXJWFndCQeFCuSoPHEnjSQEqYxzNZbCrGzmpl</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''4b5b4967-c1ae-4f39-98a4-0285facf14e9'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''4b5b4967-c1ae-4f39-98a4-0285facf14e9'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">9535</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">1976-04-23T18:56:04.2</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-PDkcEZAoNojRqKrBOeRmlMl</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid">-Fallback-scrubbed-SyMKqmnRFVoWhQBCjjUGtyFCqJpGscQXyJei</d:GLToClaim><d:GLToClaimCode>3538</d:GLToClaimCode><d:GLToClaimDescription>-Fallback-scrubbed-RkBcrUSWJvceyqE</d:GLToClaimDescription><d:GLToPay
+        m:type="Edm.Guid">-Fallback-scrubbed-PodHbKOXoVJgCsghdWljvPJhlRmUSkNGHAZx</d:GLToPay><d:GLToPayCode>6030</d:GLToPayCode><d:GLToPayDescription>-Fallback-scrubbed-vFYXNRvUdbAgrJWTqTaJDicVnnfHkWlbRaaBhoAAhxhxeE</d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">4b5b4967-c1ae-4f39-98a4-0285facf14e9</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.2</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">-13856050269814.1</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-b</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-DqvSBiQHXcHKPAjqzLrQcfsuFwFLREfWrmXrTygaJJFTTJSCDZyHOaPhJiOhvfGLrFgNApAvpoxgqAyKObSFDDFpbCZAojwoWshB</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''28ad7d4e-fdfc-4a32-89be-048c4ee004d8'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''28ad7d4e-fdfc-4a32-89be-048c4ee004d8'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">7084</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">1996-11-02T19:24:09.897</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-HPoKgRxDMGtfnvXOOyujeVUqUXFXv</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid">-Fallback-scrubbed-SyMKqmnRFVoWhQBCjjUGtyFCqJpGscQXyJei</d:GLToClaim><d:GLToClaimCode>3538</d:GLToClaimCode><d:GLToClaimDescription>-Fallback-scrubbed-RkBcrUSWJvceyqE</d:GLToClaimDescription><d:GLToPay
+        m:type="Edm.Guid">-Fallback-scrubbed-ySrlWSZpxBPaMtiuaynsGairNoaGeqpjDoVZ</d:GLToPay><d:GLToPayCode>9269</d:GLToPayCode><d:GLToPayDescription>-Fallback-scrubbed-AZfHCMOQXAQIZcdrDosqBuFRDUGaKZBrWEGQQVebGXbf</d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">28ad7d4e-fdfc-4a32-89be-048c4ee004d8</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.897</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">-13856050269814.1</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-b</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-qXrGjTUTTQZaUopkNhodbJZtlRMPQOlfRTfCrLAAZhSrEpLinrYYCrxkDPnSXHLqhHqulHUWgPMWhgvHxXbJLEnWypVMxWJaWLaj</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''669dc1c1-d565-4b65-8483-3987b48bdd4a'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''669dc1c1-d565-4b65-8483-3987b48bdd4a'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">2017-05-30T08:35:50.097</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-PbMjiBWXqoAaWuMYWOTlVrYJfq</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid">-Fallback-scrubbed-SyMKqmnRFVoWhQBCjjUGtyFCqJpGscQXyJei</d:GLToClaim><d:GLToClaimCode>3538</d:GLToClaimCode><d:GLToClaimDescription>-Fallback-scrubbed-RkBcrUSWJvceyqE</d:GLToClaimDescription><d:GLToPay
+        m:type="Edm.Guid">-Fallback-scrubbed-BqboHItJqziBZWeXNoHIQblPTvrFJTCOnULM</d:GLToPay><d:GLToPayCode>1388</d:GLToPayCode><d:GLToPayDescription>-Fallback-scrubbed-wlGLBILUNIOhFaFZfeANT</d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">669dc1c1-d565-4b65-8483-3987b48bdd4a</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.097</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">10.3448351815169</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-b</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-svvtGwfmjOUjOUxhUtpTmaXgWiOkUucoTCMAjXStHSPlpDvGpxyfeeQJpbcfQPaocuABprGgkqYSGKaNsYENsHRZmJXjDBkEkRuw</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''392d320f-df0d-41c7-b81a-4935d5751b73'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''392d320f-df0d-41c7-b81a-4935d5751b73'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid"
+        m:null="true"></d:Account><d:AccountCode m:null="true"></d:AccountCode><d:AccountName
+        m:null="true"></d:AccountName><d:CalculationBasis m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged
+        m:type="Edm.Boolean">false</d:Charged><d:Code xml:space="-Fallback-scrubbed-CqWDXPlO">1596</d:Code><d:Country
+        m:null="true"></d:Country><d:Created m:type="Edm.DateTime">2022-06-28T07:41:03.98</d:Created><d:Creator
+        m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-iynVKFYz</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid"
+        m:null="true"></d:GLToClaim><d:GLToClaimCode m:null="true"></d:GLToClaimCode><d:GLToClaimDescription
+        m:null="true"></d:GLToClaimDescription><d:GLToPay m:type="Edm.Guid" m:null="true"></d:GLToPay><d:GLToPayCode
+        m:null="true"></d:GLToPayCode><d:GLToPayDescription m:null="true"></d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">392d320f-df0d-41c7-b81a-4935d5751b73</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:22.98</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">1596</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-q</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-RPnUllAHHkzaNHgcxbDZHlnbnMVjhlwmkEtzLjWvYmljvcRjlhQDrTEmZkDPqIsircZsaGJBDpVWcoCQHfbiTzhMkvemNLpxsAbh</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''3373c1ea-b010-41dc-96f5-51b5b1e69031'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''3373c1ea-b010-41dc-96f5-51b5b1e69031'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">4468</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">1983-11-18T06:24:24.72</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-TZCByjAwAJo</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid">-Fallback-scrubbed-SyMKqmnRFVoWhQBCjjUGtyFCqJpGscQXyJei</d:GLToClaim><d:GLToClaimCode>3538</d:GLToClaimCode><d:GLToClaimDescription>-Fallback-scrubbed-RkBcrUSWJvceyqE</d:GLToClaimDescription><d:GLToPay
+        m:type="Edm.Guid">-Fallback-scrubbed-aSvHFEbGoZsFogOdMiQPDxudkUJCiqfsoklM</d:GLToPay><d:GLToPayCode>1044</d:GLToPayCode><d:GLToPayDescription>-Fallback-scrubbed-tPbZlCUwlDaytuyaKIgPn</d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">3373c1ea-b010-41dc-96f5-51b5b1e69031</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.72</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">-13856050269814.1</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-b</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-wWiymwTsnKtyTkSctnHOdrNJMkjJmIvbDXKuPNvnIHmJuSFoXalVGKpxRsUsijohaZzZaClKVyoNOFEXmbOwnyFdVhvOsXNjCynp</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''4c787449-8df0-449a-8496-63cd8485be02'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''4c787449-8df0-449a-8496-63cd8485be02'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">203</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">2004-09-02T21:07:14.82</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-tYwnoWNMMdBtVSupfAcxk</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-L</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid"
+        m:null="true"></d:GLToClaim><d:GLToClaimCode m:null="true"></d:GLToClaimCode><d:GLToClaimDescription
+        m:null="true"></d:GLToClaimDescription><d:GLToPay m:type="Edm.Guid" m:null="true"></d:GLToPay><d:GLToPayCode
+        m:null="true"></d:GLToPayCode><d:GLToPayDescription m:null="true"></d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">4c787449-8df0-449a-8496-63cd8485be02</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-L</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.82</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">1596</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-j</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-yDmJubRGoueCmakEdTZRgIruoiaQJvGiDVBctXDroFmPRRWesBUrQvDhYUDELnloGvlYwoCxjQMxBApNdfAOKPEsMHtsTqVRRgAu</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''c9d53e18-9916-437f-9c03-7a1f504dcbe9'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''c9d53e18-9916-437f-9c03-7a1f504dcbe9'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">5505</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">1985-05-04T12:31:41.547</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-qdtcZHRVVxZxbFHVzTIPeOArVk</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid">-Fallback-scrubbed-SyMKqmnRFVoWhQBCjjUGtyFCqJpGscQXyJei</d:GLToClaim><d:GLToClaimCode>3538</d:GLToClaimCode><d:GLToClaimDescription>-Fallback-scrubbed-RkBcrUSWJvceyqE</d:GLToClaimDescription><d:GLToPay
+        m:type="Edm.Guid">-Fallback-scrubbed-BqboHItJqziBZWeXNoHIQblPTvrFJTCOnULM</d:GLToPay><d:GLToPayCode>1388</d:GLToPayCode><d:GLToPayDescription>-Fallback-scrubbed-wlGLBILUNIOhFaFZfeANT</d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">c9d53e18-9916-437f-9c03-7a1f504dcbe9</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.547</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">10.3448351815169</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-z</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-MqySmCSYdRTNvnKjWvISnIfcoGsKAYkcrlypSBnnpMiAutUDXHdQDNplQMSnPnOiDoFJpieCIcOzEcnOJDSgKoIZtnCtKNaPVSAo</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''752fbf45-63cf-46f4-b46d-840396c7c9c2'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''752fbf45-63cf-46f4-b46d-840396c7c9c2'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">9127</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">1973-09-04T18:38:48.263</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-FtWLbSRpHaxzrxtuB</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid">-Fallback-scrubbed-SyMKqmnRFVoWhQBCjjUGtyFCqJpGscQXyJei</d:GLToClaim><d:GLToClaimCode>3538</d:GLToClaimCode><d:GLToClaimDescription>-Fallback-scrubbed-RkBcrUSWJvceyqE</d:GLToClaimDescription><d:GLToPay
+        m:type="Edm.Guid">-Fallback-scrubbed-hVnwauMUWwLAZombYzbFiuvygPNCErUUizRz</d:GLToPay><d:GLToPayCode>9443</d:GLToPayCode><d:GLToPayDescription>-Fallback-scrubbed-lTmsHNvUNxssvzPjZ</d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">752fbf45-63cf-46f4-b46d-840396c7c9c2</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.263</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">-13856050269814.1</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-b</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-kSybJeFGHDhYKBvNniBAjYgxKDuGruydPBdDXrEwDZpKFXWVhWlJPjUwnSkLZeYkdoiAgFncYbWyosHthQsvafkxokiDIdgFtasV</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''aa7bcd48-1870-4718-ac24-885be48fcd2f'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''aa7bcd48-1870-4718-ac24-885be48fcd2f'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">5939</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">2021-02-14T12:11:40.377</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-XFKVUEWVKLTdCCtylGSs</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid">-Fallback-scrubbed-SyMKqmnRFVoWhQBCjjUGtyFCqJpGscQXyJei</d:GLToClaim><d:GLToClaimCode>3538</d:GLToClaimCode><d:GLToClaimDescription>-Fallback-scrubbed-RkBcrUSWJvceyqE</d:GLToClaimDescription><d:GLToPay
+        m:type="Edm.Guid">-Fallback-scrubbed-aSvHFEbGoZsFogOdMiQPDxudkUJCiqfsoklM</d:GLToPay><d:GLToPayCode>1044</d:GLToPayCode><d:GLToPayDescription>-Fallback-scrubbed-tPbZlCUwlDaytuyaKIgPn</d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">aa7bcd48-1870-4718-ac24-885be48fcd2f</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.377</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">5145623867.4603</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-b</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-bDfqvOqAHLcJkduJmRDvjFgmqScKxxMzjyheLrLVhRJhfOXjmvIMOhIuBKSyLRYuFzApNgMzQxVamIAEnSFbvMFrPusSBfYufmLO</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''fea3f457-a7ee-4d61-a668-9241e91b525a'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''fea3f457-a7ee-4d61-a668-9241e91b525a'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">8272</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">2004-01-02T17:23:58.857</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-HxBUZxBmHbzYdfxBUcKcjcGXEAuYo</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid"
+        m:null="true"></d:GLToClaim><d:GLToClaimCode m:null="true"></d:GLToClaimCode><d:GLToClaimDescription
+        m:null="true"></d:GLToClaimDescription><d:GLToPay m:type="Edm.Guid" m:null="true"></d:GLToPay><d:GLToPayCode
+        m:null="true"></d:GLToPayCode><d:GLToPayDescription m:null="true"></d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">fea3f457-a7ee-4d61-a668-9241e91b525a</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.857</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">1596</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-j</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-VBHfMvvlmlhTxClUWNThTeyojszUREUupppzIdcFqfuZbfYrvShGGJofaCJDLjqvEQtRABTgnkYYoQdSlxKzxiyoRmDHyBPosbgj</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''86c6da79-6321-453b-9a0a-9ced9eb2537b'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''86c6da79-6321-453b-9a0a-9ced9eb2537b'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">2571</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">2008-01-03T12:01:10.517</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-dduKzECGpXSwmRVNGxoYZehiJ</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid"
+        m:null="true"></d:GLToClaim><d:GLToClaimCode m:null="true"></d:GLToClaimCode><d:GLToClaimDescription
+        m:null="true"></d:GLToClaimDescription><d:GLToPay m:type="Edm.Guid" m:null="true"></d:GLToPay><d:GLToPayCode
+        m:null="true"></d:GLToPayCode><d:GLToPayDescription m:null="true"></d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">86c6da79-6321-453b-9a0a-9ced9eb2537b</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.517</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">1596</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-j</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-GdoXNZzQGbNgvAXlXNQotEbLOCuRNFLmzNNATpVKdesDZdlsfQGmALtGOnjZVwUnWIozjtQWdjmYRwWzntMFHlacsukXsxifLirP</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''02dcf266-44bd-4029-98fa-c61a7d05f059'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''02dcf266-44bd-4029-98fa-c61a7d05f059'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">8580</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">1973-02-03T04:06:57.65</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-xJxfKFNUKfCUOhFMzoAxGhADyg</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid">-Fallback-scrubbed-SyMKqmnRFVoWhQBCjjUGtyFCqJpGscQXyJei</d:GLToClaim><d:GLToClaimCode>3538</d:GLToClaimCode><d:GLToClaimDescription>-Fallback-scrubbed-RkBcrUSWJvceyqE</d:GLToClaimDescription><d:GLToPay
+        m:type="Edm.Guid">-Fallback-scrubbed-aSvHFEbGoZsFogOdMiQPDxudkUJCiqfsoklM</d:GLToPay><d:GLToPayCode>1044</d:GLToPayCode><d:GLToPayDescription>-Fallback-scrubbed-tPbZlCUwlDaytuyaKIgPn</d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">02dcf266-44bd-4029-98fa-c61a7d05f059</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.65</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">-13856050269814.1</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-z</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-FrKQkfqMGwYWpsSEVoTtzKEFxUBceyBkwSWgmwqsTjqnoThfUPbdmReNHLuBhJnvWtyuNcGwPFEekiGlEArlpUQQaRnfifyvuSfi</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''8996a81f-d8a9-4f0d-a0d0-c7b32e1a2add'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''8996a81f-d8a9-4f0d-a0d0-c7b32e1a2add'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">9660</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">1998-04-27T17:08:16.787</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-koCDCKojdvgcqViheCrRs</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid"
+        m:null="true"></d:GLToClaim><d:GLToClaimCode m:null="true"></d:GLToClaimCode><d:GLToClaimDescription
+        m:null="true"></d:GLToClaimDescription><d:GLToPay m:type="Edm.Guid" m:null="true"></d:GLToPay><d:GLToPayCode
+        m:null="true"></d:GLToPayCode><d:GLToPayDescription m:null="true"></d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">8996a81f-d8a9-4f0d-a0d0-c7b32e1a2add</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.787</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">1596</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-j</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry><entry><id>-Fallback-scrubbed-NARprGFoQGfCFBhXUFDaMjNgSpjaCPWGzFIQbvPglqGZaeOIpgCENrCwrVYixaXncfBttTsbWngheEALccYnPLUsXafquOUWtIVA</id><title
+        type="-Fallback-scrubbed-bRmZ"></title><updated>1977-03-17T07:58:18Z</updated><author><name></name></author><link
+        rel="edit" title="-Fallback-scrubbed-oUwoYAs" href="VATCodes(guid''f6f4a48a-22b7-4125-8fd0-d1e59640efc1'')"></link><link
+        rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/VATPercentages"
+        type="-Fallback-scrubbed-troIjESQRcLYcZHgPKvmqldEQadBtT" title="-Fallback-scrubbed-NQpAxtcKGJXzrP"
+        href="VATCodes(guid''f6f4a48a-22b7-4125-8fd0-d1e59640efc1'')/VATPercentages"></link><category
+        term="-Fallback-scrubbed-QJgqCadOOySNwBAPBggBqMOIcXBU" scheme="-Fallback-scrubbed-YurTaoQHrWCTtGhJDHQFZbcUXELsVhyGlzobzNwkeVlZeZWAJFWPsniSttIA"></category><content
+        type="-Fallback-scrubbed-VTPVBCiBsGzzhEH"><m:properties><d:Account m:type="Edm.Guid">-Fallback-scrubbed-fHPGSIGTuPqrOBXYoZqalYVuhbDjUPwuyiYb</d:Account><d:AccountCode
+        xml:space="-Fallback-scrubbed-CqWDXPlO">6011</d:AccountCode><d:AccountName>-Fallback-scrubbed-ZsBdDMvgKuoJiJA</d:AccountName><d:CalculationBasis
+        m:type="Edm.Byte">6011</d:CalculationBasis><d:Charged m:type="Edm.Boolean">false</d:Charged><d:Code
+        xml:space="-Fallback-scrubbed-CqWDXPlO">7713</d:Code><d:Country m:null="true"></d:Country><d:Created
+        m:type="Edm.DateTime">1973-11-21T10:28:55.427</d:Created><d:Creator m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Creator><d:CreatorFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:CreatorFullName><d:Description>-Fallback-scrubbed-xZdTJmwhUNaRwZGTjoFdBCNqXC</d:Description><d:Division
+        m:type="Edm.Int32">1090</d:Division><d:EUSalesListing>-Fallback-scrubbed-q</d:EUSalesListing><d:ExcludeVATListing
+        m:type="Edm.Byte">1596</d:ExcludeVATListing><d:GLDiscountPurchase m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountPurchase><d:GLDiscountPurchaseCode m:null="true"></d:GLDiscountPurchaseCode><d:GLDiscountPurchaseDescription
+        m:null="true"></d:GLDiscountPurchaseDescription><d:GLDiscountSales m:type="Edm.Guid"
+        m:null="true"></d:GLDiscountSales><d:GLDiscountSalesCode m:null="true"></d:GLDiscountSalesCode><d:GLDiscountSalesDescription
+        m:null="true"></d:GLDiscountSalesDescription><d:GLToClaim m:type="Edm.Guid">-Fallback-scrubbed-SyMKqmnRFVoWhQBCjjUGtyFCqJpGscQXyJei</d:GLToClaim><d:GLToClaimCode>3538</d:GLToClaimCode><d:GLToClaimDescription>-Fallback-scrubbed-RkBcrUSWJvceyqE</d:GLToClaimDescription><d:GLToPay
+        m:type="Edm.Guid">-Fallback-scrubbed-aSvHFEbGoZsFogOdMiQPDxudkUJCiqfsoklM</d:GLToPay><d:GLToPayCode>1044</d:GLToPayCode><d:GLToPayDescription>-Fallback-scrubbed-tPbZlCUwlDaytuyaKIgPn</d:GLToPayDescription><d:ID
+        m:type="Edm.Guid">f6f4a48a-22b7-4125-8fd0-d1e59640efc1</d:ID><d:IntraStat
+        m:type="Edm.Boolean">false</d:IntraStat><d:IntrastatType>-Fallback-scrubbed-q</d:IntrastatType><d:IsBlocked
+        m:type="Edm.Boolean">false</d:IsBlocked><d:LegalText m:null="true"></d:LegalText><d:Modified
+        m:type="Edm.DateTime">2023-06-12T23:54:23.427</d:Modified><d:Modifier m:type="Edm.Guid">-Fallback-scrubbed-ThRdhwtzwYKrdJigrYQCnlCYLKMLbsqpylHD</d:Modifier><d:ModifierFullName>-Fallback-scrubbed-DZULvaVoWVUAt</d:ModifierFullName><d:Percentage
+        m:type="Edm.Double">-13856050269814.1</d:Percentage><d:TaxReturnType m:type="Edm.Int16"
+        m:null="true"></d:TaxReturnType><d:Type>-Fallback-scrubbed-b</d:Type><d:VatDocType>-Fallback-scrubbed-f</d:VatDocType><d:VatMargin
+        m:type="Edm.Byte">1596</d:VatMargin><d:VATPartialRatio m:type="Edm.Int16"
+        m:null="true"></d:VATPartialRatio><d:VATTransactionType>-Fallback-scrubbed-j</d:VATTransactionType><d:CustomField
+        m:null="true"></d:CustomField></m:properties></content></entry></feed>'
+    headers:
+      Cache-Control:
+      - no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '51072'
+      Content-Security-Policy:
+      - frame-ancestors 'self'; object-src 'self'; report-uri https://exactonline.report-uri.com/r/t/csp/enforce
+      Content-Type:
+      - application/atom+xml;charset=utf-8
+      DataServiceVersion:
+      - 2.0;
+      Date:
+      - Mon, 09 Nov 2026 15:28:55 GMT
+      Expires:
+      - '-1'
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Strict-Transport-Security:
+      - max-age=31536000 ; includeSubDomains ; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Exact-Correlation-Id:
+      - 017339ed-736f-4dfb-8620-987c0275f59f
+      X-RateLimit-Limit:
+      - '5000'
+      X-RateLimit-Minutely-Limit:
+      - '60'
+      X-RateLimit-Minutely-Remaining:
+      - '57'
+      X-RateLimit-Minutely-Reset:
+      - '1794238140000'
+      X-RateLimit-Remaining:
+      - '4983'
+      X-RateLimit-Reset:
+      - '1794268800000'
+      X-RequestHandledBy-EOLDotNetApp:
+      - '0'
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

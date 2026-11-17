@@ -1,0 +1,531 @@
+{
+  "streams": [
+    {
+      "tap_stream_id": "gl_accounts",
+      "replication_key": "Modified",
+      "replication_method": "INCREMENTAL",
+      "key_properties": [
+        "ID"
+      ],
+      "schema": {
+        "properties": {
+          "ID": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "AllowCostsInSales": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "AssimilatedVATBox": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "BalanceSide": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "BalanceType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "BelcotaxType": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "Code": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Compress": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "Costcenter": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "CostcenterDescription": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Costunit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "CostunitDescription": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Created": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Creator": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "CreatorFullName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "CustomField": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "DeductibilityPercentages": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Division": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ExcludeVATListing": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ExpenseNonDeductiblePercentage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "IsBlocked": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "Matching": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "Modified": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ModifierFullName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "PrivateGLAccount": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "PrivatePercentage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ReportingCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "RevalueCurrency": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "SearchCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "Type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "stream": "gl_accounts",
+      "metadata": [
+        {
+          "breadcrumb": [
+            "properties",
+            "ID"
+          ],
+          "metadata": {
+            "inclusion": "automatic",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "AllowCostsInSales"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "AssimilatedVATBox"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "BalanceSide"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "BalanceType"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "BelcotaxType"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Code"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Compress"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Costcenter"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "CostcenterDescription"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Costunit"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "CostunitDescription"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Created"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Creator"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "CreatorFullName"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "CustomField"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "DeductibilityPercentages"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Description"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Division"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "ExcludeVATListing"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "ExpenseNonDeductiblePercentage"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "IsBlocked"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Matching"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Modified"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "ModifierFullName"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "PrivateGLAccount"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "PrivatePercentage"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "ReportingCode"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "RevalueCurrency"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "SearchCode"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "Type"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true,
+            "table-key-properties": [
+              "ID"
+            ],
+            "valid-replication-keys": [
+              "Modified"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
