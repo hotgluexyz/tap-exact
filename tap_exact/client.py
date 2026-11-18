@@ -7,7 +7,12 @@ from hotglue_singer_sdk.helpers.jsonpath import extract_jsonpath
 from hotglue_singer_sdk.streams import RESTStream
 from pendulum import parse
 
+from hotglue_etl_exceptions import InvalidCredentialsError
 from tap_exact.auth import OAuth2Authenticator
+from tap_exact.exceptions import (
+    TapExactDailyRateLimitExceededError,
+    TapExactInsufficientPermissionsError,
+)
 from hotglue_singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from time import sleep
 import datetime
@@ -88,11 +93,19 @@ class ExactStream(RESTStream):
             url = f"{self.url_base}/inventory/Warehouses"
             params = {"$filter": f"Code eq '{default_warehouse_id}'"}
             self.logger.info(f"PARAMS - {params}")
-            headers = self.authenticator.auth_headers
+            authenticator = self.authenticator
+            headers = authenticator.auth_headers
 
-            response = requests.request("GET", url=url, params=params, headers=headers)
+            response = requests.request("GET", url=url, params=params, headers=headers, timeout=self.timeout)
             self.logger.info(f"RESPONSE TEXT : {response.text}")
-            self.validate_response(response)
+            try:
+                self.validate_response(response)
+            except InvalidCredentialsError:
+                authenticator.update_access_token()
+                headers["Authorization"] = f"Bearer {authenticator.access_token}"
+                response = requests.request("GET", url=url, params=params, headers=headers, timeout=self.timeout)
+                self.logger.info(f"RESPONSE TEXT : {response.text}")
+                self.validate_response(response)
             res_json = self.xml_to_dict(response)
 
             warehouse_res = res_json["feed"].get("entry")
@@ -286,9 +299,22 @@ class ExactStream(RESTStream):
                     continue
                 yield transformed_record
 
+    def _request(self, prepared_request: requests.PreparedRequest, context: Optional[dict]) -> requests.Response:
+        try:
+            return super()._request(prepared_request, context)
+        except InvalidCredentialsError:
+            # The access token was rejected (401): refresh it and replay once before giving up.
+            authenticator = self.authenticator
+            authenticator.update_access_token()
+            prepared_request.headers["Authorization"] = f"Bearer {authenticator.access_token}"
+            return super()._request(prepared_request, context)
+
     def validate_response(self, response: requests.Response) -> None:
         sleep(1.01)
-        if (
+        if response.status_code == 429 and response.headers.get("X-RateLimit-Remaining") == "0":
+            rate_limit_reset = int(response.headers.get("X-RateLimit-Reset", 0)) / 1000
+            raise TapExactDailyRateLimitExceededError(f"Rate limit exceeded per day, please wait until {datetime.datetime.fromtimestamp(int(rate_limit_reset))} to try again")
+        elif (
             response.status_code in self.extra_retry_statuses
             or 500 <= response.status_code < 600
         ):
@@ -297,13 +323,12 @@ class ExactStream(RESTStream):
         elif response.status_code == 408:
             self.logger.info("Retrying after timeout")
             raise RetriableAPIError("Retrying after error")
-        elif response.status_code == 429:
-            rate_limit_reset = int(response.headers.get("X-RateLimit-Reset")) / 1000
-            # if limit per day is exceeded raise error
-            if response.headers.get("X-RateLimit-Remaining") == 0:
-                raise FatalAPIError(f"Rate limit exceeded per day, please wait until {datetime.datetime.fromtimestamp(int(rate_limit_reset))} to try again")
+        elif response.status_code == 401:
             msg = self.response_error_message(response)
-            raise RetriableAPIError(f"{msg} with response {response.text}")
+            raise InvalidCredentialsError(f"{msg} with response {response.text}")
+        elif response.status_code == 403:
+            msg = self.response_error_message(response)
+            raise TapExactInsufficientPermissionsError(f"{msg} with response {response.text}")
         elif 400 <= response.status_code < 500:
             msg = self.response_error_message(response)
             raise FatalAPIError(f"{msg} with response {response.text}")
